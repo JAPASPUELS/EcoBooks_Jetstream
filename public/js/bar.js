@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Verifica el estado de 'dark mode' en localStorage
     if (localStorage.getItem("dark-mode") === "enabled") {
         body.classList.add("dark");
-        modeText.innerText = "Light mode";
+        modeText.innerText = "Modo claro";
     }
 
     toggle.addEventListener("click", () => {
