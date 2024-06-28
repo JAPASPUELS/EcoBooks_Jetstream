@@ -1,0 +1,47 @@
+body {
+    background-color: #cfe9d9; /* Color de fondo */
+}
+
+.card {
+    border-radius: 1rem;
+    background-color: #ffffff; /* Color de fondo de la tarjeta */
+    box-shadow: 0 4px 8px rgba(1, 60, 255, 0.582); /* Sombra suave */
+}
+
+img.img-fluid.h-100 {
+    border-radius: 1rem 0 0 1rem;
+    object-fit: cover;
+}
+
+.d-flex.align-items-center {
+    height: 100%;
+}
+
+.btn-custom {
+    background-color: #0062cc; /* Color del botón */
+    color: white;
+    border-radius: 0.25rem; /* Borde redondeado */
+}
+
+.form-outline input {
+    border-color: #ff6219; /* Color del borde del campo de entrada */
+    border-radius: 0.25rem; /* Borde redondeado */
+}
+
+.form-label {
+    color: #393f81; /* Color del texto de la etiqueta */
+}
+
+.center-text {
+    text-align: center;
+}
+
+.highlight-link {
+    color: #ff6219; /* Color destacado para el enlace */
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.text-muted {
+    color: #393f81 !important; /* Color del texto mutado */
+}
