@@ -236,6 +236,18 @@ body {
     display: flex;
     align-items: center;
     flex-wrap: wrap;
+    position: fixed;
+    width: calc(100% - 260px);
+    left: 260px;
+    top: 0;
+    padding: 12px;
+    background: #e4e9f7;
+    z-index: 1000;
+    transition: all 0.5s ease;
+}
+.sidebar.close ~ .home-section .home-content {
+    left: 78px;
+    width: calc(100% - 78px);
 }
 .home-section .home-content .bx-menu,
 .home-section .home-content .text {
