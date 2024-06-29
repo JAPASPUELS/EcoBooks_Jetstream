@@ -97,6 +97,9 @@
                     <i class='fas fa-sign-out-alt' style="color: #F44336;"></i>
                     <span class="link_name">Cerrar Sesión</span>
                 </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
             </div>
 
         </li>
