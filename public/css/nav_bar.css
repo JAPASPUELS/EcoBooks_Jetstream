@@ -66,6 +66,7 @@ body {
 }
 .sidebar .nav-links li:hover {
     background: #03350e;
+    cursor: pointer
 }
 .sidebar .nav-links li .icon-link {
     display: flex;
@@ -112,8 +113,7 @@ body {
     pointer-events: none;
 }
 .sidebar .nav-links li .sub-menu {
-    padding: 6px 6px 14px 80px;
-    margin-top: -10px;
+    padding: 0 6px;
     background: #03350e;
     display: none;
 }
@@ -227,6 +227,7 @@ body {
     width: calc(100% - 260px);
     transition: all 0.5s ease;
     padding: 12px;
+    margin-top: 60px;
 }
 .sidebar.close ~ .home-section {
     left: 78px;
@@ -287,4 +288,56 @@ body {
         left: 78px;
         width: calc(100% - 78px);
     }
+}
+
+.sidebar .nav-links li.active {
+    background: #4caf4f94; /* Color de fondo del módulo activo */
+}
+
+.sidebar .nav-links li.active .link_name {
+    color: white; /* Color del texto del módulo activo */
+}
+
+.sidebar .nav-links li .sub-menu li.active {
+    background: #4CAF50; /* Color de fondo del submódulo activo */
+}
+
+.sidebar .nav-links li .sub-menu li.active .link_name {
+    color: white; /* Color del texto del submódulo activo */
+}
+/* Estilos para la pantalla de carga */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    visibility: hidden;
+}
+
+.loading-screen.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Puedes agregar un spinner o algún indicativo de carga */
+.spinner {
+    border: 8px solid rgba(255, 255, 255, 0.3);
+    border-top: 8px solid #fff;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
 }

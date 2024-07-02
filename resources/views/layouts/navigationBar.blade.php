@@ -17,6 +17,10 @@
 </head>
 
 <body>
+    <div id="loading-screen" class="loading-screen">
+        <div class="spinner"></div>
+    </div>
+    
     @include('components.dashboard-navigation')
 
     <section class="home-section">
