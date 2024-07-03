@@ -23,7 +23,7 @@
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">Category</a></li>
-                <li><a href="#">Registrar Venta</a></li>
+                <li><a href="{{route('sales.create')}}">Registrar Venta</a></li>
                 <li><a href="#">Historial de Ventas</a></li>
             </ul>
         </li>
@@ -51,7 +51,7 @@
                 <i class='bx bxs-chevron-down arrow'></i>
             </div>
             <ul class="sub-menu">
-                <li><a class="link_name" href="#">Category</a></li>
+                <li><a class="link_name">Category</a></li>
                 <li><a href="#">Registrar Cliente</a></li>
                 <li><a href="#">Modificar Cliente</a></li>
                 <li><a href="#">Reporte Clientes</a></li>
