@@ -22,15 +22,6 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="pro_apellido">
-                        <i class="fas fa-user icon-celeste"></i> Apellido del Proveedor
-                    </label>
-                    <input type="text" class="form-control" id="pro_apellido" name="pro_apellido" value="{{ old('pro_apellido') }}" required>
-                    @error('pro_apellido')
-                    <div class="text-danger">{{ $message }}</div>
-                    @enderror
-                </div>
-                <div class="form-group">
                     <label for="direccion_pro">
                         <i class="fas fa-map-marker-alt icon-celeste"></i> Dirección del Proveedor
                     </label>

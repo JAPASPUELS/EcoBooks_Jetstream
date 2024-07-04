@@ -16,7 +16,6 @@ class ProveedorController extends Controller
     {
         $request->validate([
             'pro_nombre' => 'required|string|max:50',
-            'pro_apellido' => 'required|string|max:50',
             'direccion_pro' => 'required|string|max:150',
             'pro_email' => 'required|string|email|max:100',
             'pro_telefono1' => 'required|string|max:20',
@@ -25,7 +24,6 @@ class ProveedorController extends Controller
 
         Proveedor::create([
             'pro_nombre' => $request->pro_nombre,
-            'pro_apellido' => $request->pro_apellido,
             'direccion_pro' => $request->direccion_pro,
             'pro_email' => $request->pro_email,
             'pro_telefono1' => $request->pro_telefono1,
@@ -37,7 +35,7 @@ class ProveedorController extends Controller
 
     public function index()
     {
-        $proveedores = Proveedor::orderBy('pro_apellido', 'asc')->get();
+        $proveedores = Proveedor::orderBy('pro_nombre', 'asc')->get();
         return view('vistas.proveedores.index', compact('proveedores'));
     }
 
@@ -52,7 +50,6 @@ class ProveedorController extends Controller
     {
         $request->validate([
             'pro_nombre' => 'required|string|max:50',
-            'pro_apellido' => 'required|string|max:50',
             'direccion_pro' => 'required|string|max:150',
             'pro_email' => 'required|string|email|max:100',
             'pro_telefono1' => 'required|string|max:20',
@@ -62,7 +59,6 @@ class ProveedorController extends Controller
         $proveedor = Proveedor::findOrFail($id);
         $proveedor->update([
             'pro_nombre' => $request->pro_nombre,
-            'pro_apellido' => $request->pro_apellido,
             'direccion_pro' => $request->direccion_pro,
             'pro_email' => $request->pro_email,
             'pro_telefono1' => $request->pro_telefono1,

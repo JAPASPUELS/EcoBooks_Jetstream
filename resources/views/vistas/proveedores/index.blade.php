@@ -13,7 +13,6 @@
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>Apellido</th>
                         <th>Nombre</th>
                         <th>Dirección</th>
                         <th>Email</th>
@@ -25,7 +24,6 @@
                 <tbody>
                     @foreach($proveedores as $proveedor)
                         <tr>
-                            <td data-label="Apellido">{{ $proveedor->pro_apellido }}</td>
                             <td data-label="Nombre">{{ $proveedor->pro_nombre }}</td>
                             <td data-label="Dirección">{{ $proveedor->direccion_pro }}</td>
                             <td data-label="Email">{{ $proveedor->pro_email }}</td>

@@ -15,10 +15,6 @@
                 <input type="text" id="edit_pro_nombre" name="pro_nombre" class="form-control" required>
             </div>
             <div class="form-group">
-                <label for="edit_pro_apellido">Apellido del Proveedor</label>
-                <input type="text" id="edit_pro_apellido" name="pro_apellido" class="form-control" required>
-            </div>
-            <div class="form-group">
                 <label for="edit_direccion_pro">Dirección del Proveedor</label>
                 <input type="text" id="edit_direccion_pro" name="direccion_pro" class="form-control" required>
             </div>

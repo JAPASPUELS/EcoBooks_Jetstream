@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Llenar el formulario con los datos del proveedor
                     document.getElementById('edit_pro_id').value = data.pro_id;
                     document.getElementById('edit_pro_nombre').value = data.pro_nombre;
-                    document.getElementById('edit_pro_apellido').value = data.pro_apellido;
                     document.getElementById('edit_direccion_pro').value = data.direccion_pro;
                     document.getElementById('edit_pro_email').value = data.pro_email;
                     document.getElementById('edit_pro_telefono1').value = data.pro_telefono1;
