@@ -59,7 +59,7 @@
         </li>
         <li id="proveedores">
             <div class="icon-link">
-                <a href="#">
+                <a>
                     <i class='fas fa-truck icon' style="color: #9C27B0;"></i>
                     <span class="link_name">Proveedores</span>
                 </a>
@@ -67,11 +67,12 @@
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">Category</a></li>
-                <li><a id="proveedores-create" href="#">Registrar Proveedor</a></li>
-                <li><a id="proveedores-update" href="#">Modificar Proveedor</a></li>
+                <li><a id="proveedores-create" href="{{ route('proveedores.create') }}">Registrar Proveedor</a></li>
+                <li><a id="proveedores-update" href="{{ route('proveedores.index') }}">Modificar Proveedor</a></li>
                 <li><a id="proveedores-report" href="#">Reporte Proveedores</a></li>
             </ul>
         </li>
+
         <li id="auditoria">
             <a href="#">
                 <i class='fas fa-clipboard-check icon' style="color: #FF5722;"></i>
