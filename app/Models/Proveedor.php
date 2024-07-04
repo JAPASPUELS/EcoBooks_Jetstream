@@ -19,6 +19,9 @@ class Proveedor extends Model
         'pro_email',
         'pro_telefono1',
         'pro_telefono2',
+        'created_at',
+        'updated_at',
+
     ];
 
     // Eloquent automáticamente manejará las columnas created_at y updated_at

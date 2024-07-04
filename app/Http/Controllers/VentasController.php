@@ -13,20 +13,29 @@ class VentasController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    // public function index(Request $request)
+    // {
+    //     if ($request) {
+    //         $query = trim($request->get('searchText'));
+    //         $ventas = DB::table('ventas')
+    //             ->join('clientes', 'ventas.cli_codigo', '=', 'clientes.cli_codigo')
+    //             ->select('ventas.vent_numero', 'ventas.vent_fecha', 'ventas.vent_total', 'clientes.cli_nombre as cliente')
+    //             ->where('ventas.vent_numero', 'LIKE', '%' . $query . '%')
+    //             ->orderBy('ventas.vent_numero', 'asc')
+    //             ->paginate(7);
+    //         return view('vistas.ventas.index', ['ventas' => $ventas, 'searchText' => $query]);
+    //     }
+    // }
+    public function index()
     {
-        if ($request) {
-            $query = trim($request->get('searchText'));
-            $ventas = DB::table('ventas')
-                ->join('clientes', 'ventas.cli_codigo', '=', 'clientes.cli_codigo')
-                ->select('ventas.vent_numero', 'ventas.vent_fecha', 'ventas.vent_total', 'clientes.cli_nombre as cliente')
-                ->where('ventas.vent_numero', 'LIKE', '%' . $query . '%')
-                ->orderBy('ventas.vent_numero', 'asc')
-                ->paginate(7);
-            return view('vistas.ventas.index', ['ventas' => $ventas, 'searchText' => $query]);
+        try {
+            $ventas = Ventas::orderBy('vent_numero', 'asc')->get();
+            return view('vistas.ventas.index', compact('ventas'));
+        } catch (\Throwable $th) {
+            //throw $th;
+            error_log("Error Load Audit Data -> $th");
         }
     }
-
     /**
      * Show the form for creating a new resource.
      */

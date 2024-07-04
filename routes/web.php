@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VentasController;
 use App\Http\Controllers\ProveedorController;
+use App\Http\Controllers\AuditoriaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -37,3 +38,7 @@ Route::put('/proveedores/{id}', [ProveedorController::class, 'update']);
 Route::delete('/proveedores/{id}', [ProveedorController::class, 'destroy'])->name('proveedores.destroy');
 
 
+
+// ! auditoria 
+Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
+// Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');

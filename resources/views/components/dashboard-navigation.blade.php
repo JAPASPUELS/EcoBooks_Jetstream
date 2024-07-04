@@ -74,12 +74,12 @@
         </li>
 
         <li id="auditoria">
-            <a href="#">
+            <a href="{{ route('auditoria.index') }}">
                 <i class='fas fa-clipboard-check icon' style="color: #FF5722;"></i>
                 <span class="link_name">Auditoría</span>
             </a>
             <ul class="sub-menu blank">
-                <li><a class="link_name" href="#">Auditoría</a></li>
+                <li><a class="link_name" href="{{ route('auditoria.index') }}">Auditoría</a></li>
             </ul>
         </li>
         <li id="perfil">
