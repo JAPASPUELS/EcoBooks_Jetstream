@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VentasController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AuditoriaController;
+use App\Http\Controllers\CategoriaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -28,6 +29,19 @@ Route::resource('vistas/ventas', VentasController::class)->names([
     'update' => 'ventas.update',
     'destroy' => 'ventas.destroy'
 ]);
+
+Route::resource('vistas/categorias', CategoriaController::class)->names([
+    'index' => 'categorias.index',
+    'create' => 'categorias.create',
+    'store' => 'categorias.store',
+    'show' => 'categorias.show',
+    'edit' => 'categorias.edit',
+    'update' => 'categorias.update',
+    // 'destroy' => 'categorias.destroy'
+]);
+
+Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
+
 
 // Rutas para gestionar proveedores
 Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
