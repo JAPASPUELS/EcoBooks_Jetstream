@@ -52,8 +52,8 @@
             </div>
             <ul class="sub-menu">
                 <li><a class="link_name" href="#">Category</a></li>
-                <li><a id="clientes-create" href="#">Registrar Cliente</a></li>
-                <li><a id="clientes-update" href="#">Modificar Cliente</a></li>
+                <li><a id="clientes-create" href="{{ route('clientes.create') }}">Registrar Cliente</a></li>
+                <li><a id="clientes-update" href="{{ route('clientes.index') }}">Modificar Cliente</a></li>
                 <li><a id="clientes-report" href="#">Reporte Clientes</a></li>
             </ul>
         </li>
@@ -82,6 +82,17 @@
                 <li><a class="link_name" href="{{ route('auditoria.index') }}">Auditoría</a></li>
             </ul>
         </li>
+        
+        <li id="roles">
+            <a href="#">
+                <i class='bi bi-person-rolodex' style="color: #da22ff;"></i>
+                <span class="link_name">Roles</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Roles</a></li>
+            </ul>
+        </li>
+
         <li id="perfil">
             <a href="{{ url('user/profile') }}">
                 <i class='fas fa-user icon' style="color: #E91E63;"></i>
