@@ -72,7 +72,15 @@
                 <li><a id="proveedores-report" href="#">Reporte Proveedores</a></li>
             </ul>
         </li>
-
+        <li id="categoria">
+            <a href="{{ route('categorias.index') }}">
+                <i class='fas fa-tag icon' style="color: #FF5722;"></i>
+                <span class="link_name">Categorías</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="{{ route('categorias.index') }}">Categorías</a></li>
+            </ul>
+        </li>
         <li id="auditoria">
             <a href="{{ route('auditoria.index') }}">
                 <i class='fas fa-clipboard-check icon' style="color: #FF5722;"></i>
