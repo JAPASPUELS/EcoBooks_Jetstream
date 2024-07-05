@@ -47,8 +47,8 @@ Route::get('/inventario/create', [InventarioController::class, 'create'])->name(
 Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
 Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
 Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
-Route::get('/clientes/{id}/edit', [ClientesController::class, 'edit'])->name('clientes.edit');
-Route::put('/clientes/{id}', [ClientesController::class, 'update'])->name('clientes.update');
+Route::get('/clientes/{id}/edit', [ClientesController::class, 'edit']);
+Route::put('/clientes/{id}', [ClientesController::class, 'update']);
 Route::delete('/clientes/{id}', [ClientesController::class, 'destroy'])->name('clientes.destroy');
 
 
