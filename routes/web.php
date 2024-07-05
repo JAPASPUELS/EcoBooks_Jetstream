@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\VentasController;
 use App\Http\Controllers\ProveedorController;
-
+use App\Http\Controllers\ClientesController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -27,6 +27,13 @@ Route::resource('vistas/ventas', VentasController::class)->names([
     'update' => 'ventas.update',
     'destroy' => 'ventas.destroy'
 ]);
+
+Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
+Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
+Route::get('/clientes', [ClientesController::class, 'index'])->name('clientes.index');
+Route::get('/clientes/{id}/edit', [ClientesController::class, 'edit']);
+Route::put('/clientes/{id}', [ClientesController::class, 'update']);
+Route::delete('/clientes/{id}', [ClientesController::class, 'destroy'])->name('clientes.destroy');
 
 // Rutas para gestionar proveedores
 Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
