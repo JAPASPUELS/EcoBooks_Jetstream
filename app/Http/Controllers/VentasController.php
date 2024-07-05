@@ -4,28 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ventas;
+use App\Models\Articulo;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\VentasFormRequest;
 use Illuminate\Support\Facades\DB;
 
 class VentasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    // public function index(Request $request)
-    // {
-    //     if ($request) {
-    //         $query = trim($request->get('searchText'));
-    //         $ventas = DB::table('ventas')
-    //             ->join('clientes', 'ventas.cli_codigo', '=', 'clientes.cli_codigo')
-    //             ->select('ventas.vent_numero', 'ventas.vent_fecha', 'ventas.vent_total', 'clientes.cli_nombre as cliente')
-    //             ->where('ventas.vent_numero', 'LIKE', '%' . $query . '%')
-    //             ->orderBy('ventas.vent_numero', 'asc')
-    //             ->paginate(7);
-    //         return view('vistas.ventas.index', ['ventas' => $ventas, 'searchText' => $query]);
-    //     }
-    // }
     public function index()
     {
         try {
@@ -36,12 +21,14 @@ class VentasController extends Controller
             error_log("Error Load Audit Data -> $th");
         }
     }
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        return view('vistas.ventas.create');
+        $articulos = Articulo::all();
+        return view('vistas.ventas.create', compact('articulos'));
     }
 
     /**
@@ -88,5 +75,14 @@ class VentasController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Add product to the sale.
+     */
+    public function addProduct(Request $request)
+    {
+        $articulo = Articulo::find($request->art_id);
+        return response()->json($articulo);
     }
 }

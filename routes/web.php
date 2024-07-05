@@ -38,6 +38,9 @@ Route::put('/proveedores/{id}', [ProveedorController::class, 'update']);
 Route::delete('/proveedores/{id}', [ProveedorController::class, 'destroy'])->name('proveedores.destroy');
 
 
+Route::get('/ventas/create', [VentasController::class, 'create']);
+Route::post('/ventas/add-product', [VentasController::class, 'addProduct']);
+
 
 // ! auditoria 
 Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
