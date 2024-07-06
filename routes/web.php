@@ -24,6 +24,12 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::middleware(['auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified', 'role:2'])->group(function () {
+    Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
+});
+
 Route::resource('vistas/ventas', VentasController::class)->names([
     'index' => 'ventas.index',
     'create' => 'ventas.create',
@@ -52,6 +58,9 @@ Route::resource('vistas/categorias', CategoriaController::class)->names([
 
 Route::get('/report/excel', [ReportController::class, 'exportExcel'])->name('report.excel');
 Route::get('/report/pdf', [ReportController::class, 'exportPDF'])->name('report.pdf');
+
+Route::get('/reportcli/excel', [ReportController::class, 'exportExcelClients'])->name('reportcli.excel');
+Route::get('/reportcli/pdf', [ReportController::class, 'exportPDFClients'])->name('reportcli.pdf');
 
 // Route::post('/categorias', [CategoriaController::class, 'store'])->name('categorias.store');
 // Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
@@ -87,5 +96,5 @@ Route::post('/ventas/add-product', [VentasController::class, 'addProduct']);
 
 
 // ! auditoria 
-Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
+// Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
 // Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');

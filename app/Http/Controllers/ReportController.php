@@ -1,11 +1,13 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Clientes;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Articulo;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CategoriesExport;
+use App\Exports\ClientesExport;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
@@ -25,5 +27,16 @@ class ReportController extends Controller
         }
         $pdf = PDF::loadView('reports.categories', compact('categories'));
         return $pdf->download('categories.pdf');
+    }
+    public function exportExcelClients()
+    {
+        return Excel::download(new ClientesExport, 'clientes.xlsx');
+    }
+
+    public function exportPDFClients()
+    {
+        $clientes = Clientes::all();
+        $pdf = PDF::loadView('reports.clientes', compact('clientes'));
+        return $pdf->download('clientes.pdf');
     }
 }
