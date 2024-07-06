@@ -8,25 +8,25 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input type="text" class="form-control mb-3" placeholder="Buscar productos">
+                <input type="text" class="form-control mb-3" placeholder="Buscar productos" id="searchProductInput">
                 <table class="table">
                     <thead>
                         <tr>
                             <th>Código</th>
                             <th>Producto</th>
-                            <th>Cant.</th>
+                            <th>Stock</th>
                             <th>Precio</th>
                             <th>Agregar</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="productos-lista">
                         @foreach ($articulos as $articulo)
                         <tr>
                             <td>{{ $articulo->art_id }}</td>
                             <td>{{ $articulo->art_nombre }}</td>
-                            <td><input type="number" class="form-control" value="1"></td>
+                            <td>{{ $articulo->art_cantidad }}</td>
                             <td>{{ $articulo->art_precio }}</td>
-                            <td><button type="button" class="btn btn-primary btn-sm" onclick="addProduct('{{ $articulo->art_id }}', '{{ $articulo->art_nombre }}', '{{ $articulo->art_precio }}')">Agregar</button></td>
+                            <td><button type="button" class="btn btn-primary btn-sm" data-id="{{ $articulo->art_id }}" data-nombre="{{ $articulo->art_nombre }}" data-precio="{{ $articulo->art_precio }}" data-stock="{{ $articulo->art_cantidad }}">Agregar</button></td>
                         </tr>
                         @endforeach
                     </tbody>
@@ -47,10 +47,3 @@
         </div>
     </div>
 </div>
-
-<script>
-function addProduct(id, nombre, precio) {
-    // Esta función se encargará de agregar el producto a la tabla de la vista principal
-    // Puedes agregar la lógica para agregar el producto a la tabla y cerrar el modal
-}
-</script>
