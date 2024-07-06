@@ -11,16 +11,7 @@ class AuditoriaController extends Controller
     {
         try {
             $auditoria = Auditoria::orderBy('id_aud', 'asc')->get();
-            // return view('vistas.auditoria.index', compact('auditoria'));
-            // Aquí puedes preparar datos para tus gráficos
-            $acciones = $auditoria->pluck('aud_accion')->unique()->values();
-            $cantidadPorAccion = $auditoria->groupBy('aud_accion')->map->count();
-
-            return view('index', [
-                'auditoria' => $auditoria,
-                'acciones' => $acciones,
-                'cantidadPorAccion' => $cantidadPorAccion,
-            ]);
+            return view('vistas.auditoria.index', compact('auditoria'));
         } catch (\Throwable $th) {
             //throw $th;
             error_log("Error Load Audit Data -> $th");

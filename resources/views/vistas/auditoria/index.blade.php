@@ -47,5 +47,5 @@
 
 <!-- @include('vistas.proveedores.modal') -->
 
-<!-- <script src="{{ asset('js/proveedores.js') }}"></script> -->
+{{-- <!-- <script src="{{ asset('js/proveedores.js') }}"></script> --> --}}
 @endsection

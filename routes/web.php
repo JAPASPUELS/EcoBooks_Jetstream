@@ -5,8 +5,11 @@ use App\Http\Controllers\VentasController;
 use App\Http\Controllers\ProveedorController;
 use App\Http\Controllers\AuditoriaController;
 use App\Http\Controllers\CategoriaController;
-
+use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\ReportController;
+
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -40,15 +43,19 @@ Route::delete('/clientes/{id}', [ClientesController::class, 'destroy'])->name('c
 
 Route::resource('vistas/categorias', CategoriaController::class)->names([
     'index' => 'categorias.index',
-    'create' => 'categorias.create',
     'store' => 'categorias.store',
-    'show' => 'categorias.show',
     'edit' => 'categorias.edit',
     'update' => 'categorias.update',
-    // 'destroy' => 'categorias.destroy'
+    'destroy' => 'categorias.destroy'
 ]);
 
-Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
+
+Route::get('/report/excel', [ReportController::class, 'exportExcel'])->name('report.excel');
+Route::get('/report/pdf', [ReportController::class, 'exportPDF'])->name('report.pdf');
+
+// Route::post('/categorias', [CategoriaController::class, 'store'])->name('categorias.store');
+// Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
+// Route::put('/categorias/{id}', [CategoriaController::class, 'update'])->name('categorias.update');
 
 
 // Rutas para gestionar proveedores

@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 }).then((result) => {
                     if (result.isConfirmed) {
                         fetch(`/categorias/${id}`, {
-                            method: 'POST',
+                            method: 'DELETE',
                             headers: {
                                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                                 'X-HTTP-Method-Override': 'DELETE' // Override method to DELETE
