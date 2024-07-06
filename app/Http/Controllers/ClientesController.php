@@ -41,23 +41,25 @@ class ClientesController extends Controller
         return view('vistas.clientes.index', compact('clientes'));
     }
 
-    public function edit($id)
-    {
-        $cliente = Clientes::findOrFail($id);
-        return response()->json($cliente);
-    }
 
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'cli_codigo' => 'required|string|max:20|unique:clientes,cli_codigo,',
-            'cli_nombre' => 'required|string|max:50',
-            'cli_apellido' => 'required|string|max:50',
-            'cli_correo' => 'required|string|email|max:100',
-            'cli_direccion' => 'required|string|max:150',
-            'cli_identificacion' => 'required|string|in:CI,PP,RUC',
-        ]);
+public function edit($id)
+{
+    $cliente = Clientes::findOrFail($id);
+    return response()->json($cliente);
+}
 
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'cli_codigo' => 'required|string|max:20|unique:clientes,cli_codigo,' . $id . ',cli_codigo',
+        'cli_nombre' => 'required|string|max:50',
+        'cli_apellido' => 'required|string|max:50',
+        'cli_correo' => 'required|string|email|max:100',
+        'cli_direccion' => 'required|string|max:150',
+        'cli_identificacion' => 'required|string|in:CI,PP,RUC',
+    ]);
+
+    try {
         $cliente = Clientes::findOrFail($id);
         $cliente->update([
             'cli_codigo' => $request->cli_codigo,
@@ -68,8 +70,12 @@ class ClientesController extends Controller
             'cli_identificacion' => $request->cli_identificacion,
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Clientes actualizado exitosamente']);
+        return response()->json(['success' => true, 'message' => 'Cliente actualizado exitosamente']);
+    } catch (\Exception $e) {
+        return response()->json(['success' => false, 'message' => 'Error actualizando cliente', 'error' => $e->getMessage()], 500);
     }
+}
+
 
     public function destroy($id)
     {
