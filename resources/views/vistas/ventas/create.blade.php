@@ -18,15 +18,6 @@
                         <label for="cliente" class="form-label">Cliente</label>
                         <input type="text" class="form-control" id="cliente" placeholder="Juan Perez">
                     </div>
-                    <div class="form-group">
-                        <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" placeholder="juanhernandezm2208@gmail.com">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="celular" class="form-label">Celular</label>
-                        <input type="text" class="form-control" id="celular" placeholder="09981345688">
                     </div>
                     <div class="form-group">
                         <label for="pago" class="form-label">Pago</label>
@@ -87,60 +78,5 @@
 </div>
 
 @include('vistas.ventas.modal')
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const productsTable = document.getElementById('productsTable');
-    const subtotalElement = document.getElementById('subtotal');
-    const ivaElement = document.getElementById('iva');
-    const totalElement = document.getElementById('total');
-    const addProductsButton = document.getElementById('addProductsButton');
-
-    addProductsButton.addEventListener('click', function () {
-        // Obtener los productos seleccionados del modal
-        const selectedProducts = []; // Reemplazar con la lógica para obtener productos seleccionados
-
-        selectedProducts.forEach(product => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${product.art_id}</td>
-                <td><input type="number" value="1" class="form-control" onchange="updateTotals()"></td>
-                <td>${product.art_nombre}</td>
-                <td>
-                    <input type="checkbox" id="envase_si" name="envase_si"> Sí
-                    <input type="checkbox" id="envase_no" name="envase_no"> No
-                </td>
-                <td>${product.art_precio}</td>
-                <td>${product.art_precio}</td>
-                <td><button type="button" class="btn btn-danger btn-sm" onclick="removeProduct(this)">Eliminar</button></td>
-            `;
-            productsTable.appendChild(row);
-        });
-
-        updateTotals();
-    });
-
-    window.updateTotals = function () {
-        let subtotal = 0;
-        productsTable.querySelectorAll('tr').forEach(row => {
-            const quantity = row.querySelector('input[type="number"]').value;
-            const price = row.children[4].innerText;
-            const total = quantity * price;
-            row.children[5].innerText = total.toFixed(2);
-            subtotal += total;
-        });
-        const iva = subtotal * 0.13;
-        const total = subtotal + iva;
-        subtotalElement.innerText = subtotal.toFixed(2);
-        ivaElement.innerText = iva.toFixed(2);
-        totalElement.innerText = total.toFixed(2);
-    };
-
-    window.removeProduct = function (button) {
-        const row = button.parentElement.parentElement;
-        productsTable.removeChild(row);
-        updateTotals();
-    };
-});
-</script>
+<script src="{{ asset('js/ventas.js') }}"></script>
 @endsection
