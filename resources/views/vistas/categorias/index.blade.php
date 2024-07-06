@@ -5,21 +5,21 @@
 
     <div>
         <div class="mx-5">
-            <div class="flex justify-between items-center">
-                <h3 class="text-green-600 font-bold">Categorías</h3>
-                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4" id="reportBtn">
-                    Generar Reportes
-                </button>            
+            <div class="flex justify-start items-center">
                 <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" id="openModalBtn">
-                    Nuevo Registro
+                    Nuevo
                 </button>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4" id="reportBtn">
+                    Reportes
+                </button>
+
             </div>
-            
+
             <!-- Barra de búsqueda -->
             <div class="mt-5">
                 <input type="text" id="search" class="form-control" placeholder="Buscar categorías...">
             </div>
-    
+
             <div class="mt-5">
                 <table class="table table-striped table-hover">
                     <thead>
@@ -32,21 +32,23 @@
                         </tr>
                     </thead>
                     <tbody id="categoryTable">
-                        @foreach($categories as $cat)
-                        <tr>
-                            <td data-label="Id">{{ $cat->cat_id }}</td>
-                            <td data-label="Nombre">{{ $cat->cat_name }}</td>
-                            <td data-label="Descripción">{{ $cat->cat_description }}</td>
-                            <td data-label="En Uso">{{ $cat->enUso }}</td>
-                            <td data-label="Acciones">
-                                <button class="btn btn-edit" data-id="{{ $cat->cat_id }}" data-name="{{ $cat->cat_name }}" data-description="{{ $cat->cat_description }}">
-                                    <i class='bx bx-edit'></i>
-                                </button>
-                                <button class="btn btn-delete" data-id="{{ $cat->cat_id }}" data-uso="{{ $cat->enUso }}">
-                                    <i class='bx bx-trash'></i>
-                                </button>
-                            </td>
-                        </tr>
+                        @foreach ($categories as $cat)
+                            <tr>
+                                <td data-label="Id">{{ $cat->cat_id }}</td>
+                                <td data-label="Nombre">{{ $cat->cat_name }}</td>
+                                <td data-label="Descripción">{{ $cat->cat_description }}</td>
+                                <td data-label="En Uso">{{ $cat->enUso }}</td>
+                                <td data-label="Acciones">
+                                    <button class="btn btn-edit" data-id="{{ $cat->cat_id }}"
+                                        data-name="{{ $cat->cat_name }}" data-description="{{ $cat->cat_description }}">
+                                        <i class='bx bx-edit'></i>
+                                    </button>
+                                    <button class="btn btn-delete" data-id="{{ $cat->cat_id }}"
+                                        data-uso="{{ $cat->enUso }}">
+                                        <i class='bx bx-trash'></i>
+                                    </button>
+                                </td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
