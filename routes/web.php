@@ -75,6 +75,14 @@ Route::get('/proveedores/{id}/edit', [ProveedorController::class, 'edit']);
 Route::put('/proveedores/{id}', [ProveedorController::class, 'update']);
 Route::delete('/proveedores/{id}', [ProveedorController::class, 'destroy'])->name('proveedores.destroy');
 
+Route::get('/reportprov/excel', [ReportController::class, 'exportExcelProveedores'])->name('reportprov.excel');
+Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])->name('reportprov.pdf');
+
+
+
+
+
+
 //Rutas para gestionar inventario
 Route::get('/inventario/create', [InventarioController::class, 'create'])->name('inventario.create');
 
