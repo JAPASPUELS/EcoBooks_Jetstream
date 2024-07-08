@@ -30,14 +30,6 @@ Route::middleware(['auth:sanctum',
     Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
 });
 
-Route::middleware(['auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified', 'role:2'])->group(function () {
-    Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
-});
-
-// Route::get('/clientes/{cedula}', [ClienteController::class, 'buscarPorCedula']);
-
 
 Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
 Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
