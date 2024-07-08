@@ -41,9 +41,8 @@
                     </label>
                 </div>
                 <div class="flex justify-end mt-6 space-x-3">
-                    <button type="button" class="btn btn-product bg-blue-500 text-white py-2 px-4 rounded-md" onclick="openProductModal()">+ Nuevo producto</button>
+                    <button type="button" class="btn btn-product bg-blue-500 text-white py-2 px-4 rounded-md" onclick="openProductModal()">+ Agregar Producto</button>
                     <button type="button" class="bg-gray-500 text-white py-2 px-4 rounded-md">+ Nuevo cliente</button>
-                    <button type="button" class="bg-green-500 text-white py-2 px-4 rounded-md" id="addProductsButton">Agregar productos</button>
                     <button type="button" class="bg-teal-500 text-white py-2 px-4 rounded-md" onclick="guardarVenta()">Guardar</button>
                 </div>
                 <table class="min-w-full divide-y divide-gray-200 mt-6">
