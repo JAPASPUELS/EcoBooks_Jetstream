@@ -7,7 +7,7 @@
         <ul class="nav-links">
             <li id="dashboard">
                 <a href="{{ route('dashboard') }}">
-                    <i class='fas fa-home icon' style="color: #4CAF50;"></i>
+                    <i class='fas fa-home icon' style="color: #03A9F4;"></i>
                     <span class="link_name">Inicio</span>
                 </a>
                 <ul class="sub-menu blank">
@@ -17,7 +17,7 @@
             <li id="ventas">
                 <div class="icon-link">
                     <a>
-                        <i class='fas fa-shopping-cart icon' style="color: #00BCD4;"></i>
+                        <i class='fas fa-shopping-cart icon' style="color: #03A9F4;"></i>
                         <span class="link_name">Ventas</span>
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
@@ -31,7 +31,7 @@
             <li id="inventario">
                 <div class="icon-link">
                     <a href="#">
-                        <i class='fas fa-boxes icon' style="color: #FF9800;"></i>
+                        <i class='fas fa-boxes icon' style="color: #03A9F4;"></i>
                         <span class="link_name">Inventario</span>
                     </a>
                     <i class='bx bxs-chevron-down arrow'></i>
@@ -128,7 +128,7 @@
     <ul class="nav-links">
         <li id="dashboard">
             <a href="{{ route('dashboard') }}">
-                <i class='fas fa-home icon' style="color: #4CAF50;"></i>
+                <i class='fas fa-home icon' style="color: #03A9F4;"></i>
                 <span class="link_name">Inicio</span>
             </a>
             <ul class="sub-menu blank">
@@ -138,7 +138,7 @@
         <li id="ventas">
             <div class="icon-link">
                 <a>
-                    <i class='fas fa-shopping-cart icon' style="color: #00BCD4;"></i>
+                    <i class='fas fa-shopping-cart icon' style="color: #03A9F4;"></i>
                     <span class="link_name">Ventas</span>
                 </a>
                 <i class='bx bxs-chevron-down arrow'></i>
@@ -152,7 +152,7 @@
         <li id="inventario">
             <div class="icon-link">
                 <a href="#">
-                    <i class='fas fa-boxes icon' style="color: #FF9800;"></i>
+                    <i class='fas fa-boxes icon' style="color: #03A9F4;"></i>
                     <span class="link_name">Inventario</span>
                 </a>
                 <i class='bx bxs-chevron-down arrow'></i>
@@ -182,7 +182,7 @@
         <li id="proveedores">
             <div class="icon-link">
                 <a>
-                    <i class='fas fa-truck icon' style="color: #9C27B0;"></i>
+                    <i class='fas fa-truck icon' style="color: #03A9F4;"></i>
                     <span class="link_name">Proveedores</span>
                 </a>
                 <i class='bx bxs-chevron-down arrow'></i>
@@ -198,7 +198,7 @@
         </li>
         <li id="categoria">
             <a href="{{ route('categorias.index') }}">
-                <i class='fas fa-tag icon' style="color: #FF5722;"></i>
+                <i class='fas fa-tag icon' style="color: #03A9F4;"></i>
                 <span class="link_name">Categorías</span>
             </a>
             <ul class="sub-menu blank">
@@ -207,7 +207,7 @@
         </li>
         <li id="auditoria">
             <a href="{{ route('auditoria.index') }}">
-                <i class='fas fa-clipboard-check icon' style="color: #FF5722;"></i>
+                <i class='fas fa-clipboard-check icon' style="color: #03A9F4;"></i>
                 <span class="link_name">Auditoría</span>
             </a>
             <ul class="sub-menu blank">
@@ -217,7 +217,7 @@
         <li id="roles">
             <div class="icon-link">
                 <a >
-                    <i class='bi bi-person-rolodex' style="color: #da22ff;"></i>
+                    <i class='bi bi-person-rolodex' style="color: #03A9F4;"></i>
                     <span class="link_name">Gestion Roles Usuarios</span>
                 </a>
             </div>
@@ -234,7 +234,7 @@
         </li>
         <li id="perfil">
             <a href="{{ url('user/profile') }}">
-                <i class='fas fa-user icon' style="color: #E91E63;"></i>
+                <i class='fas fa-user icon' style="color: #03A9F4;"></i>
                 <span class="link_name">Perfil</span>
             </a>
             <ul class="sub-menu blank">
