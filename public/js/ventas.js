@@ -2,6 +2,61 @@ document.addEventListener('DOMContentLoaded', function () {
     const productsPerPage = 7;
     let currentPage = 1;
     const products = articulos;
+function guardarVenta() {
+    const productos = [];
+    document.querySelectorAll('#productsTable tr').forEach(row => {
+        productos.push({
+            art_id: row.querySelector('[name="art_id"]').value,
+            det_precio: row.querySelector('[name="det_precio"]').value,
+            det_unidades: row.querySelector('[name="det_unidades"]').value
+        });
+    });
+
+    const ventaData = {
+        cli_codigo: document.getElementById('cedula').value,
+        vent_total: parseFloat(document.getElementById('total').innerText),
+        vent_fecha: document.getElementById('fecha').value,
+        fpa_id: document.getElementById('pago').value,
+        detalle_ventas: productos
+    };
+
+    fetch('/vistas/ventas', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+        },
+        body: JSON.stringify(ventaData)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            Swal.fire({
+                title: 'Éxito',
+                text: data.message,
+                icon: 'success',
+                confirmButtonText: 'Aceptar'
+            }).then(() => {
+                window.location.href = '/vistas/ventas';
+            });
+        } else {
+            Swal.fire({
+                title: 'Error',
+                text: data.message,
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+        }
+    })
+    .catch(error => {
+        Swal.fire({
+            title: 'Error',
+            text: 'Hubo un error al guardar la venta',
+            icon: 'error',
+            confirmButtonText: 'Aceptar'
+        });
+    });
+}
 
     function openProductModal() {
         document.getElementById('productModal').showModal();

@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ventas;
+use App\Models\DetalleVentas;
+use App\Models\Pagos;
+use App\Models\FormaPagos;
 use App\Models\Clientes;
 use App\Models\Articulo;
-use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\VentasFormRequest;
 use Illuminate\Support\Facades\DB;
 
 class VentasController extends Controller
@@ -29,8 +30,8 @@ class VentasController extends Controller
     public function create()
     {
         $articulos = Articulo::all();
-        $formasPagos = FormaPagos::all(); // Obtener todas las formas de pago
-        return view('vistas.ventas.create', compact('articulos', 'formasPagos'));
+        $forma_Pagos = FormaPagos::all(); // Obtener todas las formas de pago
+        return view('vistas.ventas.create', compact('articulos', 'forma_Pagos'));
     }
 
     /**
@@ -38,13 +39,41 @@ class VentasController extends Controller
      */
     public function store(Request $request)
     {
-        $ventas = new Ventas();
-        $ventas->vent_numero = $request->get('vent_numero');
-        $ventas->cli_codigo = $request->get('cli_codigo');
-        $ventas->vent_fecha = $request->get('vent_fecha');
-        $ventas->vent_total = $request->get('vent_total');
-        $ventas->save();
-        return Redirect::to('vistas/ventas');
+        DB::beginTransaction();
+
+        try {
+            // Crear la venta
+            $venta = new Ventas();
+            $venta->cli_codigo = $request->cli_codigo;
+            $venta->vent_total = $request->vent_total;
+            $venta->vent_fecha = $request->vent_fecha;
+            $venta->save();
+
+            // Crear el detalle de la venta
+            foreach ($request->detalle_ventas as $detalle) {
+                $detalleVenta = new DetalleVentas();
+                $detalleVenta->vent_numero = $venta->vent_numero;
+                $detalleVenta->art_id = $detalle['art_id'];
+                $detalleVenta->det_precio = $detalle['det_precio'];
+                $detalleVenta->det_unidades = $detalle['det_unidades'];
+                $detalleVenta->det_precio_total = $detalle['det_precio_total'];
+                $detalleVenta->save();
+            }
+
+            // Crear el pago
+            $pago = new Pagos();
+            $pago->vent_numero = $venta->vent_numero;
+            $pago->fpa_id = $request->fpa_id;
+            $pago->pag_valor = $request->vent_total;
+            $pago->save();
+
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Venta guardada exitosamente']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => 'Error al guardar la venta', 'error' => $e->getMessage()]);
+        }
     }
 
     /**
