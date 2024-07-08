@@ -151,7 +151,7 @@ function guardarVenta() {
             </td>
             <td class="product-precio">${product.art_precio.toFixed(2)}</td>
             <td class="product-total">${(product.art_precio * product.cantidad).toFixed(2)}</td>
-            <td><button type="button" class="btn btn-danger btn-sm">Eliminar</button></td>
+            <td><button type="button" class="btn btn-danger bg-red-500 rounded-sm  text-white  px-5 py-2.5 me-2 mb-2  btn-sm">Eliminar</button></td>
         `;
 
         row.querySelector('.btn-danger').addEventListener('click', function () {
