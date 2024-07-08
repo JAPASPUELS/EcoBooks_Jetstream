@@ -127,7 +127,7 @@
                             <button
                                 class="w-full inline-flex justify-center mr-16 rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-500 text-yellow-400 font-medium  hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm opacity-50 cursor-not-allowed" disabled
                                 id="vPro">
-                                 Filtros de Reportes
+                                Filtros de Reportes
                             </button>
                         </div>
                         <div class="border-t border-gray-300 my-4"></div>

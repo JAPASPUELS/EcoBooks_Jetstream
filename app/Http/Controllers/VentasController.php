@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ventas;
+use App\Models\Clientes;
 use App\Models\Articulo;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\VentasFormRequest;
@@ -28,7 +29,8 @@ class VentasController extends Controller
     public function create()
     {
         $articulos = Articulo::all();
-        return view('vistas.ventas.create', compact('articulos'));
+        $formasPagos = FormaPagos::all(); // Obtener todas las formas de pago
+        return view('vistas.ventas.create', compact('articulos', 'formasPagos'));
     }
 
     /**
@@ -84,5 +86,19 @@ class VentasController extends Controller
     {
         $articulo = Articulo::find($request->art_id);
         return response()->json($articulo);
+    }
+    public function buscarPorCedula($cedula)
+    {
+        $cliente = Clientes::where('cli_codigo', $cedula)->first();
+    
+        if ($cliente) {
+            return response()->json([
+                'success' => 'Ok!',
+                'cli_nombre' => $cliente->cli_nombre,
+                'cli_apellido' => $cliente->cli_apellido,
+            ]);
+        } else {
+            return response()->json(['error' => 'Cliente no encontrado']);
+        }
     }
 }

@@ -31,15 +31,6 @@ Route::middleware(['auth:sanctum',
     Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
 });
 
-Route::resource('vistas/ventas', VentasController::class)->names([
-    'index' => 'ventas.index',
-    'create' => 'ventas.create',
-    'store' => 'ventas.store',
-    'show' => 'ventas.show',
-    'edit' => 'ventas.edit',
-    'update' => 'ventas.update',
-    'destroy' => 'ventas.destroy'
-]);
 
 Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
 Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
@@ -84,6 +75,14 @@ Route::get('/proveedores/{id}/edit', [ProveedorController::class, 'edit']);
 Route::put('/proveedores/{id}', [ProveedorController::class, 'update']);
 Route::delete('/proveedores/{id}', [ProveedorController::class, 'destroy'])->name('proveedores.destroy');
 
+Route::get('/reportprov/excel', [ReportController::class, 'exportExcelProveedores'])->name('reportprov.excel');
+Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])->name('reportprov.pdf');
+
+
+
+
+
+
 //Rutas para gestionar inventario
 Route::get('/inventario/create', [InventarioController::class, 'create'])->name('inventario.create');
 
@@ -102,6 +101,17 @@ Route::delete('/clientes/{id}', [ClientesController::class, 'destroy'])->name('c
 
 Route::get('/ventas/create', [VentasController::class, 'create']);
 Route::post('/ventas/add-product', [VentasController::class, 'addProduct']);
+Route::get('/ventas/cliente/cedula/{cedula}', [VentasController::class, 'buscarPorCedula']);
+
+Route::resource('vistas/ventas', VentasController::class)->names([
+    'index' => 'ventas.index',
+    'create' => 'ventas.create',
+    'store' => 'ventas.store',
+    'show' => 'ventas.show',
+    'edit' => 'ventas.edit',
+    'update' => 'ventas.update',
+    'destroy' => 'ventas.destroy'
+]);
 
 
 // ! auditoria 

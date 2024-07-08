@@ -7,6 +7,8 @@ use App\Models\Clientes;
 
 class ClientesController extends Controller
 {
+
+
     public function create()
     {
         return view('vistas.clientes.create');
@@ -84,4 +86,5 @@ public function update(Request $request, $id)
 
         return response()->json(['success' => true, 'message' => 'Clientes eliminado exitosamente']);
     }
+
 }
