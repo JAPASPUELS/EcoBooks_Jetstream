@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const productsPerPage = 7;
     let currentPage = 1;
     const products = articulos;
-    
+
     function openProductModal() {
         document.getElementById('productModal').showModal();
         renderProducts(products, currentPage);

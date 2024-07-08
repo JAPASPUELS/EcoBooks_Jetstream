@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ventas;
+use App\Models\Clientes;
 use App\Models\Articulo;
 use Illuminate\Support\Facades\Redirect;
 use App\Http\Requests\VentasFormRequest;
@@ -87,15 +88,16 @@ class VentasController extends Controller
     }
     public function buscarPorCedula($cedula)
     {
-        $cliente = Cliente::where('cli_codigo', $cedula)->first();
+        $cliente = Clientes::where('cli_codigo', $cedula)->first();
     
         if ($cliente) {
             return response()->json([
+                'success' => 'Ok!',
                 'cli_nombre' => $cliente->cli_nombre,
                 'cli_apellido' => $cliente->cli_apellido,
             ]);
         } else {
-            return response()->json(['error' => 'Cliente no encontrado'], 404);
+            return response()->json(['error' => 'Cliente no encontrado']);
         }
     }
 }
