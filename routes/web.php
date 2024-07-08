@@ -33,6 +33,8 @@ Route::resource('vistas/ventas', VentasController::class)->names([
     'update' => 'ventas.update',
     'destroy' => 'ventas.destroy'
 ]);
+Route::get('/clientes/{cedula}', [ClienteController::class, 'buscarPorCedula']);
+
 
 Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
 Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
@@ -84,6 +86,7 @@ Route::delete('/clientes/{id}', [ClientesController::class, 'destroy'])->name('c
 
 Route::get('/ventas/create', [VentasController::class, 'create']);
 Route::post('/ventas/add-product', [VentasController::class, 'addProduct']);
+Route::post('/ventas/cliente/cedula/{cedula}', [VentasController::class, 'buscarPorCedula']);
 
 
 // ! auditoria 

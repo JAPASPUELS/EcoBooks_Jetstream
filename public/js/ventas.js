@@ -1,10 +1,58 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const productsTable = document.getElementById('productsTable');
-    const subtotalElement = document.getElementById('subtotal');
-    const ivaElement = document.getElementById('iva');
-    const totalElement = document.getElementById('total');
+    const productsPerPage = 7;
+    let currentPage = 1;
+    const products = articulos;
+    
+    function openProductModal() {
+        document.getElementById('productModal').showModal();
+        renderProducts(products, currentPage);
+        renderPagination(products);
+    }
 
-    // Usar delegación de eventos para evitar duplicidad en la asignación de eventos
+    function closeProductModal() {
+        document.getElementById('productModal').close();
+    }
+
+    function renderProducts(products, page) {
+        const start = (page - 1) * productsPerPage;
+        const end = start + productsPerPage;
+        const paginatedProducts = products.slice(start, end);
+
+        const productosLista = document.getElementById('productos-lista');
+        productosLista.innerHTML = '';
+
+        paginatedProducts.forEach(product => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td class="px-6 py-4 whitespace-nowrap">${product.art_id}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${product.art_nombre}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${product.art_cantidad}</td>
+                <td class="px-6 py-4 whitespace-nowrap">${product.art_precio}</td>
+                <td class="px-6 py-4 whitespace-nowrap"><button type="button" class="bg-blue-500 text-white px-3 py-1 rounded-md text-sm" data-id="${product.art_id}" data-nombre="${product.art_nombre}" data-precio="${product.art_precio}" data-stock="${product.art_cantidad}">Agregar</button></td>
+            `;
+            productosLista.appendChild(tr);
+        });
+    }
+
+    function renderPagination(products) {
+        const totalPages = Math.ceil(products.length / productsPerPage);
+        const pagination = document.getElementById('pagination');
+        pagination.innerHTML = '';
+
+        for (let i = 1; i <= totalPages; i++) {
+            const li = document.createElement('li');
+            li.classList.add('page-item');
+            li.innerHTML = `<a class="py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700" href="#">${i}</a>`;
+            li.addEventListener('click', function (e) {
+                e.preventDefault();
+                currentPage = i;
+                renderProducts(products, currentPage);
+                renderPagination(products);
+            });
+            pagination.appendChild(li);
+        }
+    }
+
     document.getElementById('productModal').addEventListener('click', function (event) {
         if (event.target && event.target.matches('button[data-id]')) {
             const button = event.target;
@@ -12,7 +60,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const productNombre = button.getAttribute('data-nombre');
             const productPrecio = parseFloat(button.getAttribute('data-precio'));
             const stock = parseInt(button.getAttribute('data-stock'));
-            
+
             const product = {
                 art_id: productId,
                 art_nombre: productNombre,
@@ -22,15 +70,14 @@ document.addEventListener('DOMContentLoaded', function () {
             };
 
             addProductToTable(product);
-            $('#productModal').modal('hide');
+            closeProductModal();
         }
     });
 
     function addProductToTable(product) {
-        // Verificar si el producto ya existe en la tabla
+        const productsTable = document.getElementById('productsTable');
         const existingRow = productsTable.querySelector(`tr[data-id="${product.art_id}"]`);
         if (existingRow) {
-            // Actualizar la cantidad si el producto ya existe
             const cantidadInput = existingRow.querySelector('input[type="number"]');
             cantidadInput.value = parseInt(cantidadInput.value) + product.cantidad;
             updateTotals();
@@ -62,6 +109,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     window.updateTotals = function() {
+        const productsTable = document.getElementById('productsTable');
         let subtotal = 0;
 
         productsTable.querySelectorAll('tr').forEach(row => {
@@ -75,8 +123,12 @@ document.addEventListener('DOMContentLoaded', function () {
         const iva = subtotal * 0.13;
         const total = subtotal + iva;
 
-        subtotalElement.innerText = subtotal.toFixed(2);
-        ivaElement.innerText = iva.toFixed(2);
-        totalElement.innerText = total.toFixed(2);
+        document.getElementById('subtotal').innerText = subtotal.toFixed(2);
+        document.getElementById('iva').innerText = iva.toFixed(2);
+        document.getElementById('total').innerText = total.toFixed(2);
     }
+    
+
+    window.openProductModal = openProductModal;
+    window.closeProductModal = closeProductModal;
 });

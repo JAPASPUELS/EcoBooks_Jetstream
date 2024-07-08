@@ -85,4 +85,17 @@ class VentasController extends Controller
         $articulo = Articulo::find($request->art_id);
         return response()->json($articulo);
     }
+    public function buscarPorCedula($cedula)
+    {
+        $cliente = Cliente::where('cli_codigo', $cedula)->first();
+    
+        if ($cliente) {
+            return response()->json([
+                'cli_nombre' => $cliente->cli_nombre,
+                'cli_apellido' => $cliente->cli_apellido,
+            ]);
+        } else {
+            return response()->json(['error' => 'Cliente no encontrado'], 404);
+        }
+    }
 }
