@@ -24,6 +24,18 @@ Route::middleware([
     })->name('dashboard');
 });
 
+Route::middleware(['auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified', 'role:2'])->group(function () {
+    Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
+});
+
+Route::middleware(['auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified', 'role:2'])->group(function () {
+    Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
+});
+
 // Route::get('/clientes/{cedula}', [ClienteController::class, 'buscarPorCedula']);
 
 
@@ -46,6 +58,9 @@ Route::resource('vistas/categorias', CategoriaController::class)->names([
 Route::get('/report/excel', [ReportController::class, 'exportExcel'])->name('report.excel');
 Route::get('/report/pdf', [ReportController::class, 'exportPDF'])->name('report.pdf');
 
+Route::get('/reportcli/excel', [ReportController::class, 'exportExcelClients'])->name('reportcli.excel');
+Route::get('/reportcli/pdf', [ReportController::class, 'exportPDFClients'])->name('reportcli.pdf');
+
 // Route::post('/categorias', [CategoriaController::class, 'store'])->name('categorias.store');
 // Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
 // Route::put('/categorias/{id}', [CategoriaController::class, 'update'])->name('categorias.update');
@@ -58,6 +73,14 @@ Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveed
 Route::get('/proveedores/{id}/edit', [ProveedorController::class, 'edit']);
 Route::put('/proveedores/{id}', [ProveedorController::class, 'update']);
 Route::delete('/proveedores/{id}', [ProveedorController::class, 'destroy'])->name('proveedores.destroy');
+
+Route::get('/reportprov/excel', [ReportController::class, 'exportExcelProveedores'])->name('reportprov.excel');
+Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])->name('reportprov.pdf');
+
+
+
+
+
 
 //Rutas para gestionar inventario
 Route::get('/inventario/create', [InventarioController::class, 'create'])->name('inventario.create');
@@ -91,5 +114,5 @@ Route::resource('vistas/ventas', VentasController::class)->names([
 
 
 // ! auditoria 
-Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
+// Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
 // Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');

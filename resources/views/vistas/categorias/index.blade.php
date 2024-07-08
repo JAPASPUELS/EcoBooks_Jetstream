@@ -122,9 +122,18 @@
                         <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Seleccionar Tipo de Reporte
                         </h3>
                         <!-- Botones de selección de reporte -->
-                        <div class="mt-2">
+                        <div class="mt-2 ">
+                            <span class=" text-yellow-400">Version Pro ✨ </span>
                             <button
-                                class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:mt-0 sm:w-auto sm:text-sm"
+                                class="w-full inline-flex justify-center mr-16 rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-500 text-yellow-400 font-medium  hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm opacity-50 cursor-not-allowed" disabled
+                                id="vPro">
+                                Filtros de Reportes
+                            </button>
+                        </div>
+                        <div class="border-t border-gray-300 my-4"></div>
+                        <div class="mt-2 ">
+                            <button
+                                class="w-full inline-flex justify-center mr-16 rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 sm:mt-0 sm:w-auto sm:text-sm"
                                 id="excelBtn">
                                 Excel
                             </button>
