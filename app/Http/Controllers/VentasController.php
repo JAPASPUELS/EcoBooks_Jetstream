@@ -29,7 +29,8 @@ class VentasController extends Controller
     public function create()
     {
         $articulos = Articulo::all();
-        return view('vistas.ventas.create', compact('articulos'));
+        $formasPagos = FormaPagos::all(); // Obtener todas las formas de pago
+        return view('vistas.ventas.create', compact('articulos', 'formasPagos'));
     }
 
     /**
