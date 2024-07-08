@@ -9,6 +9,7 @@ use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ReportController;
+use App\Http\Controllers\ChartController;
 
 
 Route::get('/', function () {
@@ -81,6 +82,11 @@ Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])-
 
 
 
+Route::get('/charts', function() {
+    return view('auditoria.index');
+});
+
+Route::get('/chart-data/{tableName}', [ChartController::class, 'getData'])->name('chart.data');
 
 
 //Rutas para gestionar inventario
