@@ -9,7 +9,6 @@ use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\FormaPagoController;
-use App\Http\Controllers\PagoController;
 
 
 Route::get('/', function () {
@@ -83,8 +82,6 @@ Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])-
 
 //Formas de Pago
 Route::resource('formaPago', FormaPagoController::class);
-Route::resource('pagos', PagoController::class)->only(['index', 'store']);
-
 
 //Rutas para gestionar inventario
 Route::get('/inventario/create', [InventarioController::class, 'create'])->name('inventario.create');
