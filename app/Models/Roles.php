@@ -17,6 +17,7 @@ class Roles extends Model
         
         'rol_nombre',
         'rol_descripcion',
+        'active',
 
     ];
 

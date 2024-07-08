@@ -7,6 +7,7 @@ use App\Http\Controllers\AuditoriaController;
 use App\Http\Controllers\CategoriaController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\ClientesController;
+use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ReportController;
 
 
@@ -53,6 +54,14 @@ Route::resource('vistas/categorias', CategoriaController::class)->names([
     'edit' => 'categorias.edit',
     'update' => 'categorias.update',
     'destroy' => 'categorias.destroy'
+]);
+
+Route::resource('vistas/roles', RolesController::class)->names([
+    'index' => 'roles.index',
+    'store' => 'roles.store',
+    'edit' => 'roles.edit',
+    'update' => 'roles.update',
+    'destroy' => 'roles.destroy'
 ]);
 
 
