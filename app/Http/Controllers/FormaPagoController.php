@@ -1,4 +1,6 @@
 <?php
+// app/Http/Controllers/FormaPagoController.php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -23,12 +25,10 @@ class FormaPagoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fpa_id' => 'required|string|max:3',
             'fpa_nombre' => 'required|string|max:30',
         ]);
 
         FormaPago::create([
-            'fpa_id' => $request->fpa_id,
             'fpa_nombre' => $request->fpa_nombre,
         ]);
 
