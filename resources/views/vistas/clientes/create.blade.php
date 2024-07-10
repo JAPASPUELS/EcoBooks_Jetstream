@@ -100,14 +100,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const cliCodigoError = document.getElementById('cli_codigo_error');
 
     clienteForm.addEventListener('submit', function(event) {
+        // Resetear el contenido del error
         cliCodigoError.textContent = '';
+        const allErrorMessages = document.querySelectorAll('.text-danger');
+        allErrorMessages.forEach(error => error.textContent = '');
+
+        let isValid = true;
 
         if (cliIdentificacion.value === 'CI' && !validarCedula(cliCodigo.value)) {
-            event.preventDefault();
+            isValid = false;
             cliCodigoError.textContent = 'Cédula ecuatoriana inválida.';
         } else if (cliIdentificacion.value === 'RUC' && !validarRUC(cliCodigo.value)) {
-            event.preventDefault();
+            isValid = false;
             cliCodigoError.textContent = 'RUC ecuatoriano inválido.';
+        }
+
+        if (!isValid) {
+            event.preventDefault();
         }
     });
 
@@ -140,45 +149,45 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function validarRUC(ruc) {
-    if (ruc.length !== 13) return false;
-    
-    const numeroProvincia = parseInt(ruc.substring(0, 2));
-    if (numeroProvincia < 1 || numeroProvincia > 24) return false;
+        if (ruc.length !== 13) return false;
 
-    const tipo = parseInt(ruc.charAt(2));
-    if (![6, 9].includes(tipo) && tipo > 5) return false;
+        const numeroProvincia = parseInt(ruc.substring(0, 2));
+        if (numeroProvincia < 1 || numeroProvincia > 24) return false;
 
-    const coeficientesPub = [3, 2, 7, 6, 5, 4, 3, 2];
-    const coeficientesPri = [4, 3, 2, 7, 6, 5, 4, 3, 2];
-    const coeficientesNat = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+        const tipo = parseInt(ruc.charAt(2));
+        if (![6, 9].includes(tipo) && tipo > 5) return false;
 
-    let suma = 0;
-    let digitoVerificador = parseInt(ruc.charAt(9));
+        const coeficientesPub = [3, 2, 7, 6, 5, 4, 3, 2];
+        const coeficientesPri = [4, 3, 2, 7, 6, 5, 4, 3, 2];
+        const coeficientesNat = [2, 1, 2, 1, 2, 1, 2, 1, 2];
 
-    if (tipo === 6) { // Público
-        for (let i = 0; i < 8; i++) {
-            suma += parseInt(ruc.charAt(i)) * coeficientesPub[i];
+        let suma = 0;
+        let digitoVerificador = parseInt(ruc.charAt(9));
+
+        if (tipo === 6) { // Público
+            for (let i = 0; i < 8; i++) {
+                suma += parseInt(ruc.charAt(i)) * coeficientesPub[i];
+            }
+            let residuo = suma % 11;
+            residuo = residuo === 0 ? 0 : 11 - residuo;
+            return residuo === digitoVerificador;
+        } else if (tipo === 9) { // Privado
+            for (let i = 0; i < 9; i++) {
+                suma += parseInt(ruc.charAt(i)) * coeficientesPri[i];
+            }
+            let residuo = suma % 11;
+            residuo = residuo === 0 ? 0 : 11 - residuo;
+            return residuo === digitoVerificador;
+        } else { // Natural
+            for (let i = 0; i < 9; i++) {
+                let valor = parseInt(ruc.charAt(i)) * coeficientesNat[i];
+                suma += valor >= 10 ? valor - 9 : valor;
+            }
+            let residuo = suma % 10;
+            residuo = residuo === 0 ? 0 : 10 - residuo;
+            return residuo === digitoVerificador;
         }
-        let residuo = suma % 11;
-        residuo = residuo === 0 ? 0 : 11 - residuo;
-        return residuo === digitoVerificador;
-    } else if (tipo === 9) { // Privado
-        for (let i = 0; i < 9; i++) {
-            suma += parseInt(ruc.charAt(i)) * coeficientesPri[i];
-        }
-        let residuo = suma % 11;
-        residuo = residuo === 0 ? 0 : 11 - residuo;
-        return residuo === digitoVerificador;
-    } else { // Natural
-        for (let i = 0; i < 9; i++) {
-            let valor = parseInt(ruc.charAt(i)) * coeficientesNat[i];
-            suma += valor >= 10 ? valor - 9 : valor;
-        }
-        let residuo = suma % 10;
-        residuo = residuo === 0 ? 0 : 10 - residuo;
-        return residuo === digitoVerificador;
     }
-}
 });
 </script>
 @endsection

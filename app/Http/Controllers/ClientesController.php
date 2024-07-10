@@ -15,24 +15,20 @@ class ClientesController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'cli_codigo' => 'required|string|max:20|unique:clientes,cli_codigo',
-            'cli_nombre' => 'required|string|max:50',
-            'cli_apellido' => 'required|string|max:50',
-            'cli_correo' => 'required|string|email|max:100',
-            'cli_direccion' => 'required|string|max:150',
-            'cli_identificacion' => 'required|string|in:CI,PP,RUC',
+            'cli_identificacion' => 'required|string',
+            'cli_codigo' => 'required|string|unique:clientes,cli_codigo',
+            'cli_nombre' => 'required|string',
+            'cli_apellido' => 'required|string',
+            'cli_correo' => 'required|email',
+            'cli_direccion' => 'required|string',
+        ], [
+            'cli_codigo.unique' => 'El código ingresado no es válido o ya ha sido ingresado.',
         ]);
-
-        Clientes::create([
-            'cli_codigo' => $request->cli_codigo,
-            'cli_nombre' => $request->cli_nombre,
-            'cli_apellido' => $request->cli_apellido,
-            'cli_correo' => $request->cli_correo,
-            'cli_direccion' => $request->cli_direccion,
-            'cli_identificacion' => $request->cli_identificacion,
-        ]);
-
-        return redirect()->route('clientes.create')->with('success', 'Clientes registrado exitosamente');
+    
+        // Lógica para almacenar el cliente
+        Clientes::create($request->all());
+    
+        return redirect()->route('clientes.index')->with('success', 'Cliente registrado exitosamente');
     }
 
     public function index()
