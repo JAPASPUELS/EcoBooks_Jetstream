@@ -20,6 +20,12 @@ class Clientes extends Model
         'cli_apellido',
         'cli_correo',
         'cli_direccion',
-        'cli_identificacion'
+        'cli_identificacion',
+        'created_by',
     ];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

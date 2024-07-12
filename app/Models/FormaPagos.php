@@ -14,5 +14,11 @@ class FormaPagos extends Model
 
     protected $fillable = [
         'fpa_nombre',
+        'created_by',
     ];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

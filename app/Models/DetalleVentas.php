@@ -18,9 +18,16 @@ class DetalleVentas extends Model
         'det_precio',
         'det_unidades',
         'det_precio_total',
+        'created_by',
     ];
 
     public $timestamps = false;
+
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
     public function venta()
     {

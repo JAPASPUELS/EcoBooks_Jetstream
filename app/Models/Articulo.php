@@ -19,8 +19,13 @@ class Articulo extends Model
         'art_precio',
         'art_cantidad',
         'cat_id',
+        'created_by',
     ];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 
     public function categoria()
     {

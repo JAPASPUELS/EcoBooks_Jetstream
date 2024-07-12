@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Articulo;
+use Illuminate\Support\Facades\Auth;
+
 
 
 class CategoriaController extends Controller
@@ -25,6 +27,8 @@ class CategoriaController extends Controller
         Categoria::create([
             'cat_name' => $request->cat_name,
             'cat_description' => $request->cat_description,
+            'created_by' => Auth::id()
+
         ]);
 
         return redirect()->route('categorias.index')->with('success', 'Categoría registrada exitosamente');

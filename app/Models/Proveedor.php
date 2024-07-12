@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Proveedor extends Model
 {
     use HasFactory;
-
+    
     protected $table = 'proveedores';
 
     protected $primaryKey = 'pro_id';
@@ -21,9 +21,15 @@ class Proveedor extends Model
         'pro_telefono2',
         'created_at',
         'updated_at',
-
+        'created_by',  
     ];
-
+    
     // Eloquent automáticamente manejará las columnas created_at y updated_at
     public $timestamps = true;
+    
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

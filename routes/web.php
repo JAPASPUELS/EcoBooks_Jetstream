@@ -10,6 +10,7 @@ use App\Http\Controllers\ClientesController;
 use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ChartController;
+use App\Http\Controllers\UsersController;
 
 
 Route::get('/', function () {
@@ -26,10 +27,15 @@ Route::middleware([
     })->name('dashboard');
 });
 
-Route::middleware(['auth:sanctum',
+Route::middleware([
+    'auth:sanctum',
     config('jetstream.auth_session'),
-    'verified', 'role:2'])->group(function () {
-    Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
+    'verified', 'role:2'
+])->group(function () {
+    Route::resource('vistas/auditoria', AuditoriaController::class)->names([
+        'index' => 'auditoria.index',
+    ]);
+
 });
 
 
@@ -55,6 +61,19 @@ Route::resource('vistas/roles', RolesController::class)->names([
     'update' => 'roles.update',
     'destroy' => 'roles.destroy'
 ]);
+
+// Route::resource('vistas/users', UsersController::class)->names([
+//     'index' => 'users.index',
+//     // 'store' => 'roles.store',
+//     // 'edit' => 'roles.edit',
+//     // 'update' => 'roles.update',
+//     // 'destroy' => 'roles.destroy'
+// ]);
+
+
+// Route::resource('vistas/auditoria', RolesController::class)->names([
+//     'index' => 'auditoria.index',
+// ]);
 
 
 Route::get('/report/excel', [ReportController::class, 'exportExcel'])->name('report.excel');
@@ -86,8 +105,12 @@ Route::get('/charts', function() {
     return view('auditoria.index');
 });
 
-Route::get('/chart-data/{tableName}', [ChartController::class, 'getData'])->name('chart.data');
+// Route::get('/chart-data/{tableName}', [ChartController::class, 'getData'])->name('chart.data');
+// Ruta para manejar la solicitud de datos del gráfico
+Route::post('/chart-data', [ChartController::class, 'getData'])->name('chart.data');
 
+// Route::get('/chart-data/{table}/{start}/{end}/{userId}', [ChartController::class, 'getData'])->name('chart.data');
+// Route::get('/chart-data/{tableName}', [ChartController::class, 'getData'])->name('chart.data');
 
 //Rutas para gestionar inventario
 Route::get('/inventario/create', [InventarioController::class, 'create'])->name('inventario.create');
