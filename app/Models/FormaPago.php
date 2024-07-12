@@ -15,12 +15,12 @@ class FormaPago extends Model
     public $timestamps = false;
 
     protected $fillable = [
-        'fpa_id',
         'fpa_nombre',
+        'created_by'
     ];
 
-    public function pagos()
+    public function user()
     {
-        return $this->hasMany(Pago::class, 'fpa_id', 'fpa_id');
+        return $this->belongsTo(User::class, 'created_by');
     }
 }

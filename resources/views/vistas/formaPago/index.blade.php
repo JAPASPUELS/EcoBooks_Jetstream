@@ -22,6 +22,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
+                        <th>Creado Por</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -30,6 +31,7 @@
                         <tr>
                             <td data-label="Id">{{ $fp->fpa_id }}</td>
                             <td data-label="Nombre">{{ $fp->fpa_nombre }}</td>
+                            <td data-label="Creado Por">{{ $fp->user->name }}</td>
                             <td data-label="Acciones">
                                 <button class="btn btn-edit" data-id="{{ $fp->fpa_id }}" data-name="{{ $fp->fpa_nombre }}">
                                     <i class='bx bx-edit'></i>
@@ -64,11 +66,6 @@
                     <div class="mt-2">
                         <form id="registroForm" method="POST" action="">
                             @csrf
-                            <div class="mb-4">
-                                <label for="fpa_id" class="block text-sm font-medium text-gray-700">ID</label>
-                                <input type="text" name="fpa_id" id="fpa_id_modal"
-                                    class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            </div>
                             <div class="mb-4">
                                 <label for="fpa_nombre" class="block text-sm font-medium text-gray-700">Nombre</label>
                                 <input type="text" name="fpa_nombre" id="fpa_nombre_modal"
@@ -126,12 +123,11 @@
 
         document.querySelectorAll('.btn-edit').forEach(button => {
             button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
                 const name = this.getAttribute('data-name');
 
                 document.getElementById('fpa_id_modal').value = id;
                 document.getElementById('fpa_nombre_modal').value = name;
-                registroForm.action = `/formaPago/${id}`;
+                registroForm.action = `/formaPago`;
                 registroForm.method = 'POST';
                 modalTitle.textContent = 'Actualizar Registro';
 

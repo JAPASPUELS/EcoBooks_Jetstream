@@ -72,10 +72,6 @@ Route::resource('vistas/roles', RolesController::class)->names([
 // ]);
 
 
-// Route::resource('vistas/auditoria', RolesController::class)->names([
-//     'index' => 'auditoria.index',
-// ]);
-
 
 Route::get('/report/excel', [ReportController::class, 'exportExcel'])->name('report.excel');
 Route::get('/report/pdf', [ReportController::class, 'exportPDF'])->name('report.pdf');
@@ -83,9 +79,6 @@ Route::get('/report/pdf', [ReportController::class, 'exportPDF'])->name('report.
 Route::get('/reportcli/excel', [ReportController::class, 'exportExcelClients'])->name('reportcli.excel');
 Route::get('/reportcli/pdf', [ReportController::class, 'exportPDFClients'])->name('reportcli.pdf');
 
-// Route::post('/categorias', [CategoriaController::class, 'store'])->name('categorias.store');
-// Route::delete('/categorias/{id}', [CategoriaController::class, 'destroy'])->name('categorias.destroy');
-// Route::put('/categorias/{id}', [CategoriaController::class, 'update'])->name('categorias.update');
 
 
 // Rutas para gestionar proveedores
@@ -102,22 +95,18 @@ Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])-
 
 //Formas de Pago
 Route::resource('formaPago', FormaPagoController::class);
+
 Route::get('/charts', function() {
     return view('auditoria.index');
 });
 
-// Route::get('/chart-data/{tableName}', [ChartController::class, 'getData'])->name('chart.data');
-// Ruta para manejar la solicitud de datos del gráfico
-Route::post('/chart-data', [ChartController::class, 'getData'])->name('chart.data');
 
-// Route::get('/chart-data/{table}/{start}/{end}/{userId}', [ChartController::class, 'getData'])->name('chart.data');
-// Route::get('/chart-data/{tableName}', [ChartController::class, 'getData'])->name('chart.data');
+Route::post('/chart-data', [ChartController::class, 'getData'])->name('chart.data');
 
 //Rutas para gestionar inventario
 Route::get('/inventario/create', [InventarioController::class, 'create'])->name('inventario.create');
 
 // Rutas para gestionar Clientess
-// routes/web.php
 
 Route::get('/clientes/create', [ClientesController::class, 'create'])->name('clientes.create');
 Route::post('/clientes', [ClientesController::class, 'store'])->name('clientes.store');
@@ -144,6 +133,3 @@ Route::resource('vistas/ventas', VentasController::class)->names([
 ]);
 
 
-// ! auditoria 
-// Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');
-// Route::get('/auditoria', [AuditoriaController::class, 'index'])->name('auditoria.index');

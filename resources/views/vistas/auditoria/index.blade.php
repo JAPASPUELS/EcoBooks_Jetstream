@@ -156,6 +156,7 @@
             var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var and = {};
 
+            
 
             const ctxAuditoria = document.getElementById('auditoriaChart').getContext('2d');
             const ctxBar = document.getElementById('barChart').getContext('2d');
