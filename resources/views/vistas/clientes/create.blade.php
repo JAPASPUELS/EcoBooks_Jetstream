@@ -140,59 +140,45 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function validarRUC(ruc) {
-        if (ruc.length !== 13) return false;
-        var numero_provincia = parseInt(ruc.substring(0, 2));
-        if (numero_provincia < 1 || numero_provincia > 24) return false;
+    if (ruc.length !== 13) return false;
+    
+    const numeroProvincia = parseInt(ruc.substring(0, 2));
+    if (numeroProvincia < 1 || numeroProvincia > 24) return false;
 
-        var d = [];
-        var suma = 0;
-        var residuo = 0;
-        var pri = false;
-        var pub = false;
-        var nat = false;
-        var numero = ruc.substring(0, 9);
-        var digito_verificador = parseInt(ruc.substring(9, 10));
-        var digito_verificador_ruc = parseInt(ruc.substring(10, 11));
+    const tipo = parseInt(ruc.charAt(2));
+    if (![6, 9].includes(tipo) && tipo > 5) return false;
 
-        for (var i = 0; i < numero.length; i++) {
-            d[i] = parseInt(numero.charAt(i));
+    const coeficientesPub = [3, 2, 7, 6, 5, 4, 3, 2];
+    const coeficientesPri = [4, 3, 2, 7, 6, 5, 4, 3, 2];
+    const coeficientesNat = [2, 1, 2, 1, 2, 1, 2, 1, 2];
+
+    let suma = 0;
+    let digitoVerificador = parseInt(ruc.charAt(9));
+
+    if (tipo === 6) { // Público
+        for (let i = 0; i < 8; i++) {
+            suma += parseInt(ruc.charAt(i)) * coeficientesPub[i];
         }
-
-        if (d[2] === 6) pub = true;
-        else if (d[2] === 9) pri = true;
-        else if (d[2] < 6) nat = true;
-
-        if (nat) {
-            for (i = 0; i < d.length - 1; i++) {
-                if (i % 2 === 0) {
-                    d[i] *= 2;
-                    if (d[i] > 9) d[i] -= 9;
-                }
-                suma += d[i];
-            }
-            residuo = suma % 10;
-            if (residuo !== 0) residuo = 10 - residuo;
-            return residuo === digito_verificador;
-        } else if (pub) {
-            var coeficientes = [3, 2, 7, 6, 5, 4, 3, 2];
-            for (i = 0; i < d.length - 1; i++) {
-                suma += d[i] * coeficientes[i];
-            }
-            residuo = suma % 11;
-            if (residuo !== 0) residuo = 11 - residuo;
-            return residuo === digito_verificador;
-        } else if (pri) {
-            coeficientes = [4, 3, 2, 7, 6, 5, 4, 3, 2];
-            for (i = 0; i < d.length - 1; i++) {
-                suma += d[i] * coeficientes[i];
-            }
-            residuo = suma % 11;
-            if (residuo !== 0) residuo = 11 - residuo;
-            return residuo === digito_verificador;
+        let residuo = suma % 11;
+        residuo = residuo === 0 ? 0 : 11 - residuo;
+        return residuo === digitoVerificador;
+    } else if (tipo === 9) { // Privado
+        for (let i = 0; i < 9; i++) {
+            suma += parseInt(ruc.charAt(i)) * coeficientesPri[i];
         }
-
-        return false;
+        let residuo = suma % 11;
+        residuo = residuo === 0 ? 0 : 11 - residuo;
+        return residuo === digitoVerificador;
+    } else { // Natural
+        for (let i = 0; i < 9; i++) {
+            let valor = parseInt(ruc.charAt(i)) * coeficientesNat[i];
+            suma += valor >= 10 ? valor - 9 : valor;
+        }
+        let residuo = suma % 10;
+        residuo = residuo === 0 ? 0 : 10 - residuo;
+        return residuo === digitoVerificador;
     }
+}
 });
 </script>
 @endsection

@@ -11,6 +11,7 @@ use App\Http\Controllers\RolesController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\UsersController;
+use App\Http\Controllers\FormaPagoController;
 
 
 Route::get('/', function () {
@@ -99,8 +100,8 @@ Route::get('/reportprov/excel', [ReportController::class, 'exportExcelProveedore
 Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])->name('reportprov.pdf');
 
 
-
-
+//Formas de Pago
+Route::resource('formaPago', FormaPagoController::class);
 Route::get('/charts', function() {
     return view('auditoria.index');
 });
