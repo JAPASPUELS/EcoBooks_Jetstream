@@ -13,6 +13,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\SecurityQuestionController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\InventarioController;
+use App\Http\Controllers\FormaPagoController;
 
 
 Route::get('/', function () {

@@ -35,17 +35,4 @@ class Ventas extends Model
     {
         return $this->hasOne(Pagos::class, 'vent_numero', 'vent_numero');
     }
-    ];
-
-    public $timestamps = false;
-
-    public function detalles()
-    {
-        return $this->hasMany(DetalleVentas::class, 'vent_numero', 'vent_numero');
-    }
-
-    public function pagos()
-    {
-        return $this->hasOne(Pagos::class, 'vent_numero', 'vent_numero');
-    }
 }
