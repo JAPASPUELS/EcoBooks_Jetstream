@@ -17,7 +17,8 @@ class Pago extends Model
         'fpa_id',
         'vent_numero',
         'pag_valor',
-        'pag_fecha'
+        'pag_fecha',
+        'created_by'
     ];
 
     public function formaPago()

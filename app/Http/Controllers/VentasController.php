@@ -11,6 +11,7 @@ use App\Models\Clientes;
 use App\Models\Articulo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log; 
 
 class VentasController extends Controller
 {
@@ -41,12 +42,14 @@ class VentasController extends Controller
     public function store(Request $request)
     {
         DB::beginTransaction();
-
+        
         try {
+            Log::info('Datos recibidos para crear una venta:', $request->all());
             // Crear la venta
             $venta = new Ventas();
             $venta->cli_codigo = $request->cli_codigo;
             $venta->vent_total = $request->vent_total;
+            $venta->vent_subtotal = $request->vent_subtotal;
             $venta->vent_fecha = $request->vent_fecha;
             $venta->created_by= Auth::id();
 
@@ -59,7 +62,6 @@ class VentasController extends Controller
                 $detalleVenta->art_id = $detalle['art_id'];
                 $detalleVenta->det_precio = $detalle['det_precio'];
                 $detalleVenta->det_unidades = $detalle['det_unidades'];
-                $detalleVenta->det_precio = $detalle['det_precio'];
                 $detalleVenta->art_envase = $detalle['art_envase'];
                 $detalleVenta->created_by= Auth::id();
                 
@@ -79,6 +81,7 @@ class VentasController extends Controller
             return response()->json(['success' => true, 'message' => 'Venta guardada exitosamente']);
         } catch (\Exception $e) {
             DB::rollBack();
+            Log::error('Error al guardar la venta: ' . $e->getMessage());
             return response()->json(['success' => false, 'message' => 'Error al guardar la venta', 'error' => $e->getMessage()]);
         }
     }
@@ -123,6 +126,7 @@ class VentasController extends Controller
         $articulo = Articulo::find($request->art_id);
         return response()->json($articulo);
     }
+    
     public function buscarPorCedula($cedula)
     {
         $cliente = Clientes::where('cli_codigo', $cedula)->first();

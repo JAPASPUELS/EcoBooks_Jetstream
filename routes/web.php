@@ -125,6 +125,7 @@ Route::delete('/clientes/{id}', [ClientesController::class, 'destroy'])->name('c
 Route::get('/ventas/create', [VentasController::class, 'create']);
 Route::post('/ventas/add-product', [VentasController::class, 'addProduct']);
 Route::get('/ventas/cliente/cedula/{cedula}', [VentasController::class, 'buscarPorCedula']);
+Route::resource('ventas', VentasController::class);
 
 Route::resource('vistas/ventas', VentasController::class)->names([
     'index' => 'ventas.index',
