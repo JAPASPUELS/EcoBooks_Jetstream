@@ -307,12 +307,12 @@
 
             excelBtn.addEventListener('click', function() {
                 // Aquí puedes redirigir a la ruta de generación de reporte Excel
-                window.location.href = "{{ route('report.excel') }}";
+                window.location.href = "{{ route('reportmov.excel') }}";
             });
 
             pdfBtn.addEventListener('click', function() {
                 // Aquí puedes redirigir a la ruta de generación de reporte PDF
-                window.location.href = "{{ route('report.pdf') }}";
+                window.location.href = "{{ route('reportmov.pdf') }}";
             });
         });
     </script>

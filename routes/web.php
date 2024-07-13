@@ -184,6 +184,8 @@ Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])-
 Route::get('/reportaud/excel', [ReportController::class, 'exportExcelAuditoria'])->name('reportaud.excel');
 Route::get('/reportaud/pdf', [ReportController::class, 'exportPDFAuditoria'])->name('reportaud.pdf');
 
+Route::get('/reportmov/excel', [ReportController::class, 'exportExcelMovimiento'])->name('reportmov.excel');
+Route::get('/reportmov/pdf', [ReportController::class, 'exportPDFMovimiento'])->name('reportmov.pdf');
 
 // Rutas para gestionar proveedores
 Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');

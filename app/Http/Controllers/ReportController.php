@@ -2,7 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Exports\AuditoriaExport;
+use App\Exports\MovimientoExport;
 use App\Models\Clientes;
+use App\Models\Movimientos;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Articulo;
@@ -68,6 +70,19 @@ class ReportController extends Controller
         $registros = Auditoria::all();
         $pdf = PDF::loadView('reports.auditoria', compact('registros'));
         return $pdf->download('auditoria.pdf');
+    }
+
+
+    public function exportExcelMovimiento()
+    {
+        return Excel::download(new MovimientoExport, 'movimientos.xlsx');
+    }
+
+    public function exportPDFMovimiento()
+    {
+        $registros = Movimientos::all();
+        $pdf = PDF::loadView('reports.movimiento', compact('registros'));
+        return $pdf->download('movimientos.pdf');
     }
 
 
