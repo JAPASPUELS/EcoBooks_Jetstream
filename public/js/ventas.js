@@ -2,61 +2,62 @@ document.addEventListener('DOMContentLoaded', function () {
     const productsPerPage = 7;
     let currentPage = 1;
     const products = articulos;
-function guardarVenta() {
-    const productos = [];
-    document.querySelectorAll('#productsTable tr').forEach(row => {
-        productos.push({
-            art_id: row.querySelector('[name="art_id"]').value,
-            det_precio: row.querySelector('[name="det_precio"]').value,
-            det_unidades: row.querySelector('[name="det_unidades"]').value
-        });
-    });
 
-    const ventaData = {
-        cli_codigo: document.getElementById('cedula').value,
-        vent_total: parseFloat(document.getElementById('total').innerText),
-        vent_fecha: document.getElementById('fecha').value,
-        fpa_id: document.getElementById('pago').value,
-        detalle_ventas: productos
-    };
-
-    fetch('/vistas/ventas', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: JSON.stringify(ventaData)
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            Swal.fire({
-                title: 'Éxito',
-                text: data.message,
-                icon: 'success',
-                confirmButtonText: 'Aceptar'
-            }).then(() => {
-                window.location.href = '/vistas/ventas';
+    function guardarVenta() {
+        const productos = [];
+        document.querySelectorAll('#productsTable tr').forEach(row => {
+            productos.push({
+                art_id: row.querySelector('[name="art_id"]').value,
+                det_precio: row.querySelector('[name="det_precio"]').value,
+                det_unidades: row.querySelector('[name="det_unidades"]').value
             });
-        } else {
+        });
+
+        const ventaData = {
+            cli_codigo: document.getElementById('cedula').value,
+            vent_total: parseFloat(document.getElementById('total').innerText),
+            vent_fecha: document.getElementById('fecha').value,
+            fpa_id: document.getElementById('pago').value,
+            detalle_ventas: productos
+        };
+
+        fetch('/vistas/ventas', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            },
+            body: JSON.stringify(ventaData)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                Swal.fire({
+                    title: 'Éxito',
+                    text: data.message,
+                    icon: 'success',
+                    confirmButtonText: 'Aceptar'
+                }).then(() => {
+                    window.location.href = '/vistas/ventas';
+                });
+            } else {
+                Swal.fire({
+                    title: 'Error',
+                    text: data.message,
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+            }
+        })
+        .catch(error => {
             Swal.fire({
                 title: 'Error',
-                text: data.message,
+                text: 'Hubo un error al guardar la venta',
                 icon: 'error',
                 confirmButtonText: 'Aceptar'
             });
-        }
-    })
-    .catch(error => {
-        Swal.fire({
-            title: 'Error',
-            text: 'Hubo un error al guardar la venta',
-            icon: 'error',
-            confirmButtonText: 'Aceptar'
         });
-    });
-}
+    }
 
     function openProductModal() {
         document.getElementById('productModal').showModal();
@@ -146,12 +147,11 @@ function guardarVenta() {
             <td><input type="number" class="form-control" value="${product.cantidad}" min="1" max="${product.stock}" onchange="updateTotals()"></td>
             <td>${product.art_nombre}</td>
             <td>
-                <input type="checkbox" id="envase_si_${product.art_id}" name="envase_si"> Sí
-                <input type="checkbox" id="envase_no_${product.art_id}" name="envase_no"> No
+                <input type="checkbox" id="envase_si_${product.art_id}" name="envase_si" onchange="updateTotals()"> Sí
             </td>
             <td class="product-precio">${product.art_precio.toFixed(2)}</td>
             <td class="product-total">${(product.art_precio * product.cantidad).toFixed(2)}</td>
-            <td><button type="button" class="btn btn-danger bg-red-500 rounded-sm  text-white  px-5 py-2.5 me-2 mb-2  btn-sm">Eliminar</button></td>
+            <td><button type="button" class="btn btn-danger bg-red-500 rounded-sm text-white px-5 py-2.5 me-2 mb-2 btn-sm">Eliminar</button></td>
         `;
 
         row.querySelector('.btn-danger').addEventListener('click', function () {
@@ -166,24 +166,63 @@ function guardarVenta() {
     window.updateTotals = function() {
         const productsTable = document.getElementById('productsTable');
         let subtotal = 0;
+        let descuento = 0;
 
         productsTable.querySelectorAll('tr').forEach(row => {
             const cantidad = row.querySelector('input[type="number"]').value;
             const precio = row.querySelector('.product-precio').innerText;
-            const totalProducto = parseFloat(cantidad) * parseFloat(precio);
+            let totalProducto = parseFloat(cantidad) * parseFloat(precio);
+
+            // Aplicar descuento por envase
+            const envaseCheckbox = row.querySelector('input[name="envase_si"]');
+            if (envaseCheckbox && envaseCheckbox.checked) {
+                totalProducto -= 0.10; // Descuento de 0.10 por envase
+            }
+
             row.querySelector('.product-total').innerText = totalProducto.toFixed(2);
             subtotal += totalProducto;
         });
 
-        const iva = subtotal * 0.13;
-        const total = subtotal + iva;
+        const descuentoInput = document.getElementById('discount').value;
+        if (descuentoInput) {
+            descuento = (subtotal * (parseFloat(descuentoInput) / 100));
+        }
+
+        const iva = (subtotal - descuento) * 0.15; // Cambié el IVA a 15% según tu tabla
+        const total = (subtotal - descuento) + iva;
 
         document.getElementById('subtotal').innerText = subtotal.toFixed(2);
+        document.getElementById('descuento').innerText = descuento.toFixed(2);
         document.getElementById('iva').innerText = iva.toFixed(2);
         document.getElementById('total').innerText = total.toFixed(2);
     }
-    
+
+    window.confirmDiscount = function() {
+        const descuentoInput = document.getElementById('discount').value;
+        if (descuentoInput) {
+            Swal.fire({
+                title: 'Confirmar descuento',
+                text: `¿Deseas aplicar un descuento del ${descuentoInput}% a esta compra?`,
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonText: 'Sí',
+                cancelButtonText: 'No'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    updateTotals();
+                }
+            });
+        }
+    }
 
     window.openProductModal = openProductModal;
     window.closeProductModal = closeProductModal;
+
+    // Filtro de productos
+    document.getElementById('searchProductInput').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        const filteredProducts = products.filter(product => product.art_nombre.toLowerCase().includes(searchTerm));
+        renderProducts(filteredProducts, 1);
+        renderPagination(filteredProducts);
+    });
 });
