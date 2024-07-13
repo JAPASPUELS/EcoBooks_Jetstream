@@ -5,16 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Inventario extends Model
+class FormaPago extends Model
 {
     use HasFactory;
-    protected $table = 'inventario';
+
+    protected $table = 'forma_pagos';
+    protected $primaryKey = 'fpa_id';
+    public $incrementing = false;
+    public $timestamps = false;
 
     protected $fillable = [
-        'art_id',
-        'inv_fecha',
-        'inv_cantidad',
-        'created_by',
+        'fpa_nombre',
+        'created_by'
     ];
 
     public function user()

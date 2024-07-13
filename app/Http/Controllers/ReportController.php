@@ -1,16 +1,17 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Exports\AuditoriaExport;
 use App\Models\Clientes;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Articulo;
+use App\Models\Auditoria;
 use App\Models\Proveedor;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CategoriesExport;
 use App\Exports\ClientesExport;
 use App\Exports\ProveedoresExport;
-use App\Exports\ArticulosExport;
 use Barryvdh\DomPDF\Facade\Pdf;
 
 class ReportController extends Controller
@@ -55,17 +56,18 @@ class ReportController extends Controller
         $pdf = PDF::loadView('reports.proveedores', compact('proveedores'));
         return $pdf->download('proveedores.pdf');
     }
-    // Exportar Articulos
-    public function exportExcelArticulos()
+
+
+    public function exportExcelAuditoria()
     {
-        return Excel::download(new ArticulosExport, 'articulos.xlsx');
+        return Excel::download(new AuditoriaExport, 'auditoria.xlsx');
     }
 
-    public function exportPDFArticulos()
+    public function exportPDFAuditoria()
     {
-        $articulos = Articulo::all();
-        $pdf = PDF::loadView('reports.articulos', compact('articulos'));
-        return $pdf->download('articulos.pdf');
+        $registros = Auditoria::all();
+        $pdf = PDF::loadView('reports.auditoria', compact('registros'));
+        return $pdf->download('auditoria.pdf');
     }
 
 

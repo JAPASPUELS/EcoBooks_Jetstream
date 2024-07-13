@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Proveedor;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProveedorController extends Controller
 {
@@ -28,6 +30,8 @@ class ProveedorController extends Controller
             'pro_email' => $request->pro_email,
             'pro_telefono1' => $request->pro_telefono1,
             'pro_telefono2' => $request->pro_telefono2,
+            'created_by' => Auth::id()
+
         ]);
 
         return redirect()->route('proveedores.create')->with('success', 'Proveedor registrado exitosamente');

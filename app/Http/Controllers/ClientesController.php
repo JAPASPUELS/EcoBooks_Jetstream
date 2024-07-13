@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Clientes;
+use Illuminate\Support\Facades\Auth;
+
 
 class ClientesController extends Controller
 {
-
-
+    
+    
     public function create()
     {
         return view('vistas.clientes.create');
     }
-
+    
     public function store(Request $request)
     {
         $request->validate([
@@ -24,7 +26,7 @@ class ClientesController extends Controller
             'cli_direccion' => 'required|string|max:150',
             'cli_identificacion' => 'required|string|in:CI,PP,RUC',
         ]);
-
+        
         Clientes::create([
             'cli_codigo' => $request->cli_codigo,
             'cli_nombre' => $request->cli_nombre,
@@ -32,6 +34,7 @@ class ClientesController extends Controller
             'cli_correo' => $request->cli_correo,
             'cli_direccion' => $request->cli_direccion,
             'cli_identificacion' => $request->cli_identificacion,
+            'created_by' => Auth::id()
         ]);
 
         return redirect()->route('clientes.create')->with('success', 'Clientes registrado exitosamente');

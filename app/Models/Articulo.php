@@ -25,4 +25,8 @@ class Articulo extends Model
     {
         return $this->belongsTo(Categoria::class, 'cat_id');
     }
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }
