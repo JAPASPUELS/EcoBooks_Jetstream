@@ -63,13 +63,13 @@ Route::resource('vistas/roles', RolesController::class)->names([
     'destroy' => 'roles.destroy'
 ]);
 
-// Route::resource('vistas/users', UsersController::class)->names([
-//     'index' => 'users.index',
-//     // 'store' => 'roles.store',
-//     // 'edit' => 'roles.edit',
-//     // 'update' => 'roles.update',
-//     // 'destroy' => 'roles.destroy'
-// ]);
+Route::resource('vistas/users', UsersController::class)->names([
+    'index' => 'users.index',
+    // 'store' => 'roles.store',
+    // 'edit' => 'roles.edit',
+    // 'update' => 'roles.update',
+    // 'destroy' => 'roles.destroy'
+]);
 
 
 

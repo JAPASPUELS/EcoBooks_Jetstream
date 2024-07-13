@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Ventas;
 use App\Models\DetalleVentas;
-use App\Models\Pagos;
-use App\Models\FormaPagos;
+use App\Models\Pago;
+use App\Models\FormaPago;
 use App\Models\Clientes;
 use App\Models\Articulo;
 use Illuminate\Support\Facades\DB;
@@ -31,7 +31,7 @@ class VentasController extends Controller
     public function create()
     {
         $articulos = Articulo::all();
-        $forma_Pagos = FormaPagos::all(); // Obtener todas las formas de pago
+        $forma_Pagos = FormaPago::all(); // Obtener todas las formas de pago
         return view('vistas.ventas.create', compact('articulos', 'forma_Pagos'));
     }
 
@@ -59,17 +59,19 @@ class VentasController extends Controller
                 $detalleVenta->art_id = $detalle['art_id'];
                 $detalleVenta->det_precio = $detalle['det_precio'];
                 $detalleVenta->det_unidades = $detalle['det_unidades'];
-                $detalleVenta->det_precio_total = $detalle['det_precio_total'];
+                $detalleVenta->det_precio = $detalle['det_precio'];
+                $detalleVenta->art_envase = $detalle['art_envase'];
                 $detalleVenta->created_by= Auth::id();
                 
                 $detalleVenta->save();
             }
 
             // Crear el pago
-            $pago = new Pagos();
+            $pago = new Pago();
             $pago->vent_numero = $venta->vent_numero;
             $pago->fpa_id = $request->fpa_id;
             $pago->pag_valor = $request->vent_total;
+            $pago->created_by= Auth::id();
             $pago->save();
 
             DB::commit();
