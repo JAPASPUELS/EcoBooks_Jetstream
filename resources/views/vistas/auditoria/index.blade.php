@@ -100,8 +100,8 @@
                 <!-- Existing code for charts -->
 
                 <!-- Modal -->
-                <div id="dataModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 hidden">
-                    <div class="bg-white rounded-lg shadow-lg p-6 w-4/5">
+                <div id="dataModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 hidden ">
+                    <div class="bg-white rounded-lg shadow-lg p-6 w-3/5">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-semibold">Datos</h3>
 
@@ -137,16 +137,16 @@
     </div>
 
     <div class="flex gap-6 ">
-        <div class="bg-white rounded-lg shadow-md border border-gray-200 ">
+        <div class="w-1/4 bg-white rounded-lg shadow-md border border-gray-200 ">
             <canvas id="auditoriaChart" width="430" height="430"></canvas>
         </div>
-        <div class="bg-white rounded-lg shadow-md border border-gray-200">
+        <div class="w-1/4 bg-white rounded-lg shadow-md border border-gray-200">
             <canvas id="barChart" width="430" height="430"></canvas>
         </div>
-        <div class="bg-white rounded-lg shadow-md border border-gray-200">
+        <div class="w-1/4 bg-white rounded-lg shadow-md border border-gray-200">
             <canvas id="richterChart" width="430" height="430"></canvas>
         </div>
-        <div class="bg-white rounded-lg shadow-md border border-gray-200">
+        <div class="w-1/5 bg-white rounded-lg shadow-md border border-gray-200">
             <canvas id="likertChart" width="430" height="430"></canvas>
         </div>
     </div>
