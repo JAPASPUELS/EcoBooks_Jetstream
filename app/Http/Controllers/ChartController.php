@@ -22,7 +22,7 @@ class ChartController extends Controller
     public function getData(Request $request)
     {
         $and = $request->input('and', []);
-        $page = isset($and['page']) ? $and['page'] : 1;
+        $page = isset($and['page']) ? $and['page'] : 1; // Obtener el número de página actual
 
         // Registrar los valores de las variables en el log para depuración
         Log::info('Request parameters', $and);

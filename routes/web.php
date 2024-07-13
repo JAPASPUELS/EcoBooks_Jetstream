@@ -79,6 +79,11 @@ Route::get('/report/pdf', [ReportController::class, 'exportPDF'])->name('report.
 Route::get('/reportcli/excel', [ReportController::class, 'exportExcelClients'])->name('reportcli.excel');
 Route::get('/reportcli/pdf', [ReportController::class, 'exportPDFClients'])->name('reportcli.pdf');
 
+Route::get('/reportprov/excel', [ReportController::class, 'exportExcelProveedores'])->name('reportprov.excel');
+Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])->name('reportprov.pdf');
+
+Route::get('/reportaud/excel', [ReportController::class, 'exportExcelAuditoria'])->name('reportaud.excel');
+Route::get('/reportaud/pdf', [ReportController::class, 'exportPDFAuditoria'])->name('reportaud.pdf');
 
 
 // Rutas para gestionar proveedores
@@ -89,16 +94,15 @@ Route::get('/proveedores/{id}/edit', [ProveedorController::class, 'edit']);
 Route::put('/proveedores/{id}', [ProveedorController::class, 'update']);
 Route::delete('/proveedores/{id}', [ProveedorController::class, 'destroy'])->name('proveedores.destroy');
 
-Route::get('/reportprov/excel', [ReportController::class, 'exportExcelProveedores'])->name('reportprov.excel');
-Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])->name('reportprov.pdf');
+
 
 
 //Formas de Pago
 Route::resource('formaPago', FormaPagoController::class);
 
-Route::get('/charts', function() {
-    return view('auditoria.index');
-});
+// Route::get('/auditoria', function() {
+//     return view('auditoria.index');
+// });
 
 
 Route::post('/chart-data', [ChartController::class, 'getData'])->name('chart.data');
