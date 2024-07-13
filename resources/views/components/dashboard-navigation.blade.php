@@ -204,6 +204,15 @@
                 <li><a class="link_name" href="{{ route('categorias.index') }}">Categorías</a></li>
             </ul>
         </li>
+        <li id="movimientos">
+            <a href="{{ route('movimientos.index') }}">
+                <i class='fas fa-exchange-alt icon' style="color: #03A9F4;"></i>
+                <span class="link_name">Movimientos</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="{{ route('movimientos.index') }}">Movimientos</a></li>
+            </ul>
+        </li>
         <li id="categoria">
             <a href="{{ route('formaPago.index') }}">
                 <i class='fas fa-credit-card icon' style="color: #03A9F4;"></i>

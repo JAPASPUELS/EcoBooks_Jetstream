@@ -14,6 +14,7 @@ use App\Http\Controllers\Auth\SecurityQuestionController;
 use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\FormaPagoController;
+use App\Http\Controllers\MovimientoController;
 
 
 Route::get('/', function () {
@@ -71,13 +72,24 @@ Route::get('/reportprov/excel', [ReportController::class, 'exportExcelProveedore
 Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])->name('reportprov.pdf');
 
 
-
+// Rutas de movimientos
+// Route::resource('vistas/movimientos', MovimientoController::class)->names([
+//     'index' => 'movimientos.index',
+//     'store' => 'movimientos.store',
+//     'edit' => 'movimientos.edit',
+//     'update' => 'movimientos.update',
+//     'destroy' => 'movimientos.destroy'
+// ]);
 
 Route::get('/charts', function () {
     return view('auditoria.index');
 });
 
 Route::get('/chart-data/{tableName}', [ChartController::class, 'getData'])->name('chart.data');
+Route::resource('vistas/movimientos', MovimientoController::class)->names([
+    'index' => 'movimientos.index',
+]);
+
 
 
 //Rutas para gestionar Articulos
@@ -158,6 +170,8 @@ Route::post('get-security-question', [ForgotPasswordController::class, 'getSecur
 
 
 
+
+// generacion de reportes
 Route::get('/report/excel', [ReportController::class, 'exportExcel'])->name('report.excel');
 Route::get('/report/pdf', [ReportController::class, 'exportPDF'])->name('report.pdf');
 

@@ -284,6 +284,7 @@
                         return response.json();
                     })
                     .then(data => {
+                        console.log(data);
                         updateCounters(data.countByAction);
                         initPieChart(data, and.aud_table);
                         initBarChart(data, and.aud_table);
