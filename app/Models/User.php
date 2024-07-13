@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use Illuminate\Contracts\Auth\MustVerifyEmail; // Asegúrate de descomentar esta línea
+use App\Models\Roles;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -10,13 +10,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable implements MustVerifyEmail // Implementa la interfaz MustVerifyEmail
+class User extends Authenticatable
 {
-    use HasApiTokens;
-    use HasFactory;
-    use HasProfilePhoto;
-    use Notifiable;
-    use TwoFactorAuthenticatable;
+    use HasApiTokens, HasFactory, HasProfilePhoto, Notifiable, TwoFactorAuthenticatable;
 
     /**
      * The attributes that are mass assignable.
@@ -27,6 +23,10 @@ class User extends Authenticatable implements MustVerifyEmail // Implementa la i
         'name',
         'email',
         'password',
+        'rol_id',
+        'security_question',
+        'security_answer',
+        'security_question_enabled',
     ];
 
     /**
@@ -61,5 +61,10 @@ class User extends Authenticatable implements MustVerifyEmail // Implementa la i
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function role()
+    {
+        return $this->belongsTo(Roles::class, 'rol_id');
     }
 }

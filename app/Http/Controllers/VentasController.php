@@ -4,26 +4,23 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Ventas;
-use Illuminate\Support\Facades\Redirect;
-use App\Http\Requests\VentasFormRequest;
+use App\Models\DetalleVentas;
+use App\Models\Pagos;
+use App\Models\FormaPagos;
+use App\Models\Clientes;
+use App\Models\Articulo;
 use Illuminate\Support\Facades\DB;
 
 class VentasController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index(Request $request)
+    public function index()
     {
-        if ($request) {
-            $query = trim($request->get('searchText'));
-            $ventas = DB::table('ventas')
-                ->join('clientes', 'ventas.cli_codigo', '=', 'clientes.cli_codigo')
-                ->select('ventas.vent_numero', 'ventas.vent_fecha', 'ventas.vent_total', 'clientes.cli_nombre as cliente')
-                ->where('ventas.vent_numero', 'LIKE', '%' . $query . '%')
-                ->orderBy('ventas.vent_numero', 'asc')
-                ->paginate(7);
-            return view('vistas.ventas.index', ['ventas' => $ventas, 'searchText' => $query]);
+        try {
+            $ventas = Ventas::orderBy('vent_numero', 'asc')->get();
+            return view('vistas.ventas.index', compact('ventas'));
+        } catch (\Throwable $th) {
+            //throw $th;
+            error_log("Error Load Audit Data -> $th");
         }
     }
 
@@ -32,7 +29,9 @@ class VentasController extends Controller
      */
     public function create()
     {
-        return view('vistas.ventas.create');
+        $articulos = Articulo::all();
+        $forma_Pagos = FormaPagos::all(); // Obtener todas las formas de pago
+        return view('vistas.ventas.create', compact('articulos', 'forma_Pagos'));
     }
 
     /**
@@ -40,13 +39,41 @@ class VentasController extends Controller
      */
     public function store(Request $request)
     {
-        $ventas = new Ventas();
-        $ventas->vent_numero = $request->get('vent_numero');
-        $ventas->cli_codigo = $request->get('cli_codigo');
-        $ventas->vent_fecha = $request->get('vent_fecha');
-        $ventas->vent_total = $request->get('vent_total');
-        $ventas->save();
-        return Redirect::to('vistas/ventas');
+        DB::beginTransaction();
+
+        try {
+            // Crear la venta
+            $venta = new Ventas();
+            $venta->cli_codigo = $request->cli_codigo;
+            $venta->vent_total = $request->vent_total;
+            $venta->vent_fecha = $request->vent_fecha;
+            $venta->save();
+
+            // Crear el detalle de la venta
+            foreach ($request->detalle_ventas as $detalle) {
+                $detalleVenta = new DetalleVentas();
+                $detalleVenta->vent_numero = $venta->vent_numero;
+                $detalleVenta->art_id = $detalle['art_id'];
+                $detalleVenta->det_precio = $detalle['det_precio'];
+                $detalleVenta->det_unidades = $detalle['det_unidades'];
+                $detalleVenta->det_precio_total = $detalle['det_precio_total'];
+                $detalleVenta->save();
+            }
+
+            // Crear el pago
+            $pago = new Pagos();
+            $pago->vent_numero = $venta->vent_numero;
+            $pago->fpa_id = $request->fpa_id;
+            $pago->pag_valor = $request->vent_total;
+            $pago->save();
+
+            DB::commit();
+
+            return response()->json(['success' => true, 'message' => 'Venta guardada exitosamente']);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['success' => false, 'message' => 'Error al guardar la venta', 'error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -79,5 +106,28 @@ class VentasController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    /**
+     * Add product to the sale.
+     */
+    public function addProduct(Request $request)
+    {
+        $articulo = Articulo::find($request->art_id);
+        return response()->json($articulo);
+    }
+    public function buscarPorCedula($cedula)
+    {
+        $cliente = Clientes::where('cli_codigo', $cedula)->first();
+    
+        if ($cliente) {
+            return response()->json([
+                'success' => 'Ok!',
+                'cli_nombre' => $cliente->cli_nombre,
+                'cli_apellido' => $cliente->cli_apellido,
+            ]);
+        } else {
+            return response()->json(['error' => 'Cliente no encontrado']);
+        }
     }
 }

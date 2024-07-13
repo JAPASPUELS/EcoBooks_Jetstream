@@ -12,16 +12,21 @@ class Ventas extends Model
     protected $table = 'ventas';
     protected $primaryKey = 'vent_numero';
 
-    public $timestamps = true;
-
     protected $fillable = [
-        'vent_numero',
         'cli_codigo',
+        'vent_total',
         'vent_fecha',
-        'vent_total'
     ];
 
-    protected $guarded = [
+    public $timestamps = false;
 
-    ];
+    public function detalles()
+    {
+        return $this->hasMany(DetalleVentas::class, 'vent_numero', 'vent_numero');
+    }
+
+    public function pagos()
+    {
+        return $this->hasOne(Pagos::class, 'vent_numero', 'vent_numero');
+    }
 }
