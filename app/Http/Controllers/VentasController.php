@@ -51,7 +51,7 @@ class VentasController extends Controller
             $venta->vent_total = $request->vent_total;
             $venta->vent_subtotal = $request->vent_subtotal;
             $venta->vent_fecha = $request->vent_fecha;
-            $venta->created_by= Auth::id();
+            $venta->created_by = Auth::id();
 
             $venta->save();
 
@@ -130,7 +130,7 @@ class VentasController extends Controller
     public function buscarPorCedula($cedula)
     {
         $cliente = Clientes::where('cli_codigo', $cedula)->first();
-    
+
         if ($cliente) {
             return response()->json([
                 'success' => 'Ok!',
