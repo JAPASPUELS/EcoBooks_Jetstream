@@ -10,6 +10,7 @@ use App\Models\FormaPagos;
 use App\Models\Clientes;
 use App\Models\Articulo;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class VentasController extends Controller
 {
@@ -47,6 +48,8 @@ class VentasController extends Controller
             $venta->cli_codigo = $request->cli_codigo;
             $venta->vent_total = $request->vent_total;
             $venta->vent_fecha = $request->vent_fecha;
+            $venta->created_by = Auth::id();
+
             $venta->save();
 
             // Crear el detalle de la venta
@@ -57,6 +60,8 @@ class VentasController extends Controller
                 $detalleVenta->det_precio = $detalle['det_precio'];
                 $detalleVenta->det_unidades = $detalle['det_unidades'];
                 $detalleVenta->det_precio_total = $detalle['det_precio_total'];
+                $detalleVenta->created_by = Auth::id();
+
                 $detalleVenta->save();
             }
 
@@ -119,7 +124,7 @@ class VentasController extends Controller
     public function buscarPorCedula($cedula)
     {
         $cliente = Clientes::where('cli_codigo', $cedula)->first();
-    
+
         if ($cliente) {
             return response()->json([
                 'success' => 'Ok!',
