@@ -1,4 +1,7 @@
-/* ventas.css */
+.overflow-y-auto {
+    overflow-y: auto;
+}
+
 .modal-open .modal {
     display: flex;
     align-items: center;
@@ -10,6 +13,7 @@ body {
 }
 
 .container {
+    max-height: 12rem !important; 
     margin-top: 20px;
 }
 
@@ -87,8 +91,8 @@ body {
 
 /* Additional Styles for Horizontal Form Layout */
 .form-row {
-    display: flex;
-    flex-wrap: wrap;
+    /* display: flex;
+    flex-wrap: wrap; */
     margin-bottom: 10px;
 }
 
@@ -205,4 +209,4 @@ body {
 .page-link:hover {
     background-color: #e9ecef;
     border-color: #dee2e6;
-}
+} 
