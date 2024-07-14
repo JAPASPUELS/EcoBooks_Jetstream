@@ -172,16 +172,22 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $item->mov_id }}
                             </td>
                             <td
-                                class="px-6 py-4 whitespace-nowrap text-sm {{ $item->mov_tipo == 'ajuste' ? 'text-blue-500' : ($item->mov_tipo == 'egreso' ? 'text-red-500' : 'text-green-500') }}">
+                                class="px-6 py-4 whitespace-nowrap text-sm 
+                            {{ $item->mov_tipo == 'ajuste' || $item->mov_tipo == 'AJUSTE'
+                                ? 'text-blue-500'
+                                : ($item->mov_tipo == 'egreso' || $item->mov_tipo == 'EGRESO'
+                                    ? 'text-red-500'
+                                    : 'text-green-500') }}">
                                 {{ $item->mov_tipo }}
                             </td>
+
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->mov_cantidad }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->mov_fecha }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->product->art_nombre }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->mov_stock_anterior }}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->stock_previo }}
                             </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->mov_stock_actual }}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->stock_actual }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $item->user->name }}</td>
                         </tr>
@@ -307,12 +313,12 @@
 
             excelBtn.addEventListener('click', function() {
                 // Aquí puedes redirigir a la ruta de generación de reporte Excel
-                window.location.href = "{{ route('report.excel') }}";
+                window.location.href = "{{ route('reportmov.excel') }}";
             });
 
             pdfBtn.addEventListener('click', function() {
                 // Aquí puedes redirigir a la ruta de generación de reporte PDF
-                window.location.href = "{{ route('report.pdf') }}";
+                window.location.href = "{{ route('reportmov.pdf') }}";
             });
         });
     </script>

@@ -15,6 +15,7 @@ use App\Http\Controllers\ArticuloController;
 use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\MovimientoController;
+use App\Http\Controllers\GastoController;
 
 
 Route::get('/', function () {
@@ -90,6 +91,13 @@ Route::resource('vistas/movimientos', MovimientoController::class)->names([
     'index' => 'movimientos.index',
 ]);
 
+Route::resource('vistas/gastos', GastoController::class)->names([
+    'index' => 'gastos.index',
+    'store' => 'gastos.store',
+    'edit' => 'gastos.edit',
+    'update' => 'gastos.update',
+    'destroy' => 'gastos.destroy',
+]);
 
 
 //Rutas para gestionar Articulos
@@ -183,6 +191,12 @@ Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])-
 
 Route::get('/reportaud/excel', [ReportController::class, 'exportExcelAuditoria'])->name('reportaud.excel');
 Route::get('/reportaud/pdf', [ReportController::class, 'exportPDFAuditoria'])->name('reportaud.pdf');
+
+Route::get('/reportmov/excel', [ReportController::class, 'exportExcelMovimiento'])->name('reportmov.excel');
+Route::get('/reportmov/pdf', [ReportController::class, 'exportPDFMovimiento'])->name('reportmov.pdf');
+
+Route::get('/reportgast/excel', [ReportController::class, 'exportExcelGasto'])->name('reportgast.excel');
+Route::get('/reportgast/pdf', [ReportController::class, 'exportPDFGasto'])->name('reportgast.pdf');
 
 
 // Rutas para gestionar proveedores
