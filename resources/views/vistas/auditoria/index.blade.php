@@ -124,7 +124,7 @@
                                 <!-- Datos se llenarán con JavaScript -->
                             </tbody>
                         </table>
-                        <div id="paginationLinks" class="mt-4 flex justify-center">
+                        <div id="paginationLinks" class="mt-4 justify-center ">
                             <!-- Links de paginación se llenarán con JavaScript -->
                         </div>
 
@@ -340,17 +340,17 @@
 
                 if (current_page > 1) {
                     paginationLinks.innerHTML +=
-                        `<a href="#" class="${baseLinkClasses} pagination-link  bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900" data-page="${current_page - 1}">&laquo; Previo</a>`;
+                        `<a href="#" class="${baseLinkClasses} pagination-link mt-1 bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900" data-page="${current_page - 1}">&laquo; Previo</a>`;
                 }
 
                 for (let i = 1; i <= last_page; i++) {
                     paginationLinks.innerHTML +=
-                        `<a href="#" class="${baseLinkClasses} pagination-link ${i === current_page ? 'active bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900'}" data-page="${i}">${i}</a>`;
+                        `<a href="#" class="${baseLinkClasses} pagination-link mt-1 ${i === current_page ? 'active bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900'}" data-page="${i}">${i}</a>`;
                 }
 
                 if (current_page < last_page) {
                     paginationLinks.innerHTML +=
-                        `<a href="#" class="${baseLinkClasses} pagination-link bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900" data-page="${current_page + 1}">Siguiente &raquo;</a>`;
+                        `<a href="#" class="${baseLinkClasses} pagination-link mt-1 bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900" data-page="${current_page + 1}">Siguiente &raquo;</a>`;
                 }
 
 
