@@ -104,7 +104,6 @@
                     <div class="bg-white rounded-lg shadow-lg p-6 w-3/5">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-semibold">Datos</h3>
-
                             <button id="closeModalButton" class="text-red-500">&times;</button>
                         </div>
                         <button id="reportButton"

@@ -213,6 +213,15 @@
                 <li><a class="link_name" href="{{ route('movimientos.index') }}">Movimientos</a></li>
             </ul>
         </li>
+        <li id="gastos">
+            <a href="{{ route('gastos.index') }}">
+                <i class='fas fa-money-bill-wave icon' style="color: #03A9F4;"></i>
+                <span class="link_name">Gastos</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="{{ route('gastos.index') }}">Gastos</a></li>
+            </ul>
+        </li>
         <li id="categoria">
             <a href="{{ route('formaPago.index') }}">
                 <i class='fas fa-credit-card icon' style="color: #03A9F4;"></i>
