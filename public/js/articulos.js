@@ -128,10 +128,121 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Manejar el clic en el botón de cambiar estado
+    document.querySelectorAll(".btn-status").forEach((button) => {
+        button.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
+            const estado = this.getAttribute("data-estado");
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: `¿Deseas cambiar el estado a ${
+                    estado == 1 ? "inactivo" : "activo"
+                }?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                cancelButtonText: "Cancelar",
+                confirmButtonText: "Sí, cambiarlo",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/articulos/${id}/toggle-status`, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": document
+                                .querySelector('meta[name="csrf-token"]')
+                                .getAttribute("content"),
+                            "X-HTTP-Method-Override": "PATCH", // Override method to PATCH
+                        },
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "¡Estado cambiado!",
+                                    text: data.message,
+                                    confirmButtonText: "Aceptar",
+                                }).then(() => {
+                                    location.reload(); // Recargar la página para reflejar los cambios
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: data.message,
+                                    confirmButtonText: "Aceptar",
+                                });
+                            }
+                        });
+                }
+            });
+        });
+    });
+
     // Cerrar el modal y permitir el scroll del cuerpo cuando se cierre
     document
         .getElementById("editArticuloModal")
         .addEventListener("close", function () {
             document.body.classList.remove("modal-open");
         });
+
+    // Reportes
+    const reportModal = document.getElementById("reportModal");
+    const reportBtn = document.getElementById("reportArticulosBtn");
+    const closeReportModalBtn = document.getElementById("closeReportModal");
+    const excelBtn = document.getElementById("excelBtn");
+    const pdfBtn = document.getElementById("pdfBtn");
+    const searchInput = document.getElementById("searchInput");
+    const searchCriteria = document.getElementById("searchCriteria");
+    const articulosTable = document.getElementById("articulosTable");
+
+    reportBtn.addEventListener("click", function () {
+        reportModal.classList.remove("hidden");
+    });
+
+    closeReportModalBtn.addEventListener("click", function () {
+        reportModal.classList.add("hidden");
+    });
+
+    excelBtn.addEventListener("click", function () {
+        // Aquí puedes redirigir a la ruta de generación de reporte Excel
+        window.location.href = "{{ route('reportart.excel') }}";
+    });
+
+    pdfBtn.addEventListener("click", function () {
+        // Aquí puedes redirigir a la ruta de generación de reporte PDF
+        window.location.href = "{{ route('reportart.pdf') }}";
+    });
+
+    // Filtrado de la tabla
+    searchInput.addEventListener("keyup", function () {
+        const filter = searchInput.value.toLowerCase();
+        const criteria = searchCriteria.value;
+        const rows = articulosTable.getElementsByTagName("tr");
+        for (let i = 0; i < rows.length; i++) {
+            const cells = rows[i].getElementsByTagName("td");
+            let found = false;
+            for (let j = 0; j < cells.length; j++) {
+                if (cells[j]) {
+                    if (
+                        (criteria === "nombre" &&
+                            cells[0].innerHTML.toLowerCase().indexOf(filter) >
+                                -1) ||
+                        (criteria === "categoria" &&
+                            cells[3].innerHTML.toLowerCase().indexOf(filter) >
+                                -1)
+                    ) {
+                        found = true;
+                        break;
+                    }
+                }
+            }
+            if (found) {
+                rows[i].style.display = "";
+            } else {
+                rows[i].style.display = "none";
+            }
+        }
+    });
 });

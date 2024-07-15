@@ -28,7 +28,7 @@
                 <li><a id="ventas-index" href="{{ route('ventas.index') }}">Historial de Ventas</a></li>
             </ul>
         </li>
-        <li id="inventario">
+        <li id="articulos">
             <div class="icon-link">
                 <a>
                     <i class='fas fa-boxes icon' style="color: #03A9F4;"></i>
@@ -40,7 +40,6 @@
                 <li><a class="link_name">Articulos</a></li>
                 <li><a id="inventario-create" href="{{ route('articulos.create') }}">Registrar Articulo</a></li>
                 <li><a id="inventario-update" href="{{ route('articulos.index') }}">Modificar Articulo</a></li>
-
             </ul>
         </li>
         <li id="clientes">
@@ -96,7 +95,7 @@
                     <a href="{{ route('roles.index') }}">Gestión Roles</a>
                 </li>
                 <li class="flex items-center space-x-2">
-                    <a href="{{ route('users.index') }}">Gestión Usuarios Principales</a>
+                    <a href="#">Gestión Usuarios Principales</a>
                 </li>
             </ul>
 
@@ -163,6 +162,20 @@
 
             </ul>
         </li>
+        <li id="compras">
+            <div class="icon-link">
+                <a>
+                    <i class='fas fa-shopping-bag icon' style="color: #03A9F4;"></i>
+                    <span class="link_name">Compras</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name">Compras</a></li>
+                <li><a id="compra-create" href="{{ route('compras.create') }}">Registrar Compra</a></li>
+                <li><a id="compra-update" href="{{ route('compras.index') }}">Modificar Compras</a></li>
+            </ul>
+        </li>
         <li id="clientes">
             <div class="icon-link">
                 <a href="#">
@@ -204,7 +217,7 @@
                 <li><a class="link_name" href="{{ route('categorias.index') }}">Categorías</a></li>
             </ul>
         </li>
-        <li id="categoria">
+        <li id="formapago">
             <a href="{{ route('formaPago.index') }}">
                 <i class='fas fa-credit-card icon' style="color: #03A9F4;"></i>
                 <span class="link_name">Formas de Pago</span>
@@ -213,6 +226,25 @@
                 <li><a class="link_name" href="{{ route('formaPago.index') }}">Formas de Pago</a></li>
             </ul>
         </li>
+        <li id="movimientos">
+            <a href="{{ route('movimientos.index') }}">
+                <i class='fas fa-exchange-alt icon' style="color: #03A9F4;"></i>
+                <span class="link_name">Movimientos</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="{{ route('movimientos.index') }}">Movimientos</a></li>
+            </ul>
+        </li>
+        <li id="gastos">
+            <a href="{{ route('gastos.index') }}">
+                <i class='fas fa-money-bill-wave icon' style="color: #03A9F4;"></i>
+                <span class="link_name">Gastos</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="{{ route('gastos.index') }}">Gastos</a></li>
+            </ul>
+        </li>
+
         <li id="auditoria">
             <a href="{{ route('auditoria.index') }}">
                 <i class='fas fa-clipboard-check icon' style="color: #03A9F4;"></i>

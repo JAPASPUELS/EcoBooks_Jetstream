@@ -54,23 +54,23 @@ class CategoriaController extends Controller
     public function index(Request $request)
     {
         $query = Categoria::query();
-    
+
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where('cat_name', 'LIKE', "%{$search}%")
-                  ->orWhere('cat_description', 'LIKE', "%{$search}%");
+                ->orWhere('cat_description', 'LIKE', "%{$search}%");
         }
-    
+
         $categories = $query->get();
-    
+
         foreach ($categories as $category) {
             $enUso = Articulo::where('cat_id', $category->cat_id)->exists();
             $category->enUso = $enUso ? 'Ok' : '';
         }
-    
+
         return view('vistas.categorias.index', compact('categories'));
     }
-    
+
 
     public function edit($id)
     {

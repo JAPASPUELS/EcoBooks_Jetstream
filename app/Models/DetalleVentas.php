@@ -17,6 +17,7 @@ class DetalleVentas extends Model
         'art_id',
         'det_precio',
         'det_unidades',
+        'art_envase',
         'det_precio_total',
         'created_by',
     ];

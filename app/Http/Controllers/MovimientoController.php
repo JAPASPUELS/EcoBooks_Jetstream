@@ -3,85 +3,61 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Categoria;
+use App\Models\Movimientos;
+use App\Models\User;
 use App\Models\Articulo;
-use Illuminate\Support\Facades\Auth;
 
-
-
-class CategoriaController extends Controller
+class MovimientoController extends Controller
 {
-
-
-    public function store(Request $request)
-    {
-        // $request->validate([
-        //     'cat_name' => 'required|string|max:50',
-        //     'cat_description' => 'required|string|max:150',
-        // ]);
-
-        // Categoria::create([
-        //     'cat_name' => $request->cat_name,
-        //     'cat_description' => $request->cat_description,
-        //     'created_by' => Auth::id()
-
-        // ]);
-
-        // return redirect()->route('categorias.index')->with('success', 'Categoría registrada exitosamente');
-    }
-
-  
     public function index(Request $request)
     {
-        // $query = Categoria::query();
-    
-        // if ($request->has('search')) {
-        //     $search = $request->input('search');
-        //     $query->where('cat_name', 'LIKE', "%{$search}%")
-        //           ->orWhere('cat_description', 'LIKE', "%{$search}%");
-        // }
-    
-        // $categories = $query->get();
-    
-        // foreach ($categories as $category) {
-        //     $enUso = Articulo::where('cat_id', $category->cat_id)->exists();
-        //     $category->enUso = $enUso ? 'Ok' : '';
-        // }
-    
-        // return view('vistas.categorias.index', compact('categories'));
-    }
-    
+        $query = Movimientos::query();
 
-    public function edit($id)
-    {
-        // $category = Categoria::findOrFail($id);
-        // return response()->json($category);
-    }
+        // Filtrar los datos basados en los parámetros de consulta
+        if ($request->has('tipo') && $request->tipo != "todo") {
+            $query->where('mov_tipo', $request->tipo);
+        }
+        if ($request->has('usuario') && $request->usuario != 0) {
+            $query->where('created_by', $request->usuario);
+        }
 
-    public function update(Request $request, $id)
-    {
-        // $request->validate([
-        //     'cat_name' => 'required|string|max:50',
-        //     'cat_description' => 'required|string|max:150',
-        // ]);
+        if ($request->has('producto') && $request->producto != 0) {
+            $query->where('art_id', $request->producto);
+        }
 
-        // $categoria = Categoria::findOrFail($id);
-        // $categoria->update([
-        //     'cat_name' => $request->cat_name,
-        //     'cat_description' => $request->cat_description,
-        // ]);
+        if ($request->has('fechaInicio') && $request->fechaInicio != '') {
+            $query->whereDate('mov_fecha', '>=', $request->fechaInicio);
+        }
 
-        // return redirect()->route('categorias.index')->with('success', 'Categoría actualizada exitosamente');
-    }
+        if ($request->has('fechaFin') && $request->fechaFin != '') {
+            $query->whereDate('mov_fecha', '<=', $request->fechaFin);
+        }
 
-    public function destroy($id)
-    {
-    //     try {
-    //         $categoria = Categoria::findOrFail($id);
-    //         $categoria->delete();
-    //         return response()->json(['success' => true, 'message' => 'Categoria eliminada exitosamente']);
-    //     } catch (\Throwable $th) {
-    //         error_log($th);
-    //     }
+        if ($request->has('searchTerm') && $request->searchTerm != '') {
+            $query->where(function ($q) use ($request) {
+                $q->where('mov_tipo', 'like', '%' . $request->searchTerm . '%')
+                    ->where('mov_cantidad', 'like', '%' . $request->searchTerm . '%')
+                    ->where('mov_fecha', 'like', '%' . $request->searchTerm . '%')
+                    ->where('stock_previo', 'like', '%' . $request->searchTerm . '%')
+                    ->where('stock_actual', 'like', '%' . $request->searchTerm . '%')
+                    ->orWhereHas('product', function ($query) use ($request) {
+                        $query->where('art_nombre', 'like', '%' . $request->searchTerm . '%');
+                    })
+                    ->orWhereHas('user', function ($query) use ($request) {
+                        $query->where('name', 'like', '%' . $request->searchTerm . '%');
+                    });
+            });
+        }
+
+        $data = $query->paginate(12);
+
+        $users = User::all();
+        $products = Articulo::all();
+
+        return view('vistas.movimientos.index', [
+            'data' => $data,
+            'users' => $users,
+            'products' => $products
+        ]);
     }
 }
