@@ -172,8 +172,7 @@
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left">
                                 {{ $item->gast_descripcion }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left">$
-                                {{ $item->gast_valor }}
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left">$ {{ $item->gast_valor }}
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 text-left">{{ $item->gast_fecha }}
                             </td>
@@ -558,5 +557,7 @@
         function closeDeleteModal() {
             document.getElementById('deleteModal').classList.add('hidden');
         }
+
+      
     </script>
 @endsection

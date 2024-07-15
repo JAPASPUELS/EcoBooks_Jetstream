@@ -16,6 +16,7 @@ use App\Http\Controllers\InventarioController;
 use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\GastoController;
+use App\Http\Controllers\CompraController;
 
 
 Route::get('/', function () {
@@ -81,6 +82,14 @@ Route::get('reportprov/pdf', [ReportController::class, 'exportPDFProveedores'])-
 //     'update' => 'movimientos.update',
 //     'destroy' => 'movimientos.destroy'
 // ]);
+// Rutas de movimientos
+// Route::resource('vistas/movimientos', MovimientoController::class)->names([
+//     'index' => 'movimientos.index',
+//     'store' => 'movimientos.store',
+//     'edit' => 'movimientos.edit',
+//     'update' => 'movimientos.update',
+//     'destroy' => 'movimientos.destroy'
+// ]);
 
 Route::get('/charts', function () {
     return view('auditoria.index');
@@ -98,10 +107,22 @@ Route::resource('vistas/gastos', GastoController::class)->names([
     'update' => 'gastos.update',
     'destroy' => 'gastos.destroy',
 ]);
+Route::resource('vistas/movimientos', MovimientoController::class)->names([
+    'index' => 'movimientos.index',
+]);
+
+Route::resource('vistas/gastos', GastoController::class)->names([
+    'index' => 'gastos.index',
+    'store' => 'gastos.store',
+    'edit' => 'gastos.edit',
+    'update' => 'gastos.update',
+    'destroy' => 'gastos.destroy',
+]);
 
 
 //Rutas para gestionar Articulos
 Route::resource('articulos', ArticuloController::class);
+Route::patch('/articulos/{articulo}/toggle-status', [ArticuloController::class, 'toggleStatus'])->name('articulos.toggleStatus');
 Route::get('/reportart/excel', [ReportController::class, 'exportExcelArticulos'])->name('reportart.excel');
 Route::get('/reportart/pdf', [ReportController::class, 'exportPDFArticulos'])->name('reportart.pdf');
 
@@ -131,7 +152,6 @@ Route::middleware([
     Route::resource('vistas/auditoria', AuditoriaController::class)->names([
         'index' => 'auditoria.index',
     ]);
-
 });
 
 
@@ -248,6 +268,11 @@ Route::get('/clientes/{id}/edit', [ClientesController::class, 'edit']);
 Route::put('/clientes/{id}', [ClientesController::class, 'update']);
 Route::delete('/clientes/{id}', [ClientesController::class, 'destroy'])->name('clientes.destroy');
 
+//Rutas para gestionar Compras
+Route::resource('compras', CompraController::class);
+Route::delete('/compras/{id}', [CompraController::class, 'destroy'])->name('compras.destroy');
+Route::get('/reportcompras/excel', [ReportController::class, 'exportExcelCompras'])->name('reportCompras.excel');
+Route::get('/reportcompras/pdf', [ReportController::class, 'exportPDFCompras'])->name('reportCompras.pdf');
 
 
 
@@ -265,5 +290,3 @@ Route::resource('vistas/ventas', VentasController::class)->names([
     'update' => 'ventas.update',
     'destroy' => 'ventas.destroy'
 ]);
-
-

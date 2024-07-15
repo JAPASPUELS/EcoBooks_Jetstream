@@ -15,7 +15,7 @@ class Ventas extends Model
     protected $fillable = [
         'cli_codigo',
         'vent_total',
-        'vent_subtotal',
+        'vent_subsubtotal',
         'vent_fecha',
         'created_by',
     ];
@@ -39,6 +39,6 @@ class Ventas extends Model
 
     public function pagos()
     {
-        return $this->hasMany(Pago::class, 'vent_numero', 'vent_numero'); // Cambio aquí
+        return $this->hasOne(Pago::class, 'vent_numero', 'vent_numero');
     }
 }

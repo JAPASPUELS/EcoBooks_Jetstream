@@ -31,6 +31,7 @@ class ArticuloController extends Controller
         return view('vistas.articulos.index', compact('articulos'));
     }
 
+
     public function create()
     {
         $categorias = Categoria::all();
@@ -39,6 +40,7 @@ class ArticuloController extends Controller
 
     public function store(Request $request)
     {
+        // Validar los datos del formulario
         $validated = $request->validate([
             'art_nombre' => 'required|string|max:255',
             'art_precio' => 'required|numeric|min:0',
@@ -47,6 +49,15 @@ class ArticuloController extends Controller
             'art_unidades' => 'required|string|max:255',
         ]);
 
+        // Verificar si el artículo ya existe
+        $articuloExistente = Articulo::where('art_nombre', $validated['art_nombre'])->first();
+
+        if ($articuloExistente) {
+            // Redirigir de nuevo con un mensaje de error
+            return redirect()->back()->with('error', 'El artículo ya existe.');
+        }
+
+        // Crear el nuevo artículo
         $articulo = Articulo::create([
             'art_nombre' => $validated['art_nombre'],
             'art_precio' => $validated['art_precio'],
@@ -58,7 +69,7 @@ class ArticuloController extends Controller
 
         // Crear un movimiento
         Movimientos::create([
-            'mov_tipo' => 'CREACION',
+            'mov_tipo' => 'ingreso',
             'mov_cantidad' => $articulo->art_cantidad,
             'mov_fecha' => now(),
             'art_id' => $articulo->art_id,
@@ -96,7 +107,7 @@ class ArticuloController extends Controller
         // Crear un movimiento si la cantidad ha cambiado
         if ($articulo->wasChanged('art_cantidad')) {
             Movimientos::create([
-                'mov_tipo' => 'ACTUALIZACION',
+                'mov_tipo' => 'ajuste',
                 'mov_cantidad' => $articulo->art_cantidad,
                 'mov_fecha' => now(),
                 'art_id' => $articulo->art_id,
@@ -109,10 +120,18 @@ class ArticuloController extends Controller
         return response()->json(['success' => true, 'message' => 'Artículo actualizado correctamente.']);
     }
 
-    public function destroy(Articulo $articulo)
+    public function changeStatus(Articulo $articulo)
     {
-        $articulo->delete();
+        $articulo->art_estado = !$articulo->art_estado;
+        $articulo->save();
 
-        return response()->json(['success' => true, 'message' => 'Articulo eliminado exitosamente']);
+        return response()->json(['success' => true, 'message' => 'Estado del artículo actualizado correctamente.']);
+    }
+    public function toggleStatus(Articulo $articulo)
+    {
+        $articulo->art_estado = !$articulo->art_estado;
+        $articulo->save();
+
+        return response()->json(['success' => true, 'message' => 'Estado del artículo actualizado correctamente.']);
     }
 }

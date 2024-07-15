@@ -7,6 +7,7 @@ use App\Models\Ventas;
 use App\Models\DetalleVentas;
 use App\Models\Pago;
 use App\Models\FormaPago;
+
 use App\Models\Clientes;
 use App\Models\Articulo;
 use App\Models\Movimientos;
@@ -43,21 +44,26 @@ class VentasController extends Controller
         $forma_Pagos = FormaPago::all();
         return view('vistas.ventas.create', compact('articulos', 'forma_Pagos'));
     }
+
     public function store(Request $request)
     {
         DB::beginTransaction();
         
+        
         try {
             Log::info('Datos recibidos para crear una venta:', $request->all());
+    
     
             // Crear la venta
             $venta = new Ventas();
             $venta->cli_codigo = $request->cli_codigo;
             $venta->vent_total = $request->vent_total;
             $venta->vent_subtotal = $request->vent_subtotal;
-            $venta->vent_fecha = now();
+            $venta->vent_fecha = $request->vent_fecha;
             $venta->created_by = Auth::id();
             $venta->save();
+    
+            // Crear el detalle de la venta y registrar movimientos
     
             // Crear el detalle de la venta y registrar movimientos
             foreach ($request->detalle_ventas as $detalle) {
@@ -65,6 +71,7 @@ class VentasController extends Controller
                 if (!$articulo) {
                     throw new \Exception("Artículo no encontrado");
                 }
+    
     
                 $detalleVenta = new DetalleVentas();
                 $detalleVenta->vent_numero = $venta->vent_numero;
@@ -75,6 +82,7 @@ class VentasController extends Controller
                 $detalleVenta->created_by = Auth::id();
                 $detalleVenta->save();
     
+                // Registrar movimiento
                 // Registrar movimiento
                 $movimiento = new Movimientos();
                 $movimiento->mov_tipo = 'EGRESO';
@@ -91,6 +99,7 @@ class VentasController extends Controller
                 $articulo->save();
             }
     
+    
             // Crear el pago
             $pago = new Pago();
             $pago->vent_numero = $venta->vent_numero;
@@ -99,7 +108,9 @@ class VentasController extends Controller
             $pago->created_by = Auth::id();
             $pago->save();
     
+    
             DB::commit();
+    
     
             return response()->json(['success' => true, 'message' => 'Venta guardada exitosamente']);
         } catch (\Exception $e) {
@@ -108,6 +119,8 @@ class VentasController extends Controller
             return response()->json(['success' => false, 'message' => 'Error al guardar la venta', 'error' => $e->getMessage()]);
         }
     }
+    
+
     
 
     public function show(string $id)
@@ -135,6 +148,7 @@ class VentasController extends Controller
         $articulo = Articulo::find($request->art_id);
         return response()->json($articulo);
     }
+
 
     public function buscarPorCedula($cedula)
     {
