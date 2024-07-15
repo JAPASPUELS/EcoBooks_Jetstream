@@ -48,23 +48,23 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CODIGO</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">CANT.</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">DESCRIPCION</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ENVASE</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PRECIO UNIT.</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">PRECIO TOTAL</th>
-                                <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
+                                <th class="py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">CODIGO</th>
+                                <th class="py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">CANT.</th>
+                                <th class="py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">DESCRIPCION</th>
+                                <th class="py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">ENVASE</th>
+                                <th class="py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">PRECIO UNIT.</th>
+                                <th class="py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">PRECIO TOTAL</th>
+                                <th class="py-3 text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
                             </tr>
                         </thead>
+                        <tbody id="productsTable" class="bg-white divide-y divide-gray-200">
+                            <!-- Productos añadidos aparecerán aquí -->
+                        </tbody>
                     </table>
-                    <div class="overflow-y-auto" style="max-height: 300px;">
-                        <table class="min-w-full divide-y divide-gray-200">
-                            <tbody id="productsTable" class="bg-white divide-y divide-gray-200">
-                                <!-- Productos añadidos aparecerán aquí -->
-                            </tbody>
-                        </table>
-                    </div>
+                    
+                    {{-- <div class="overflow-y-auto" style="max-height: 300px;"> --}}
+                       
+                    {{-- </div> --}}
                     <table class="min-w-full divide-y divide-gray-200">
                         <tfoot class="bg-gray-50">
                             <tr>
