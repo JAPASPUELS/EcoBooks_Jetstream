@@ -3,62 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentPage = 1;
     const products = articulos;
 
-    function guardarVenta() {
-        const productos = [];
-        document.querySelectorAll('#productsTable tr').forEach(row => {
-            productos.push({
-                art_id: row.querySelector('[name="art_id"]').value,
-                det_precio: row.querySelector('[name="det_precio"]').value,
-                det_unidades: row.querySelector('[name="det_unidades"]').value
-            });
-        });
-
-        const ventaData = {
-            cli_codigo: document.getElementById('cedula').value,
-            vent_total: parseFloat(document.getElementById('total').innerText),
-            vent_fecha: document.getElementById('fecha').value,
-            fpa_id: document.getElementById('pago').value,
-            detalle_ventas: productos
-        };
-
-        fetch('/vistas/ventas', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify(ventaData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    title: 'Éxito',
-                    text: data.message,
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar'
-                }).then(() => {
-                    window.location.href = '/vistas/ventas';
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: data.message,
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar'
-                });
-            }
-        })
-        .catch(error => {
-            Swal.fire({
-                title: 'Error',
-                text: 'Hubo un error al guardar la venta',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
-        });
-    }
-
     function openProductModal() {
         document.getElementById('productModal').showModal();
         renderProducts(products, currentPage);
@@ -225,4 +169,75 @@ document.addEventListener('DOMContentLoaded', function () {
         renderProducts(filteredProducts, 1);
         renderPagination(filteredProducts);
     });
+
+    function openRegisterClientModal(cedula) {
+        document.getElementById('register-client-cedula').value = cedula;
+        document.getElementById('registerClientModal').showModal();
+    }
+
+    // document.getElementById('clienteForm').addEventListener('submit', function(event) {
+    //     event.preventDefault();
+    //     const formData = new FormData(this);
+    //     console.log("aqui");
+    //     console.log(formData);
+    //     // fetch('/clientes/create', {
+    //     //     method: 'POST',
+    //     //     headers: {
+    //     //         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+    //     //     },
+    //     //     body: formData
+    //     // })
+    //     // .then(response => response.json())
+    //     // .then(data => {
+    //     //     console.log(data)
+    //     //     // if (data.success) {
+    //     //     //     document.getElementById('cedula').value = data.cliente.cli_codigo;
+    //     //     //     document.getElementById('cliente').value = `${data.cliente.cli_nombre} ${data.cliente.cli_apellido}`;
+    //     //     //     document.getElementById('registerClientModal').close();
+    //     //     //     Swal.fire({
+    //     //     //         title: 'Éxito',
+    //     //     //         text: 'Cliente registrado correctamente',
+    //     //     //         icon: 'success',
+    //     //     //         confirmButtonText: 'Aceptar'
+    //     //     //     });
+    //     //     // } else {
+    //     //     //     Swal.fire({
+    //     //     //         title: 'Error',
+    //     //     //         text: data.message,
+    //     //     //         icon: 'error',
+    //     //     //         confirmButtonText: 'Aceptar'
+    //     //     //     });
+    //     //     // }
+    //     // })
+    //     // .catch(error => {
+    //     //     Swal.fire({
+    //     //         title: 'Error',
+    //     //         text: 'Hubo un error al registrar el cliente',
+    //     //         icon: 'error',
+    //     //         confirmButtonText: 'Aceptar'
+    //     //     });
+    //     // });
+    // });
+
+    // document.getElementById('buscarCliente').addEventListener('click', function() {
+    //     const cedula = document.getElementById('cedula').value;
+
+    //     fetch(`/ventas/cliente/cedula/${cedula}`)
+    //         .then(response => response.json())
+    //         .then(data => {
+    //             if (data.success) {
+    //                 document.getElementById('cliente').value = `${data.cliente.cli_nombre} ${data.cliente.cli_apellido}`;
+    //             } else {
+    //                 openRegisterClientModal(cedula);
+    //             }
+    //         })
+    //         .catch(error => {
+    //             Swal.fire({
+    //                 title: 'Error',
+    //                 text: "Debe ingresar una cédula válida",
+    //                 icon: 'error',
+    //                 confirmButtonText: 'Aceptar'
+    //             });
+    //         });
+    // });
 });

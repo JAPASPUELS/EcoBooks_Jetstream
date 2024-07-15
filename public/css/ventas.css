@@ -1,6 +1,61 @@
-/* ventas.css */
-.overflow-y-auto {
+/* Asegúrate de que el contenedor tenga overflow-x-auto */
+.overflow-x-auto {
+    overflow-x: auto;
+}
+
+/* Definiciones de estilo para las tablas y el contenido */
+.table {
+    width: 100%;
+    min-width: 100%;
+}
+
+.table th, .table td {
+    text-align: left;
+    padding: 0.5rem;
+    border-bottom: 1px solid #e2e8f0; /* Border color similar al de Tailwind */
+}
+
+.table th {
+    background-color: #f9fafb; /* Background color similar al de Tailwind */
+}
+
+.table-container {
+    max-height: 300px;
     overflow-y: auto;
+}
+
+
+.min-w-full {
+    min-width: 100%;
+}
+
+.bg-white {
+    background-color: #fff;
+}
+
+.divide-y > :not([hidden]) ~ :not([hidden]) {
+    border-bottom-width: 1px;
+}
+
+.divide-gray-200 > :not([hidden]) ~ :not([hidden]) {
+    --tw-divide-opacity: 1;
+    border-color: rgba(229, 231, 235, var(--tw-divide-opacity));
+}
+
+.mt-4 {
+    margin-top: 1rem;
+}
+
+.p-4 {
+    padding: 1rem;
+}
+
+.p-6 {
+    padding: 1.5rem;
+}
+
+.max-h-300px {
+    max-height: 300px;
 }
 
 .modal-open .modal {
