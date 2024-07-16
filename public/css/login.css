@@ -11,9 +11,10 @@
   text-align: left;
 }
 
-body {
-  background-color: #cfe9d9; /* Color de fondo actualizado */
-}
+/*body {
+  background-color: #d8d8d8; 
+} 
+*/
 
 .btn-custom {
   background-color: #0062cc; /* Color del botón actualizado */
@@ -22,7 +23,7 @@ body {
 }
 
 .form-outline input {
-  border-color: #ff6219; /* Color del borde del campo de entrada */
+  border-color: #767677ab; /* Color del borde del campo de entrada */
   border-radius: 0.25rem; /* Borde redondeado */
 }
 
@@ -33,7 +34,7 @@ body {
 .card {
   border-radius: 1rem;
   background-color: #ffffff; /* Color de fondo de la tarjeta */
-  box-shadow: 0 4px 8px rgba(1, 60, 255, 0.582); /* Sombra suave */
+  box-shadow: 0 2px 2px rgba(91, 91, 92, 0.582); /* Sombra suave */
 }
 
 .text-muted {
