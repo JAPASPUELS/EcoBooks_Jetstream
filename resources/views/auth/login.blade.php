@@ -57,7 +57,7 @@
                                             <input type="password" id="password" class="form-control form-control-lg" name="password" required autocomplete="new-password" />
                                             <div class="d-flex justify-content-between align-items-center">
                                                 <label class="form-label mb-0" for="password">Contraseña</label>
-                                                <a href="{{ route('password.request') }}">¿Olvidaste la contraseña?</a>
+                                                <a href="{{ route('password.option') }}">¿Olvidaste la contraseña?</a>
                                             </div>
                                         </div>
 

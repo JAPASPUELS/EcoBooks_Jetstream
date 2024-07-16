@@ -10,12 +10,9 @@
     <x-slot name="form">
         <!-- Profile Photo -->
         @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-            <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
-                <!-- Profile Photo File Input -->
-                <input type="file" id="photo" class="hidden"
-                            wire:model.live="photo"
-                            x-ref="photo"
-                            x-on:change="
+        <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
+            <!-- Profile Photo File Input -->
+            <input type="file" id="photo" class="hidden" wire:model.live="photo" x-ref="photo" x-on:change="
                                     photoName = $refs.photo.files[0].name;
                                     const reader = new FileReader();
                                     reader.onload = (e) => {
@@ -24,32 +21,31 @@
                                     reader.readAsDataURL($refs.photo.files[0]);
                             " />
 
-                <x-label for="photo" value="{{ __('Photo') }}" />
+            <x-label for="photo" value="{{ __('Photo') }}" />
 
-                <!-- Current Profile Photo -->
-                <div class="mt-2" x-show="! photoPreview">
-                    <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
-                </div>
-
-                <!-- New Profile Photo Preview -->
-                <div class="mt-2" x-show="photoPreview" style="display: none;">
-                    <span class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center"
-                          x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
-                    </span>
-                </div>
-
-                <x-secondary-button class="mt-2 me-2" type="button" x-on:click.prevent="$refs.photo.click()">
-                    {{ __('Select A New Photo') }}
-                </x-secondary-button>
-
-                @if ($this->user->profile_photo_path)
-                    <x-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
-                        {{ __('Remove Photo') }}
-                    </x-secondary-button>
-                @endif
-
-                <x-input-error for="photo" class="mt-2" />
+            <!-- Current Profile Photo -->
+            <div class="mt-2" x-show="! photoPreview">
+                <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
             </div>
+
+            <!-- New Profile Photo Preview -->
+            <div class="mt-2" x-show="photoPreview" style="display: none;">
+                <span class="block rounded-full w-20 h-20 bg-cover bg-no-repeat bg-center" x-bind:style="'background-image: url(\'' + photoPreview + '\');'">
+                </span>
+            </div>
+
+            <x-secondary-button class="mt-2 me-2" type="button" x-on:click.prevent="$refs.photo.click()">
+                {{ __('Select A New Photo') }}
+            </x-secondary-button>
+
+            @if ($this->user->profile_photo_path)
+            <x-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
+                {{ __('Remove Photo') }}
+            </x-secondary-button>
+            @endif
+
+            <x-input-error for="photo" class="mt-2" />
+        </div>
         @endif
 
         <!-- Name -->
@@ -66,21 +62,44 @@
             <x-input-error for="email" class="mt-2" />
 
             @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::emailVerification()) && ! $this->user->hasVerifiedEmail())
-                <p class="text-sm mt-2">
-                    {{ __('Your email address is unverified.') }}
+            <p class="text-sm mt-2">
+                {{ __('Your email address is unverified.') }}
 
-                    <button type="button" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" wire:click.prevent="sendEmailVerification">
-                        {{ __('Click here to re-send the verification email.') }}
-                    </button>
-                </p>
+                <button type="button" class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" wire:click.prevent="sendEmailVerification">
+                    {{ __('Click here to re-send the verification email.') }}
+                </button>
+            </p>
 
-                @if ($this->verificationLinkSent)
-                    <p class="mt-2 font-medium text-sm text-green-600">
-                        {{ __('A new verification link has been sent to your email address.') }}
-                    </p>
-                @endif
+            @if ($this->verificationLinkSent)
+            <p class="mt-2 font-medium text-sm text-green-600">
+                {{ __('A new verification link has been sent to your email address.') }}
+            </p>
+            @endif
             @endif
         </div>
+
+        <!-- Security Question and Answer -->
+        <div class="col-span-6 sm:col-span-4">
+            <x-label for="security_question" value="{{ __('Nueva Pregunta de Seguridad') }}" />
+            <x-input id="security_question" type="text" class="mt-1 block w-full" wire:model.defer="state.security_question" autocomplete="off" />
+            <x-input-error for="security_question" class="mt-2" />
+        </div>
+
+        <div class="col-span-6 sm:col-span-4 relative">
+            <x-label for="security_answer" value="{{ __('Respuesta de Seguridad') }}" />
+            <x-input id="security_answer" type="password" class="mt-1 block w-full pr-10" wire:model.defer="state.security_answer" autocomplete="off" />
+            <span toggle="#security_answer" class="fa fa-fw fa-eye field-icon toggle-password" style="position: absolute; top: 35px; right: 10px; cursor: pointer;"></span>
+            <x-input-error for="security_answer" class="mt-2" />
+        </div>
+
+        <div class="col-span-6 sm:col-span-4">
+            <label for="security_question_enabled" class="flex items-center">
+                <x-checkbox id="security_question_enabled" wire:model.defer="state.security_question_enabled" />
+                <span class="ml-2 text-sm text-gray-600">{{ __('Activar Pregunta de Seguridad para Recuperar Contraseña') }}</span>
+            </label>
+            <x-input-error for="security_question_enabled" class="mt-2" />
+        </div>
+
     </x-slot>
 
     <x-slot name="actions">
@@ -93,3 +112,14 @@
         </x-button>
     </x-slot>
 </x-form-section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.querySelector('.toggle-password').addEventListener('click', function(e) {
+            const passwordInput = document.querySelector('#security_answer');
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.classList.toggle('fa-eye-slash');
+        });
+    });
+</script>

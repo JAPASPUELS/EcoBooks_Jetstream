@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Reporte de Proveedores</title>
     <style>
@@ -7,29 +8,47 @@
             font-family: Arial, sans-serif;
             font-size: 12px;
         }
+
         table {
             width: 100%;
             border-collapse: collapse;
         }
-        table, th, td {
+
+        table,
+        th,
+        td {
             border: 1px solid black;
         }
-        th, td {
+
+        th,
+        td {
             padding: 8px;
             text-align: left;
         }
+
         th {
             background-color: #f2f2f2;
         }
+
         .header {
             text-align: center;
             margin-bottom: 20px;
         }
     </style>
 </head>
+
 <body>
     <div class="header">
-        <h1>Reporte de Proveedores</h1>
+        <div class="header">
+            <div class="details">
+                <h1 class="text-2xl font-bold">Reporte de Proveedores</h1>
+                <p>Fecha: {{ \Carbon\Carbon::now()->format('d/m/Y H:i:s') }}</p>
+                @if (auth()->user())
+                    <p>Generado por: {{ auth()->user()->name }}</p>
+                    <p>Email: {{ auth()->user()->email }}</p>
+                @endif
+            </div>
+        </div>
     </div>
     <table>
         <thead>
@@ -43,7 +62,7 @@
             </tr>
         </thead>
         <tbody>
-            @foreach($proveedores as $proveedor)
+            @foreach ($proveedores as $proveedor)
                 <tr>
                     <td>{{ $proveedor->pro_id }}</td>
                     <td>{{ $proveedor->pro_nombre }}</td>
@@ -56,4 +75,5 @@
         </tbody>
     </table>
 </body>
+
 </html>

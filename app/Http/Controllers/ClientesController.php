@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Clientes;
+use Illuminate\Support\Facades\Auth;
+
 
 class ClientesController extends Controller
 {
+
+
     public function create()
     {
         return view('vistas.clientes.create');

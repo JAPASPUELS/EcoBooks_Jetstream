@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\FormaPago;
+use Illuminate\Support\Facades\Auth;
+
 
 class FormaPagoController extends Controller
 {
@@ -17,7 +19,7 @@ class FormaPagoController extends Controller
             $query->where('fpa_nombre', 'LIKE', "%{$search}%");
         }
 
-        $forma_pagos = $query->get();
+        $forma_pagos = $query->with('user')->get();
 
         return view('vistas.formaPago.index', compact('forma_pagos'));
     }
@@ -30,6 +32,7 @@ class FormaPagoController extends Controller
 
         FormaPago::create([
             'fpa_nombre' => $request->fpa_nombre,
+            'created_by' => Auth::id()
         ]);
 
         return redirect()->route('formaPago.index')->with('success', 'Forma de pago registrada exitosamente');

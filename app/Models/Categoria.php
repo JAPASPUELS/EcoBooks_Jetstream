@@ -17,5 +17,11 @@ class Categoria extends Model
     protected $fillable = [
         'cat_name',
         'cat_description',
+        'created_by',
     ];
+    
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }

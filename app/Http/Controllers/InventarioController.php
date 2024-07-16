@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Inventario;
+use Illuminate\Support\Facades\Auth;
 
 
 class InventarioController extends Controller
@@ -20,6 +21,8 @@ class InventarioController extends Controller
             'art_id' => $request->art_id,
             'inv_fecha' => $request->inv_fecha,
             'inv_cantidad' => $request->inv_cantidad,
+            'created_by' => Auth::id()
+
         ]);
 
         return redirect()->back()->with('success', 'Inventario registrado exitosamente.');

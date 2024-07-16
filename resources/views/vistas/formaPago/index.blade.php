@@ -22,6 +22,7 @@
                     <tr>
                         <th>Id</th>
                         <th>Nombre</th>
+                        <th>Creado Por</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
@@ -30,6 +31,7 @@
                         <tr>
                             <td data-label="Id">{{ $fp->fpa_id }}</td>
                             <td data-label="Nombre">{{ $fp->fpa_nombre }}</td>
+                            <td data-label="Creado Por">{{ $fp->user->name }}</td>
                             <td data-label="Acciones">
                                 <button class="btn btn-edit" data-id="{{ $fp->fpa_id }}" data-name="{{ $fp->fpa_nombre }}">
                                     <i class='bx bx-edit'></i>
@@ -121,11 +123,10 @@
 
         document.querySelectorAll('.btn-edit').forEach(button => {
             button.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
                 const name = this.getAttribute('data-name');
 
                 document.getElementById('fpa_nombre_modal').value = name;
-                registroForm.action = `/formaPago/${id}`;
+                registroForm.action = `/formaPago`;
                 registroForm.method = 'POST';
                 modalTitle.textContent = 'Actualizar Registro';
 

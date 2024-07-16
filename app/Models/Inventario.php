@@ -14,5 +14,11 @@ class Inventario extends Model
         'art_id',
         'inv_fecha',
         'inv_cantidad',
+        'created_by',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'created_by');
+    }
 }
