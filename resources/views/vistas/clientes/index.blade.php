@@ -51,6 +51,11 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <!-- Enlaces de paginación -->
+            <div class="mt-4">
+                {{ $clientes->links() }}
+            </div>
         </div>
     </div>
 </div>

@@ -33,51 +33,49 @@ class ClientesController extends Controller
 
     public function index()
     {
-        $clientes = Clientes::orderBy('cli_nombre', 'asc')->get();
+        $clientes = Clientes::orderBy('cli_nombre', 'asc')->paginate(10); // Cambiado a paginate(10)
         return view('vistas.clientes.index', compact('clientes'));
     }
 
-
-public function edit($id)
-{
-    $cliente = Clientes::findOrFail($id);
-    return response()->json($cliente);
-}
-
-public function update(Request $request, $id)
-{
-    $request->validate([
-        'cli_codigo' => 'required|string|max:20|unique:clientes,cli_codigo,' . $id . ',cli_codigo',
-        'cli_nombre' => 'required|string|max:50',
-        'cli_apellido' => 'required|string|max:50',
-        'cli_correo' => 'required|string|email|max:100',
-        'cli_direccion' => 'required|string|max:150',
-        'cli_identificacion' => 'required|string|in:CI,PP,RUC',
-    ]);
-
-    try {
+    public function edit($id)
+    {
         $cliente = Clientes::findOrFail($id);
-        $cliente->update([
-            'cli_codigo' => $request->cli_codigo,
-            'cli_nombre' => $request->cli_nombre,
-            'cli_apellido' => $request->cli_apellido,
-            'cli_correo' => $request->cli_correo,
-            'cli_direccion' => $request->cli_direccion,
-            'cli_identificacion' => $request->cli_identificacion,
+        return response()->json($cliente);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'cli_codigo' => 'required|string|max:20|unique:clientes,cli_codigo,' . $id . ',cli_codigo',
+            'cli_nombre' => 'required|string|max:50',
+            'cli_apellido' => 'required|string|max:50',
+            'cli_correo' => 'required|string|email|max:100',
+            'cli_direccion' => 'required|string|max:150',
+            'cli_identificacion' => 'required|string|in:CI,PP,RUC',
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Cliente actualizado exitosamente']);
-    } catch (\Exception $e) {
-        return response()->json(['success' => false, 'message' => 'Error actualizando cliente', 'error' => $e->getMessage()], 500);
-    }
-}
+        try {
+            $cliente = Clientes::findOrFail($id);
+            $cliente->update([
+                'cli_codigo' => $request->cli_codigo,
+                'cli_nombre' => $request->cli_nombre,
+                'cli_apellido' => $request->cli_apellido,
+                'cli_correo' => $request->cli_correo,
+                'cli_direccion' => $request->cli_direccion,
+                'cli_identificacion' => $request->cli_identificacion,
+            ]);
 
+            return response()->json(['success' => true, 'message' => 'Cliente actualizado exitosamente']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error actualizando cliente', 'error' => $e->getMessage()], 500);
+        }
+    }
 
     public function destroy($id)
     {
         $cliente = Clientes::findOrFail($id);
         $cliente->delete();
 
-        return response()->json(['success' => true, 'message' => 'Clientes eliminado exitosamente']);
+        return response()->json(['success' => true, 'message' => 'Cliente eliminado exitosamente']);
     }
 }
