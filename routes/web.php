@@ -159,6 +159,17 @@ Route::resource('vistas/roles', RolesController::class)->names([
     'destroy' => 'roles.destroy'
 ]);
 
+
+Route::resource('vistas/inventario', InventarioController::class)->names([
+    'index' => 'inventario.index',
+    // 'store' => 'roles.store',
+    // 'edit' => 'roles.edit',
+    // 'update' => 'roles.update',
+    // 'destroy' => 'roles.destroy'
+]);
+Route::get('vistas/inventario/detalle/{fecha}', [InventarioController::class, 'detalle'])->name('inventario.detalle');
+
+
 // Route::resource('vistas/users', UsersController::class)->names([
 //     'index' => 'users.index',
 //     // 'store' => 'roles.store',
@@ -199,6 +210,10 @@ Route::get('/reportmov/pdf', [ReportController::class, 'exportPDFMovimiento'])->
 Route::get('/reportgast/excel', [ReportController::class, 'exportExcelGasto'])->name('reportgast.excel');
 Route::get('/reportgast/pdf', [ReportController::class, 'exportPDFGasto'])->name('reportgast.pdf');
 
+Route::get('/reportinv/excel', [ReportController::class, 'exportExcelInventario'])->name('reportinv.excel');
+Route::get('/reportinv/pdf', [ReportController::class, 'exportPDFInventario'])->name('reportinv.pdf');
+
+
 
 // Rutas para gestionar proveedores
 Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
@@ -221,8 +236,6 @@ Route::resource('formaPago', FormaPagoController::class);
 
 Route::post('/chart-data', [ChartController::class, 'getData'])->name('chart.data');
 
-//Rutas para gestionar inventario
-Route::get('/inventario/create', [InventarioController::class, 'create'])->name('inventario.create');
 
 // Rutas para gestionar Clientess
 

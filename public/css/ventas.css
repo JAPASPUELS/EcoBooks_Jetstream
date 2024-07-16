@@ -1,7 +1,4 @@
-.overflow-y-auto {
-    overflow-y: auto;
-}
-
+/* ventas.css */
 .modal-open .modal {
     display: flex;
     align-items: center;
@@ -13,7 +10,6 @@ body {
 }
 
 .container {
-    max-height: 12rem !important; 
     margin-top: 20px;
 }
 
@@ -87,12 +83,20 @@ body {
 .btn-info {
     background-color: #5bc0de;
     border: none;
+.btn-success {
+    background-color: #5cb85c;
+    border: none;
+}
+
+.btn-info {
+    background-color: #5bc0de;
+    border: none;
 }
 
 /* Additional Styles for Horizontal Form Layout */
 .form-row {
-    /* display: flex;
-    flex-wrap: wrap; */
+    display: flex;
+    flex-wrap: wrap;
     margin-bottom: 10px;
 }
 
@@ -106,6 +110,18 @@ body {
     margin-right: 0;
 }
 
+/* Responsive Design for Small Screens */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+    .form-row .form-group {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+}
+
+/* ventas.css */
 /* Responsive Design for Small Screens */
 @media (max-width: 768px) {
     .form-row {
@@ -208,5 +224,6 @@ body {
 
 .page-link:hover {
     background-color: #e9ecef;
+    border-color: #dee2e6;
     border-color: #dee2e6;
 } 

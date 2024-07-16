@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\AuditoriaExport;
 use App\Exports\MovimientoExport;
+use App\Exports\InventarioExcelExport;
 use App\Models\Clientes;
 use App\Models\Movimientos;
 use Illuminate\Http\Request;
@@ -11,6 +12,7 @@ use App\Models\Categoria;
 use App\Models\Articulo;
 use App\Models\Compra;
 use App\Models\Auditoria;
+use App\Models\Inventario;
 use App\Models\Gasto;
 use App\Models\Proveedor;
 use Maatwebsite\Excel\Facades\Excel;
@@ -103,7 +105,36 @@ class ReportController extends Controller
         return $pdf->download('gastos.pdf');
     }
 
-    // Exportar artículos
+    public function exportExcelInventario(Request $request)
+    {
+        $query = Inventario::with('user', 'product');
+
+        if ($request->has('fecha') && $request->fecha != '') {
+            $fecha = date('Y-m-d', strtotime($request->fecha));
+            $query->whereDate('inv_fecha', '>=', $fecha)
+                ->whereDate('inv_fecha', '<=', $fecha);
+        }
+
+        $registros = $query->get();
+
+        return Excel::download(new InventarioExcelExport($registros), 'inventario.xlsx');
+    }
+
+
+    public function exportPDFInventario(Request $request)
+    {
+        $query = Inventario::with('user', 'product');
+
+        if ($request->has('fecha') && $request->fecha != '') {
+            $fecha = date('Y-m-d', strtotime($request->fecha));
+            $query->whereDate('inv_fecha', '>=', $fecha)
+                ->whereDate('inv_fecha', '<=', $fecha);
+        }
+
+        $registros = $query->get();
+        $pdf = PDF::loadView('reports.inventario', compact('registros'));
+        return $pdf->download('inventario.pdf');
+    }    // Exportar artículos
     public function exportPDFArticulos()
     {
         $articulos = Articulo::with('categoria')->get();
