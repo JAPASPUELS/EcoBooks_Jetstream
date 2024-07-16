@@ -124,9 +124,10 @@
         document.querySelectorAll('.btn-edit').forEach(button => {
             button.addEventListener('click', function() {
                 const name = this.getAttribute('data-name');
+                const id = this.getAttribute('data-id');
 
                 document.getElementById('fpa_nombre_modal').value = name;
-                registroForm.action = `/formaPago`;
+                registroForm.action = `/formaPago/${id}`;
                 registroForm.method = 'POST';
                 modalTitle.textContent = 'Actualizar Registro';
 
@@ -142,7 +143,6 @@
                 modal.classList.remove('hidden');
             });
         });
-
         document.querySelectorAll('.btn-delete').forEach(button => {
             button.addEventListener('click', function() {
                 const id = this.getAttribute('data-id');

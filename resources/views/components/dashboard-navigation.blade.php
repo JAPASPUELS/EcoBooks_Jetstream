@@ -96,7 +96,7 @@
                         <a href="{{ route('roles.index') }}">Gestión Roles</a>
                     </li>
                     <li class="flex items-center space-x-2">
-                        <a href="{{ route('users.index') }}">Gestión Usuarios Principales</a>
+                      {{--  <a href="{{ route('users.index') }}">Gestión Usuarios Principales</a>--}}   
                     </li>
                 </ul>
 
