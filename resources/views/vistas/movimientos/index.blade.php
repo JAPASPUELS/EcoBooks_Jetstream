@@ -111,16 +111,16 @@
                 <select id="tipoDropdown" name="tipo"
                     class="block appearance-none w-48 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline">
                     <option value="todo">TODO</option>
-                    <option value="ingreso">INGRESO</option>
-                    <option value="egreso">EGRESO</option>
-                    <option value="ajuste">AJUSTE</option>
+                    <option value="INGRESO">INGRESO</option>
+                    <option value="EGRESO">EGRESO</option>
+                    <option value="AJUSTE">AJUSTE</option>
                 </select>
             </div>
 
             <!-- Búsqueda General -->
             <div class="relative mr-5 mt-5 mb-5">
-                <label for="searchInput" class="block text-gray-700 text-sm font-bold mb-2">Búsqueda General</label>
-                <input id="searchInput" name="searchTerm" type="text"
+                <label for="searchTerm" class="block text-gray-700 text-sm font-bold mb-2">Búsqueda General</label>
+                <input id="searchTerm" name="searchTerm" type="text"
                     class="block w-64 px-4 py-2 pr-8 rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 placeholder-gray-400"
                     placeholder="Buscar...">
             </div>

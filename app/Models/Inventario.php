@@ -21,4 +21,8 @@ class Inventario extends Model
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+    public function product()
+    {
+        return $this->belongsTo(Articulo::class, 'art_id');
+    }
 }
