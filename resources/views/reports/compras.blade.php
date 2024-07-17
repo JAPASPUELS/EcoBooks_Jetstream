@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Reporte de Articulos</title>
+    <title>Reporte de Compras</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -39,26 +39,28 @@
 
 <body>
     <div class="header">
-        <h1>Reporte de Articulos</h1>
+        <h1>Reporte de Compras</h1>
     </div>
     <table>
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Nombre</th>
-                <th>Precio</th>
+                <th>Artículo</th>
+                <th>Proveedor</th>
+                <th>Número de Factura</th>
                 <th>Cantidad</th>
-                <th>Categoria</th>
+                <th>Detalles</th>
             </tr>
         </thead>
         <tbody>
-            @foreach($articulos as $articulo)
+            @foreach($compras as $compra)
             <tr>
-                <td>{{ $articulo->art_id }}</td>
-                <td>{{ $articulo->art_nombre }}</td>
-                <td>{{ $articulo->art_precio }}</td>
-                <td>{{ $articulo->art_cantidad }}</td>
-                <td>{{ $articulo->categoria->cat_name ?? 'Sin categoría' }}</td>
+                <td>{{ $compra->comp_id }}</td>
+                <td>{{ $compra->articulo->art_nombre }}</td>
+                <td>{{ $compra->proveedor->pro_nombre }}</td>
+                <td>{{ $compra->comp_numfac }}</td>
+                <td>{{ $compra->comp_cantidad }}</td>
+                <td>{{ $compra->com_detalles }}</td>
             </tr>
             @endforeach
         </tbody>

@@ -10,6 +10,7 @@ use App\Models\Movimientos;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Articulo;
+use App\Models\Compra;
 use App\Models\Auditoria;
 use App\Models\Inventario;
 use App\Models\Gasto;
@@ -20,6 +21,8 @@ use App\Exports\ClientesExport;
 use App\Exports\ProveedoresExport;
 use App\Exports\GastosExport;
 use Barryvdh\DomPDF\Facade\Pdf;
+use App\Exports\ArticulosExport;
+use App\Exports\ComprasExport;
 
 class ReportController extends Controller
 {
@@ -131,5 +134,31 @@ class ReportController extends Controller
         $registros = $query->get();
         $pdf = PDF::loadView('reports.inventario', compact('registros'));
         return $pdf->download('inventario.pdf');
+    }    // Exportar artículos
+    public function exportPDFArticulos()
+    {
+        $articulos = Articulo::with('categoria')->orderBy('art_id')->get();
+        $pdf = PDF::loadView('reports.articulos', compact('articulos'));
+        return $pdf->download('articulos.pdf');
+    }
+
+
+    public function exportExcelArticulos()
+    {
+        return Excel::download(new ArticulosExport, 'articulos.xlsx');
+    }
+
+    // Exportar compras a PDF
+    public function exportPDFCompras()
+    {
+        $compras = Compra::with('articulo', 'proveedor')->orderBy('comp_id', 'asc')->get();
+        $pdf = PDF::loadView('reports.compras', compact('compras'));
+        return $pdf->download('compras.pdf');
+    }
+
+    // Exportar compras a Excel
+    public function exportExcelCompras()
+    {
+        return Excel::download(new ComprasExport, 'compras.xlsx');
     }
 }

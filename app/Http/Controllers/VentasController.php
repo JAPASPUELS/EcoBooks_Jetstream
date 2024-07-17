@@ -45,7 +45,7 @@ class VentasController extends Controller
             $venta->cli_codigo = $request->cli_codigo;
             $venta->vent_total = $request->vent_total;
             $venta->vent_subtotal = $request->vent_subtotal;
-            $venta->vent_fecha = now();
+            $venta->vent_fecha = $request->vent_fecha;
             $venta->created_by = Auth::id();
             $venta->save();
     
