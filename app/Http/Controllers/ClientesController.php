@@ -40,18 +40,21 @@ class ClientesController extends Controller
         return redirect()->route('clientes.create')->with('success', 'Clientes registrado exitosamente');
     }
 
+
+
+
     public function index()
     {
-        $clientes = Clientes::orderBy('cli_nombre', 'asc')->get();
+        $clientes = Clientes::orderBy('cli_nombre', 'asc')->paginate(10); // Cambiado a paginate(10)
         return view('vistas.clientes.index', compact('clientes'));
     }
 
 
-public function edit($id)
-{
-    $cliente = Clientes::findOrFail($id);
-    return response()->json($cliente);
-}
+    public function edit($id)
+    {
+        $cliente = Clientes::findOrFail($id);
+        return response()->json($cliente);
+    }
 
 public function update(Request $request, $id)
 {
@@ -75,19 +78,18 @@ public function update(Request $request, $id)
             'cli_identificacion' => $request->cli_identificacion,
         ]);
 
-        return response()->json(['success' => true, 'message' => 'Cliente actualizado exitosamente']);
-    } catch (\Exception $e) {
-        return response()->json(['success' => false, 'message' => 'Error actualizando cliente', 'error' => $e->getMessage()], 500);
+            return response()->json(['success' => true, 'message' => 'Cliente actualizado exitosamente']);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'Error actualizando cliente', 'error' => $e->getMessage()], 500);
+        }
     }
-}
-
 
     public function destroy($id)
     {
         $cliente = Clientes::findOrFail($id);
         $cliente->delete();
 
-        return response()->json(['success' => true, 'message' => 'Clientes eliminado exitosamente']);
+        return response()->json(['success' => true, 'message' => 'Cliente eliminado exitosamente']);
     }
 
 }
