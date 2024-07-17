@@ -98,7 +98,7 @@ body {
     text-decoration: none;
 }
 .sidebar .nav-links li a .link_name {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 400;
     color: #000000;
     transition: all 0.4s ease;
@@ -112,6 +112,18 @@ body {
     opacity: 0;
     pointer-events: none;
 }
+
+.sidebar .nav-links a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+.sidebar.close .nav-links .link_name {
+    opacity: 0;
+    pointer-events: none;
+}
+
+
 .sidebar .nav-links li .sub-menu {
     padding: 0 6px;
     background: #03350e;
