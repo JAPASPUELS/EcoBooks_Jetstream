@@ -10,7 +10,10 @@
     <meta name="description" content="Simple landind page" />
     <meta name="keywords" content="" />
     <meta name="author" content="" />
+    <link rel="icon" href="{{ asset('favicons/favicon.ico') }}" type="image/x-icon">
     <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    {{-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> --}}
+    {{-- <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'> --}}
     <!--Replace with your tailwind.css once created-->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet" />
     <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
@@ -55,10 +58,10 @@
                         <a class="inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
                             href="#">link</a>
                     </li> --}}
-                    <li class="mr-3">
+                    {{-- <li class="mr-3">
                         <a class="inline-block text-black no-underline hover:text-gray-800 hover:text-underline py-2 px-4"
                             href="#">Regitro</a>
-                    </li>
+                    </li> --}}
                 </ul>
                 {{-- <button id="navAction" --}}
                 {{-- class=""> --}}
@@ -378,7 +381,7 @@
     </section>
     <!--Footer-->
     <footer class="bg-white">
-        <div class="container mx-auto px-8">
+        <div class="container mx-auto ">
             <div class="w-full flex flex-col md:flex-row py-6">
                 <div class="flex-1 mb-6 text-black">
                     <a class="toggleColour text-white no-underline hover:no-underline font-bold text-2xl lg:text-4xl"
@@ -389,10 +392,7 @@
                     </a>
                 </div>
 
-
-
-
-                <div class="flex-1">
+                {{-- <div class="flex-1">
                     <p class="uppercase text-gray-500 md:mb-6">Links</p>
                     <ul class="list-reset mb-6">
                         <li class="mt-2 inline-block mr-2 md:block md:mr-0">
@@ -421,25 +421,26 @@
                                 class="no-underline hover:underline text-gray-800 hover:text-pink-500">Privacy</a>
                         </li>
                     </ul>
-                </div>
+                </div> --}}
                 <div class="flex-1">
                     <p class="uppercase text-gray-500 md:mb-6">Social</p>
                     <ul class="list-reset mb-6">
                         <li class="mt-2 inline-block mr-2 md:block md:mr-0">
-                            <a href="#"
-                                class="no-underline hover:underline text-gray-800 hover:text-pink-500">Facebook</a>
+                            <a href="https://wa.me/+593984877969?text=Hola,%20me%20comunico%20con%20*Eco%20Limpieza*%20estoy%20interesado%20en%20sus%20productos%20me%20ayuda%20con%20información?"
+                                class="no-underline  text-gray-800 hover:text-green-500" target="_blank"> <i
+                                    class='fas fa-whatsapp icon' style="color: #25D366;"></i> WhatsApp</a>
                         </li>
-                        <li class="mt-2 inline-block mr-2 md:block md:mr-0">
+                        {{-- <li class="mt-2 inline-block mr-2 md:block md:mr-0">
                             <a href="#"
                                 class="no-underline hover:underline text-gray-800 hover:text-pink-500">Linkedin</a>
                         </li>
                         <li class="mt-2 inline-block mr-2 md:block md:mr-0">
                             <a href="#"
                                 class="no-underline hover:underline text-gray-800 hover:text-pink-500">Twitter</a>
-                        </li>
+                        </li> --}}
                     </ul>
                 </div>
-                <div class="flex-1">
+                {{-- <div class="flex-1">
                     <p class="uppercase text-gray-500 md:mb-6">Company</p>
                     <ul class="list-reset mb-6">
                         <li class="mt-2 inline-block mr-2 md:block md:mr-0">
@@ -456,7 +457,7 @@
                                 class="no-underline hover:underline text-gray-800 hover:text-pink-500">Contact</a>
                         </li>
                     </ul>
-                </div>
+                </div> --}}
             </div>
         </div>
         <a href="https://www.freepik.com/free-photos-vectors/background" class="text-gray-500">Background vector
