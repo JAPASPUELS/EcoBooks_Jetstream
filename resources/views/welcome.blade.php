@@ -63,7 +63,7 @@
                 {{-- <button id="navAction" --}}
                 {{-- class=""> --}}
                 <a href="{{ route('login') }}" id="navAction"
-                    class="mx-auto lg:mx-0 hover:underline bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">Iniciar
+                    class="mx-auto lg:mx-0  bg-white text-gray-800 font-bold rounded-full mt-4 lg:mt-0 py-4 px-8 shadow opacity-75 focus:outline-none  transform transition hover:scale-105 duration-300 ease-in-out">Iniciar
                     Sesión </a>
                 {{-- </button> --}}
             </div>
@@ -195,7 +195,7 @@
             {{-- <div class="w-full mb-4">
                 <div class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"></div>
             </div> --}}
-            <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink gradient rounded-lg "  >
+            <div class="w-full md:w-1/3 p-6 flex flex-col flex-grow flex-shrink gradient rounded-lg ">
                 <div class="bg-white flex-1 rounded-lg overflow-hidden shadow-md ">
                     <a href="#" class="flex flex-wrap no-underline hover:no-underline ">
                         {{-- <p class="w-full text-gray-600 text-xs md:text-sm px-6">
@@ -288,32 +288,50 @@
                 <div class="h-1 mx-auto gradient w-64 opacity-25 my-0 py-0 rounded-t"></div>
             </div>
             <div class="flex flex-col sm:flex-row justify-center pt-12 my-12 sm:my-4">
-                <div
-                    class="flex flex-col w-5/6 lg:w-1/3 mx-auto lg:mx-0 rounded-lg bg-white mt-4 sm:-mt-6 shadow-lg z-10">
-                    <div class="flex-1 bg-white rounded-lg overflow-hidden shadow-lg">
-                        {{-- <div class="w-full p-8 text-3xl font-bold text-center">Basic</div>
-                        <div class="h-1 w-full gradient my-0 py-0 rounded-t"></div> --}}
-                        <ul class="w-full text-center text-base font-bold">
-                            <li class="border-b py-4">Detergentes biodegradables</li>
-                            <li class="border-b py-4">Limpiadores multiusos ecológicos</li>
-                            <li class="border-b py-4">Productos para el cuidado del hogar sin químicos agresivos</li>
-                            <li class="border-b py-4">Accesorios y utensilios de limpieza sostenibles</li>
+                <div class="flex flex-col w-5/6 lg:w-1/4 mx-auto lg:mx-0 rounded-none lg:rounded-l-lg bg-white mt-4">
+                    <div class="flex-1 bg-white text-gray-600 rounded-t rounded-b-none overflow-hidden shadow">
+                        <ul class="w-full text-center text-sm font-bold">
+                            <li class="border-b py-4">Detergente líquido para ropa</li>
+                            <li class="border-b py-4">Suavizante de telas</li>
+                            <li class="border-b py-4">Detergente en polvo</li>
+                            <li class="border-b py-4">Desinfectante multiuso</li>
+                            <li class="border-b py-4">Limpiador de vidrios y espejos</li>
+                            <li class="border-b py-4">Limpiador de pisos</li>
+                            <li class="border-b py-4">Limpiador de baños</li>
+                            <li class="border-b py-4">Limpiador de cocinas</li>
                         </ul>
                     </div>
-                    {{-- <div class="flex-none mt-auto bg-white rounded-b rounded-t-none overflow-hidden shadow p-6">
-                        <div class="w-full pt-6 text-4xl font-bold text-center">
-                            £x.99
-                            <span class="text-base">/ per user</span>
-                        </div>
-                        <div class="flex items-center justify-center">
-                            <button
-                                class="mx-auto lg:mx-0 hover:underline gradient text-white font-bold rounded-full my-6 py-4 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
-                                Sign Up
-                            </button>
-                        </div>
-                    </div> --}}
-                </div>
 
+                </div>
+                <div
+                    class="flex flex-col w-5/6 lg:w-1/3 mx-auto lg:mx-0 rounded-lg bg-white mt-4 sm:-mt-6 shadow-lg z-10">
+                    <div class="flex-1 bg-white rounded-t rounded-b-none overflow-hidden shadow">
+                        <ul class="w-full text-center text-base font-bold">
+                            <li class="border-b py-4">Desengrasante</li>
+                            <li class="border-b py-4">Limpiador de muebles</li>
+                            <li class="border-b py-4">Limpiador de alfombras</li>
+                            <li class="border-b py-4">Limpiador de acero inoxidable</li>
+                            <li class="border-b py-4">Limpiador de hornos</li>
+                            <li class="border-b py-4">Limpiador de pisos de madera</li>
+                            <li class="border-b py-4">Desinfectante en spray</li>
+                            <li class="border-b py-4">Jabón líquido para manos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="flex flex-col w-5/6 lg:w-1/4 mx-auto lg:mx-0 rounded-none lg:rounded-l-lg bg-white mt-4">
+                    <div class="flex-1 bg-white text-gray-600 rounded-t rounded-b-none overflow-hidden shadow">
+                        <ul class="w-full text-center text-sm font-bold">
+                            <li class="border-b py-4">Cloro</li>
+                            <li class="border-b py-4">Limpiador de inodoros</li>
+                            <li class="border-b py-4">Desinfectante de aire</li>
+                            <li class="border-b py-4">Limpiador de ventanas</li>
+                            <li class="border-b py-4">Detergente para lavavajillas</li>
+                            <li class="border-b py-4">Limpiador de microondas</li>
+                            <li class="border-b py-4">Limpiador de refrigeradores</li>
+                            <li class="border-b py-4">Limpiador multiuso natural</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -372,7 +390,7 @@
                 </div>
 
 
-           
+
 
                 <div class="flex-1">
                     <p class="uppercase text-gray-500 md:mb-6">Links</p>

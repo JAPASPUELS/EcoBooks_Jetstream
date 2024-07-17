@@ -134,7 +134,7 @@
             <!-- Botón de agregar nuevo registro -->
             <div class="mt-12 mb-7">
 
-                <button type="button" id="addBtn"
+                <button type="button" id="openModalnInventarioBtn"
                     class="bg-indigo-500 hover:bg-indigo-700 text-white py-2 px-4 rounded-lg ml-3">Nuevo</button>
             </div>
         </form>
@@ -286,10 +286,29 @@
                         px-7 py-3">
                     <div id="detalleContent"></div>
                 </div>
-              
+
             </div>
         </div>
     </div>
+
+    <!-- Modal Nuevo -->
+    <div id="nInventarioModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+        <div class="relative top-20 mx-auto p-5 border w-3/4 shadow-lg rounded-md bg-white">
+            <div class="mt-3 text-left">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="ml-7 text-lg leading-6 font-medium text-gray-900" id="modal-title-inv">
+                        Nuevo Inventario
+                    </h3>
+                    <button class="text-red-500 mr-9" id="closeModalnInventario">&times;</button>
+                </div>
+                <div class="mt-2 px-7 py-3">
+                    <button id="saveButton">Guardar</button>
+                    <div id="detalleContentnInventario"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
     <script>
         function closeModal() {
@@ -297,7 +316,6 @@
                 document.getElementById('detalleModal').classList.add('hidden');
             });
         }
-
 
         function openModal(fecha) {
             fetch(`/vistas/inventario/detalle/${fecha}`)
@@ -311,19 +329,10 @@
                 });
         }
 
-        function fetchPage(url) {
-            fetch(url)
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('detalleContent').innerHTML = html;
-                });
-        }
-
         const closeReportModalBtn = document.getElementById('closeReportModal');
         closeReportModalBtn.addEventListener('click', function() {
             reportModal.classList.add('hidden');
         });
-
 
         function generateReport(fecha) {
             document.getElementById('reportModal').classList.remove('hidden');
@@ -336,11 +345,96 @@
                 window.location.href = `/reportinv/pdf?fecha=${fecha}`;
             };
         }
-
+    </script>
+    <script>
         document.addEventListener('DOMContentLoaded', function() {
+            const closeModalnInventarioButton = document.getElementById('closeModalnInventario');
+            const openModalnInventarioButton = document.getElementById('openModalnInventarioBtn');
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('modal-title-inv').innerText = 'Nuevo Inventario ' + today;
 
+            if (closeModalnInventarioButton) {
+                closeModalnInventarioButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    document.getElementById('nInventarioModal').classList.add('hidden');
+                });
+            }
 
+            if (openModalnInventarioButton) {
+                openModalnInventarioButton.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    openModalnInventario();
+                });
+            }
 
+            function openModalnInventario() {
+                fetch(`/vistas/inventario/nuevo`)
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('detalleContentnInventario').innerHTML = html;
+                        document.getElementById('nInventarioModal').classList.remove('hidden');
+                        attachTableEventListeners();
+                    });
+            }
+
+            function attachTableEventListeners() {
+                const inputsInventariada = document.querySelectorAll('.inventariada-input');
+                const editButtons = document.querySelectorAll('.edit-btn');
+                const cantidadInputs = document.querySelectorAll('.cantidad-input');
+
+                inputsInventariada.forEach(input => {
+                    input.addEventListener('input', function() {
+                        const row = input.closest('tr');
+                        const cantidadProducto = row.querySelector('.cantidad-input').value;
+                        const validationIcon = row.querySelector('.validation-icon');
+
+                        if (input.value == cantidadProducto) {
+                            validationIcon.innerHTML =
+                                '<i class="fas fa-check text-green-500"></i>';
+                        } else {
+                            validationIcon.innerHTML = '<i class="fas fa-times text-red-500"></i>';
+                        }
+                    });
+                });
+
+                editButtons.forEach(button => {
+                    button.addEventListener('click', function() {
+                        const row = button.closest('tr');
+                        const cantidadInput = row.querySelector('.cantidad-input');
+                        cantidadInput.disabled = !cantidadInput.disabled;
+
+                        if (!cantidadInput.disabled) {
+                            cantidadInput.focus();
+                        }
+                    });
+                });
+
+                const saveButton = document.getElementById('saveButton');
+                if (saveButton) {
+                    saveButton.addEventListener('click', function() {
+                        const changes = [];
+                        cantidadInputs.forEach(input => {
+                            if (!input.disabled) {
+                                const row = input.closest('tr');
+                                changes.push({
+                                    id: row.dataset.id,
+                                    cantidad: input.value
+                                });
+                            }
+                        });
+
+                        console.log('Changes:', changes);
+
+                        // Aquí puedes enviar el array de cambios al backend utilizando AJAX o un formulario oculto
+                    });
+                }
+            }
+
+            attachTableEventListeners();
         });
     </script>
+
+
+
+
 @endsection

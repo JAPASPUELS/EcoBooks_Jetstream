@@ -159,14 +159,13 @@ Route::resource('vistas/roles', RolesController::class)->names([
 ]);
 
 
-Route::resource('vistas/inventario', InventarioController::class)->names([
-    'index' => 'inventario.index',
-    // 'store' => 'roles.store',
-    // 'edit' => 'roles.edit',
-    // 'update' => 'roles.update',
-    // 'destroy' => 'roles.destroy'
-]);
+// Route::resource('vistas/inventario', InventarioController::class)->names([
+//     'index' => 'inventario.index',
+// ]);
+
 Route::get('vistas/inventario/detalle/{fecha}', [InventarioController::class, 'detalle'])->name('inventario.detalle');
+Route::get('vistas/inventario', [InventarioController::class, 'index'])->name('inventario.index');
+Route::get('vistas/inventario/nuevo', [InventarioController::class, 'nuevo'])->name('inventario.nuevo');
 
 
 // Route::resource('vistas/users', UsersController::class)->names([
