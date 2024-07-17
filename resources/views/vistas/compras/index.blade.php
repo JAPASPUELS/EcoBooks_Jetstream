@@ -15,10 +15,11 @@
             </button>
             <form method="GET" action="{{ route('compras.index') }}" class="flex items-center space-x-2">
                 <select id="searchCriteria" name="criteria" class="custom-select">
-                    <option value="articulo">Buscar por Artículo</option>
-                    <option value="proveedor">Buscar por Proveedor</option>
+                    <option value="articulo" {{ request('criteria') == 'articulo' ? 'selected' : '' }}>Buscar por Artículo</option>
+                    <option value="proveedor" {{ request('criteria') == 'proveedor' ? 'selected' : '' }}>Buscar por Proveedor</option>
                 </select>
-                <input type="text" id="searchInput" name="search" class="custom-input" placeholder="Buscar...">
+                <input type="text" id="searchInput" name="search" class="custom-input" placeholder="Buscar..." value="{{ request('search') }}">
+                <button type="submit" class="btn btn-primary">Buscar</button>
             </form>
         </div>
     </div>
@@ -34,7 +35,6 @@
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Número de Factura</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Cantidad</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Detalles</th>
-                <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Creado por</th>
                 <th scope="col" class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Acciones</th>
             </tr>
         </thead>
@@ -46,7 +46,6 @@
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $compra->comp_numfac }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $compra->comp_cantidad }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $compra->com_detalles }}</td>
-                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $compra->user->name }}</td>
                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                     <button class="btn btn-edit" data-id="{{ $compra->comp_id }}">
                         <i class='bx bx-edit'></i>

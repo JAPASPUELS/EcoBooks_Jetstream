@@ -193,9 +193,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const closeReportModalBtn = document.getElementById("closeReportModal");
     const excelBtn = document.getElementById("excelBtn");
     const pdfBtn = document.getElementById("pdfBtn");
-    const searchInput = document.getElementById("searchInput");
-    const searchCriteria = document.getElementById("searchCriteria");
-    const articulosTable = document.getElementById("articulosTable");
 
     reportBtn.addEventListener("click", function () {
         reportModal.classList.remove("hidden");
@@ -207,42 +204,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     excelBtn.addEventListener("click", function () {
         // Aquí puedes redirigir a la ruta de generación de reporte Excel
-        window.location.href = "{{ route('reportart.excel') }}";
+        window.location.href = "/reportart/excel";
     });
 
     pdfBtn.addEventListener("click", function () {
         // Aquí puedes redirigir a la ruta de generación de reporte PDF
-        window.location.href = "{{ route('reportart.pdf') }}";
-    });
-
-    // Filtrado de la tabla
-    searchInput.addEventListener("keyup", function () {
-        const filter = searchInput.value.toLowerCase();
-        const criteria = searchCriteria.value;
-        const rows = articulosTable.getElementsByTagName("tr");
-        for (let i = 0; i < rows.length; i++) {
-            const cells = rows[i].getElementsByTagName("td");
-            let found = false;
-            for (let j = 0; j < cells.length; j++) {
-                if (cells[j]) {
-                    if (
-                        (criteria === "nombre" &&
-                            cells[0].innerHTML.toLowerCase().indexOf(filter) >
-                                -1) ||
-                        (criteria === "categoria" &&
-                            cells[3].innerHTML.toLowerCase().indexOf(filter) >
-                                -1)
-                    ) {
-                        found = true;
-                        break;
-                    }
-                }
-            }
-            if (found) {
-                rows[i].style.display = "";
-            } else {
-                rows[i].style.display = "none";
-            }
-        }
+        window.location.href = "/reportart/pdf";
     });
 });
