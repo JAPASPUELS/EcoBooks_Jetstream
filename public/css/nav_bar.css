@@ -59,6 +59,13 @@ body {
 .sidebar .nav-links::-webkit-scrollbar {
     display: none;
 }
+.sidebar.close .delimiter {
+    height: 5px;
+    /* position: relative; */
+    display: block;
+    /* list-style: none; */
+    /* transition: all 0.4s ease; */
+}
 .sidebar .nav-links li {
     position: relative;
     list-style: none;
