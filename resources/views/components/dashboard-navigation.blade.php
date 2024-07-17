@@ -3,8 +3,13 @@
         <img src="/favicons/favicon.ico" alt="EcoBooks Logo">
         <span class="logo_name">EcoBooks</span>
     </div>
-    @if (auth()->user()->rol_id == 1)
-    <ul class="nav-links">
+
+
+
+
+
+    {{-- @if (auth()->user()->permisos == 'Ventas') --}}
+    {{-- <ul class="nav-links">
         <li id="dashboard">
             <a href="{{ route('dashboard') }}">
                 <i class='fas fa-home icon' style="color: #03A9F4;"></i>
@@ -121,45 +126,49 @@
                     </form>
                 </div>
 
-            </li>
-        </ul>
-    @elseif (auth()->user()->rol_id == 2)
-        <ul class="nav-links">
-            <li id="dashboard">
-                <a href="{{ route('dashboard') }}">
-                    <i class='fas fa-home icon' style="color: #03A9F4;"></i>
-                    <span class="link_name">Inicio</span>
+        </li>
+    </ul> --}}
+    {{-- @elseif (auth()->user()->rol_id == 2) --}}
+    <ul class="nav-links">
+        <li id="dashboard">
+            <a href="{{ route('dashboard') }}">
+                <i class='fas fa-home icon' style="color: #03A9F4;"></i>
+                <span class="link_name">Inicio</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Inicio</a></li>
+            </ul>
+        </li>
+        @if (auth()->user()->permisos->contains('name_permission', 'Ventas'))
+        <li id="ventas">
+            <div class="icon-link">
+                <a>
+                    <i class='fas fa-shopping-cart icon' style="color: #03A9F4;"></i>
+                    <span class="link_name">Ventas</span>
                 </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Inicio</a></li>
-                </ul>
-            </li>
-            <li id="ventas">
-                <div class="icon-link">
-                    <a>
-                        <i class='fas fa-shopping-cart icon' style="color: #03A9F4;"></i>
-                        <span class="link_name">Ventas</span>
-                    </a>
-                    <i class='bx bxs-chevron-down arrow'></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Category</a></li>
-                    <li><a id="ventas-create" href="{{ route('ventas.create') }}">Registrar Venta</a></li>
-                    <li><a id="ventas-index" href="{{ route('ventas.index') }}">Historial de Ventas</a></li>
-                </ul>
-            </li>
-            <li id="inventario">
-                <div class="icon-link">
-                    <a>
-                        <i class='fas fa-boxes icon' style="color: #03A9F4;"></i>
-                        <span class="link_name">Articulos</span>
-                    </a>
-                    <i class='bx bxs-chevron-down arrow'></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name">Articulos</a></li>
-                    <li><a id="inventario-create" href="{{ route('articulos.create') }}">Registrar Articulo</a></li>
-                    <li><a id="inventario-update" href="{{ route('articulos.index') }}">Modificar Articulo</a></li>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Category</a></li>
+                <li><a id="ventas-create" href="{{ route('ventas.create') }}">Registrar Venta</a></li>
+                <li><a id="ventas-index" href="{{ route('ventas.index') }}">Historial de Ventas</a></li>
+            </ul>
+        </li>
+    @endif
+    
+
+        <li id="inventario">
+            <div class="icon-link">
+                <a>
+                    <i class='fas fa-boxes icon' style="color: #03A9F4;"></i>
+                    <span class="link_name">Articulos</span>
+                </a>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name">Articulos</a></li>
+                <li><a id="inventario-create" href="{{ route('articulos.create') }}">Registrar Articulo</a></li>
+                <li><a id="inventario-update" href="{{ route('articulos.index') }}">Modificar Articulo</a></li>
 
             </ul>
         </li>
@@ -282,94 +291,126 @@
                 </li>
             </ul>
 
-            </li>
-            <li id="perfil">
-                <a href="{{ url('user/profile') }}">
-                    <i class='fas fa-user icon' style="color: #03A9F4;"></i>
-                    <span class="link_name">Perfil</span>
+        </li>
+        <li id="perfil">
+            <a href="{{ url('user/profile') }}">
+                <i class='fas fa-user icon' style="color: #03A9F4;"></i>
+                <span class="link_name">Perfil</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Perfil</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="profile-details">
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class='fas fa-sign-out-alt' style="color: #F44336;"></i>
+                    <span class="link_name">Cerrar Sesión</span>
                 </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Perfil</a></li>
-                </ul>
-            </li>
-            <li>
-                <div class="profile-details">
-                    <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class='fas fa-sign-out-alt' style="color: #F44336;"></i>
-                        <span class="link_name">Cerrar Sesión</span>
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
 
-            </li>
-        </ul>
-    @else
-        <ul class="nav-links">
-            <li id="dashboard">
-                <a href="{{ route('dashboard') }}">
-                    <i class='fas fa-home icon' style="color: #4CAF50;"></i>
-                    <span class="link_name">Inicio</span>
+        </li>
+    </ul>
+    {{-- @else --}}
+    {{-- <ul class="nav-links">
+        <li id="dashboard">
+            <a href="{{ route('dashboard') }}">
+                <i class='fas fa-home icon' style="color: #4CAF50;"></i>
+                <span class="link_name">Inicio</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Inicio</a></li>
+            </ul>
+        </li>
+        <li id="ventas">
+            <div class="icon-link">
+                <a>
+                    <i class='fas fa-shopping-cart icon' style="color: #00BCD4;"></i>
+                    <span class="link_name">Ventas</span>
                 </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Inicio</a></li>
-                </ul>
-            </li>
-            <li id="ventas">
-                <div class="icon-link">
-                    <a>
-                        <i class='fas fa-shopping-cart icon' style="color: #00BCD4;"></i>
-                        <span class="link_name">Ventas</span>
-                    </a>
-                    <i class='bx bxs-chevron-down arrow'></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Category</a></li>
-                    <li><a id="ventas-create" href="{{ route('ventas.create') }}">Registrar Venta</a></li>
-                    <li><a id="ventas-index" href="{{ route('ventas.index') }}">Historial de Ventas</a></li>
-                </ul>
-            </li>
-            <li id="clientes">
-                <div class="icon-link">
-                    <a href="#">
-                        <i class='fas fa-users icon' style="color: #03A9F4;"></i>
-                        <span class="link_name">Clientes</span>
-                    </a>
-                    <i class='bx bxs-chevron-down arrow'></i>
-                </div>
-                <ul class="sub-menu">
-                    <li><a class="link_name" href="#">Category</a></li>
-                    <li><a id="clientes-create" href="{{ route('clientes.create') }}">Registrar Cliente</a></li>
-                    <li><a id="clientes-update" href="{{ route('clientes.index') }}">Modificar Cliente</a></li>
-                    <li><a id="clientes-report" href="#">Reporte Clientes</a></li>
-                </ul>
-            </li>
-            <li id="perfil">
-                <a href="{{ url('user/profile') }}">
-                    <i class='fas fa-user icon' style="color: #E91E63;"></i>
-                    <span class="link_name">Perfil</span>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Category</a></li>
+                <li><a id="ventas-create" href="{{ route('ventas.create') }}">Registrar Venta</a></li>
+                <li><a id="ventas-index" href="{{ route('ventas.index') }}">Historial de Ventas</a></li>
+            </ul>
+        </li>
+        <li id="clientes">
+            <div class="icon-link">
+                <a href="#">
+                    <i class='fas fa-users icon' style="color: #03A9F4;"></i>
+                    <span class="link_name">Clientes</span>
                 </a>
-                <ul class="sub-menu blank">
-                    <li><a class="link_name" href="#">Perfil</a></li>
-                </ul>
-            </li>
-            <li>
-                <div class="profile-details">
-                    <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <i class='fas fa-sign-out-alt' style="color: #F44336;"></i>
-                        <span class="link_name">Cerrar Sesión</span>
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                        @csrf
-                    </form>
-                </div>
+                <i class='bx bxs-chevron-down arrow'></i>
+            </div>
+            <ul class="sub-menu">
+                <li><a class="link_name" href="#">Category</a></li>
+                <li><a id="clientes-create" href="{{ route('clientes.create') }}">Registrar Cliente</a></li>
+                <li><a id="clientes-update" href="{{ route('clientes.index') }}">Modificar Cliente</a></li>
+                <li><a id="clientes-report" href="#">Reporte Clientes</a></li>
+            </ul>
+        </li>
+        <li id="perfil">
+            <a href="{{ url('user/profile') }}">
+                <i class='fas fa-user icon' style="color: #E91E63;"></i>
+                <span class="link_name">Perfil</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="#">Perfil</a></li>
+            </ul>
+        </li>
+        <li>
+            <div class="profile-details">
+                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    <i class='fas fa-sign-out-alt' style="color: #F44336;"></i>
+                    <span class="link_name">Cerrar Sesión</span>
+                </a>
+                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                    @csrf
+                </form>
+            </div>
 
-            </li>
-        </ul>
-    @endif
+        </li>
+    </ul> --}}
+    {{-- @endif --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     {{-- <ul class="nav-links">
         <li id="dashboard">
             <a href="{{ route('dashboard') }}">
