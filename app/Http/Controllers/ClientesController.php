@@ -11,10 +11,13 @@ class ClientesController extends Controller
 {
 
 
+
+
     public function create()
     {
         return view('vistas.clientes.create');
     }
+
 
     public function store(Request $request)
     {
@@ -29,10 +32,23 @@ class ClientesController extends Controller
             'cli_codigo.unique' => 'El código ingresado no es válido o ya ha sido ingresado.',
         ]);
     
-        // Lógica para almacenar el cliente
-        Clientes::create($request->all());
-    
-        return redirect()->route('clientes.index')->with('success', 'Cliente registrado exitosamente');
+      
+        $cliente = Clientes::create([
+            'cli_codigo' => $request->cli_codigo,
+            'cli_nombre' => $request->cli_nombre,
+            'cli_apellido' => $request->cli_apellido,
+            'cli_correo' => $request->cli_correo,
+            'cli_direccion' => $request->cli_direccion,
+            'cli_identificacion' => $request->cli_identificacion,
+            'created_by' => Auth::id()
+        ]);
+
+        // Check for the 'from_ventas' parameter to determine the response
+        if ($request->has('from_ventas') && $request->from_ventas) {
+            return response()->json(['success' => true, 'cliente' => $cliente]);
+        }
+
+        return redirect()->route('clientes.create')->with('success', 'Cliente registrado exitosamente');
     }
 
     public function index()
@@ -47,6 +63,7 @@ class ClientesController extends Controller
         return response()->json($cliente);
     }
 
+ 
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -58,6 +75,7 @@ class ClientesController extends Controller
             'cli_identificacion' => 'required|string|in:CI,PP,RUC',
         ]);
 
+       
         try {
             $cliente = Clientes::findOrFail($id);
             $cliente->update([
@@ -75,11 +93,12 @@ class ClientesController extends Controller
         }
     }
 
+
     public function destroy($id)
     {
         $cliente = Clientes::findOrFail($id);
         $cliente->delete();
 
-        return response()->json(['success' => true, 'message' => 'Cliente eliminado exitosamente']);
+        return response()->json(['success' => true, 'message' => 'Clientes eliminado exitosamente']);
     }
 }
