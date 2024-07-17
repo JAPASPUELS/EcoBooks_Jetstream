@@ -226,6 +226,15 @@
                 <li><a class="link_name" href="{{ route('formaPago.index') }}">Formas de Pago</a></li>
             </ul>
         </li>
+        <li id="invprincipal">
+            <a href="{{ route('inventario.index') }}">
+                <i class='fas fa-box icon' style="color: #03A9F4;"></i>
+                <span class="link_name">Inventario</span>
+            </a>
+            <ul class="sub-menu blank">
+                <li><a class="link_name" href="{{ route('inventario.index') }}">Inventario</a></li>
+            </ul>
+        </li>
         <li id="movimientos">
             <a href="{{ route('movimientos.index') }}">
                 <i class='fas fa-exchange-alt icon' style="color: #03A9F4;"></i>

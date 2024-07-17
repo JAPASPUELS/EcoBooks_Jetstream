@@ -167,7 +167,7 @@ Route::resource('vistas/roles', RolesController::class)->names([
 Route::get('vistas/inventario/detalle/{fecha}', [InventarioController::class, 'detalle'])->name('inventario.detalle');
 Route::get('vistas/inventario', [InventarioController::class, 'index'])->name('inventario.index');
 Route::get('vistas/inventario/nuevo', [InventarioController::class, 'nuevo'])->name('inventario.nuevo');
-
+Route::post('vistas/inventario/save', [InventarioController::class, 'save'])->name('inventario.save');
 
 // Route::resource('vistas/users', UsersController::class)->names([
 //     'index' => 'users.index',
