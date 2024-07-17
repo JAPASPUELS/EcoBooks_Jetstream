@@ -27,6 +27,9 @@ class Roles extends Model
         return $this->belongsTo(User::class, 'created_by');
     }
 
-    // Eloquent automáticamente manejará las columnas created_at y updated_at
+    public function permissions()
+    {
+        return $this->hasMany(Permiso::class, 'id_rol');
+    }    // Eloquent automáticamente manejará las columnas created_at y updated_at
     public $timestamps = false;
 }

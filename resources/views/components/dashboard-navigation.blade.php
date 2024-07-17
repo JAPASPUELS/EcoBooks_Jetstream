@@ -3,8 +3,13 @@
         <img src="/favicons/favicon.ico" alt="EcoBooks Logo">
         <span class="logo_name">EcoBooks</span>
     </div>
-    @if (auth()->user()->rol_id == 1)
-    <ul class="nav-links">
+
+
+
+
+
+    {{-- @if (auth()->user()->permisos == 'Ventas') --}}
+    {{-- <ul class="nav-links">
         <li id="dashboard">
             <a href="{{ route('dashboard') }}">
                 <i class='fas fa-home icon' style="color: #03A9F4;"></i>
@@ -121,8 +126,8 @@
             </div>
 
         </li>
-    </ul>
-    @elseif (auth()->user()->rol_id == 2)
+    </ul> --}}
+    {{-- @elseif (auth()->user()->rol_id == 2) --}}
     <ul class="nav-links">
         <li id="dashboard">
             <a href="{{ route('dashboard') }}">
@@ -133,6 +138,7 @@
                 <li><a class="link_name" href="#">Inicio</a></li>
             </ul>
         </li>
+        @if (auth()->user()->permisos->contains('name_permission', 'Ventas'))
         <li id="ventas">
             <div class="icon-link">
                 <a>
@@ -147,6 +153,9 @@
                 <li><a id="ventas-index" href="{{ route('ventas.index') }}">Historial de Ventas</a></li>
             </ul>
         </li>
+    @endif
+    
+
         <li id="inventario">
             <div class="icon-link">
                 <a>
@@ -293,7 +302,8 @@
         </li>
         <li>
             <div class="profile-details">
-                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                <a href="{{ route('logout') }}"
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                     <i class='fas fa-sign-out-alt' style="color: #F44336;"></i>
                     <span class="link_name">Cerrar Sesión</span>
                 </a>
@@ -304,8 +314,8 @@
 
         </li>
     </ul>
-    @else
-    <ul class="nav-links">
+    {{-- @else --}}
+    {{-- <ul class="nav-links">
         <li id="dashboard">
             <a href="{{ route('dashboard') }}">
                 <i class='fas fa-home icon' style="color: #4CAF50;"></i>
@@ -365,8 +375,41 @@
             </div>
 
         </li>
-    </ul>
-    @endif
+    </ul> --}}
+    {{-- @endif --}}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     {{-- <ul class="nav-links">
         <li id="dashboard">
             <a href="{{ route('dashboard') }}">
