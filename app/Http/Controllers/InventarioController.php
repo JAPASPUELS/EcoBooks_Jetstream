@@ -50,7 +50,7 @@ class InventarioController extends Controller
     }
     public function detalle($fecha)
     {
-        $data = Inventario::with(['user', 'product'])->whereDate('inv_fecha', $fecha)->paginate(2);
+        $data = Inventario::with(['user', 'product'])->whereDate('inv_fecha', $fecha)->paginate(10);
 
         return view('vistas.inventario.partials.detalle', [
             'data' => $data,
@@ -115,7 +115,7 @@ class InventarioController extends Controller
             );
         }
 
-        // return response()->json(['message' => 'Datos guardados correctamente']);
-        return view('vistas.inventario.index');
+        return response()->json(['message' => 'Datos guardados correctamente']);
+        // return view('vistas.inventario.index');
     }
 }

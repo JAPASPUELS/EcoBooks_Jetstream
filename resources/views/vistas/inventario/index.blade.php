@@ -302,7 +302,8 @@
                     <button class="text-red-500 mr-9" id="closeModalnInventario">&times;</button>
                 </div>
                 <div class="mt-2 px-7 py-3">
-                    <button id="saveButton" class="bg-green-500 hover:bg-green-700 px-3 py-2 text-white my-2">Guardar
+                    <button id="saveButton"
+                        class="bg-green-500 hover:bg-green-700 px-3 py-2 text-white my-2 rounded-lg">Guardar
                         Inventario</button>
                     <div id="detalleContentnInventario"></div>
                 </div>
@@ -396,17 +397,35 @@
 
         //     attachTableEventListeners();
         // });
+        function fetchPage(url) {
+            fetch(url)
+                .then(response => response.text())
+                .then(html => {
+                    document.getElementById('detalleContent').innerHTML = html;
+                });
+        }
+
         function openModal(fecha) {
             fetch(`/vistas/inventario/detalle/${fecha}`)
-                .then(response => response.text())
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error al cargar los datos');
+                    }
+                    return response.text();
+                })
                 .then(html => {
                     document.getElementById('detalleContent').innerHTML = html;
                     document.getElementById('detalleModal').classList.remove('hidden');
                     document.getElementById('reportBtn').onclick = function() {
                         generateReport(fecha);
                     };
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    // Aquí puedes manejar el error mostrando un mensaje al usuario o realizando alguna acción adecuada
                 });
         }
+
 
         const closeReportModalBtn = document.getElementById('closeReportModal');
         closeReportModalBtn.addEventListener('click', function() {
@@ -426,10 +445,10 @@
         }
 
         function closeModal() {
-                document.getElementById('closeModal').addEventListener('click', function() {
-                    document.getElementById('detalleModal').classList.add('hidden');
-                });
-            }
+            document.getElementById('closeModal').addEventListener('click', function() {
+                document.getElementById('detalleModal').classList.add('hidden');
+            });
+        }
 
         document.addEventListener('DOMContentLoaded', function() {
             const closeModalnInventarioButton = document.getElementById('closeModalnInventario');
@@ -438,7 +457,7 @@
             document.getElementById('modal-title-inv').innerText = 'Nuevo Inventario ' + today;
 
 
-      
+
 
 
 
@@ -502,75 +521,78 @@
                 });
 
                 const saveButton = document.getElementById('saveButton');
-                //     if (saveButton) {
-                //         saveButton.addEventListener('click', function() {
-                //             const changes = [];
-                //             const allinventoryitems = [];
-                //             cantidadInputs.forEach(input => {
-                //                 if (!input.disabled) {
-                //                     const row = input.closest('tr');
-                //                     changes.push({
-                //                         id: row.dataset.id,
-                //                         cantidad: input.value
-                //                     });
-                //                 }
-                //             });
-                //             inputsInventariada.forEach(input => {
-                //                 const row = input.closest('tr');
-                //                 allinventoryitems.push({
-                //                     id: row.dataset.id,
-                //                     cantidadinventariada: input.value
-                //                 });
-                //             });
-                //             Swal.fire({
-                //                 title: '¿Estás seguro?',
-                //                 text: "Se registrara el inventario co la data ingresada!",
-                //                 icon: 'warning',
-                //                 showCancelButton: true,
-                //                 confirmButtonColor: '#3085d6',
-                //                 cancelButtonColor: '#d33',
-                //                 confirmButtonText: 'Sí, Guardar!'
-                //             }).then((result) => {
-                //                 if (result.isConfirmed) {
-                //                     fetch(`/vistas/inventario`, {
-                //                             method: 'POST',
-                //                             headers: {
-                //                                 'X-CSRF-TOKEN': '{{ csrf_token() }}'
-                //                             },
-                //                             body: {
-                //                                 changes,
-                //                                 allinventoryitems
-                //                             }
-                //                         })
-                //                         .then(response => response.json())
-                //                         .then(data => {
-                //                             if (data.success) {
-                //                                 Swal.fire(
-                //                                     'Inventario Agregado!',
-                //                                     'Inventario Agregado exitosamente.',
-                //                                     'success'
-                //                                 ).then(() => {
-                //                                     location.reload();
-                //                                 });
-                //                             } else {
-                //                                 Swal.fire(
-                //                                     'Error!',
-                //                                     data.message,
-                //                                     'error'
-                //                                 );
-                //                             }
-                //                         });
-                //                 }
-                //             });
-                //             // console.log('Changes:', changes);
-                //             // console.log('Changes:', allinventoryitems);
+            //     if (saveButton) {
+            //         saveButton.addEventListener('click', function() {
+            //             const changes = [];
+            //             const allinventoryitems = [];
+            //             cantidadInputs.forEach(input => {
+            //                 if (!input.disabled) {
+            //                     const row = input.closest('tr');
+            //                     changes.push({
+            //                         id: row.dataset.id,
+            //                         cantidad: input.value
+            //                     });
+            //                 }
+            //             });
+            //             inputsInventariada.forEach(input => {
+            //                 const row = input.closest('tr');
+            //                 allinventoryitems.push({
+            //                     id: row.dataset.id,
+            //                     cantidad: input.value
+            //                 });
+            //             });
+            //             Swal.fire({
+            //                 title: '¿Estás seguro?',
+            //                 text: "Se registrara el inventario co la data ingresada!",
+            //                 icon: 'warning',
+            //                 showCancelButton: true,
+            //                 confirmButtonColor: '#3085d6',
+            //                 cancelButtonColor: '#d33',
+            //                 confirmButtonText: 'Sí, Guardar!'
+            //             }).then((result) => {
+            //                 if (result.isConfirmed) {
+            //                     fetch(`/vistas/inventario/save`, {
+            //                             method: 'POST',
+            //                             headers: {
+            //                                 'Content-Type': 'application/json',
+            //                                 'X-CSRF-TOKEN': document.querySelector(
+            //                                         'meta[name="csrf-token"]')
+            //                                     .getAttribute('content')
+            //                             },
+            //                             body: JSON.stringify({
+            //                                 changes,
+            //                                 allInventory
+            //                             })
+            //                         })
+            //                         .then(response => response.json())
+            //                         .then(data => {
+            //                             if (data.success) {
+            //                                 Swal.fire(
+            //                                     'Inventario Agregado!',
+            //                                     'Inventario Agregado exitosamente.',
+            //                                     'success'
+            //                                 ).then(() => {
+            //                                     location.reload();
+            //                                 });
+            //                             } else {
+            //                                 Swal.fire(
+            //                                     'Error!',
+            //                                     data.message,
+            //                                     'error'
+            //                                 );
+            //                             }
+            //                         });
+            //                 }
+            //             });
+            //             // console.log('Changes:', changes);
+            //             // console.log('Changes:', allinventoryitems);
 
-                //             // Aquí puedes enviar el array de cambios al backend utilizando AJAX o un formulario oculto
-                //         });
-                //     }
-                // }
+            //             // Aquí puedes enviar el array de cambios al backend utilizando AJAX o un formulario oculto
+            //         });
+            //     }
+            // }
 
-                // attachTableEventListeners();
+            // attachTableEventListeners();
 
 
                 if (saveButton) {
@@ -594,7 +616,6 @@
                         console.log('Changes:', changes);
                         console.log('All Inventory:', allInventory);
 
-                        // Enviar datos al backend usando fetch
                         fetch('/vistas/inventario/save', {
                                 method: 'POST',
                                 headers: {
@@ -610,7 +631,8 @@
                             .then(response => response.json())
                             .then(data => {
                                 console.log('Success:', data);
-                                // Manejar la respuesta del backend aquí
+                                document.getElementById('nInventarioModal').classList.add('hidden');
+                                window.location.reload();
                             })
                             .catch((error) => {
                                 console.error('Error:', error);
