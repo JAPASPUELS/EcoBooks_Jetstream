@@ -45,7 +45,6 @@ document.addEventListener("DOMContentLoaded", function() {
         sidebar.classList.remove('close');
     }
 
-    console.log(sidebarBtn);
     sidebarBtn.addEventListener("click", () => {
         sidebar.classList.toggle("close");
 
