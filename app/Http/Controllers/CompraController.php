@@ -15,21 +15,21 @@ class CompraController extends Controller
         $query = Compra::query()->with('articulo', 'proveedor', 'user');
 
         if ($request->filled('search')) {
-            $search = $request->input('search');
+            $search = strtolower($request->input('search'));
             $criteria = $request->input('criteria');
 
             if ($criteria === 'articulo') {
                 $query->whereHas('articulo', function ($q) use ($search) {
-                    $q->where('art_nombre', 'LIKE', '%' . $search . '%');
+                    $q->whereRaw('LOWER(art_nombre) LIKE ?', [$search . '%']);
                 });
             } elseif ($criteria === 'proveedor') {
                 $query->whereHas('proveedor', function ($q) use ($search) {
-                    $q->where('pro_nombre', 'LIKE', '%' . $search . '%');
+                    $q->whereRaw('LOWER(pro_nombre) LIKE ?', [$search . '%']);
                 });
             }
         }
 
-        $compras = $query->paginate(10);
+        $compras = $query->paginate(10)->appends($request->all());
 
         return view('vistas.compras.index', compact('compras'));
     }

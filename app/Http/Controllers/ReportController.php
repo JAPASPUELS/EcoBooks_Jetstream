@@ -137,10 +137,11 @@ class ReportController extends Controller
     }    // Exportar artículos
     public function exportPDFArticulos()
     {
-        $articulos = Articulo::with('categoria')->get();
+        $articulos = Articulo::with('categoria')->orderBy('art_id')->get();
         $pdf = PDF::loadView('reports.articulos', compact('articulos'));
         return $pdf->download('articulos.pdf');
     }
+
 
     public function exportExcelArticulos()
     {
@@ -150,9 +151,9 @@ class ReportController extends Controller
     // Exportar compras a PDF
     public function exportPDFCompras()
     {
-        $compras = Compra::with('articulo', 'proveedor', 'user')->get();
+        $compras = Compra::with('articulo', 'proveedor')->orderBy('comp_id', 'asc')->get();
         $pdf = PDF::loadView('reports.compras', compact('compras'));
-        return $pdf->download('reporte_Compras.pdf');
+        return $pdf->download('compras.pdf');
     }
 
     // Exportar compras a Excel

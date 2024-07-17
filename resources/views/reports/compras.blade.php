@@ -44,9 +44,10 @@
     <table>
         <thead>
             <tr>
-                <th>Articulo</th>
+                <th>Id</th>
+                <th>Artículo</th>
                 <th>Proveedor</th>
-                <th>N° Factura</th>
+                <th>Número de Factura</th>
                 <th>Cantidad</th>
                 <th>Detalles</th>
             </tr>
@@ -54,8 +55,9 @@
         <tbody>
             @foreach($compras as $compra)
             <tr>
-                <td>{{ $compra->art_id }}</td>
-                <td>{{ $compra->pro_id }}</td>
+                <td>{{ $compra->comp_id }}</td>
+                <td>{{ $compra->articulo->art_nombre }}</td>
+                <td>{{ $compra->proveedor->pro_nombre }}</td>
                 <td>{{ $compra->comp_numfac }}</td>
                 <td>{{ $compra->comp_cantidad }}</td>
                 <td>{{ $compra->com_detalles }}</td>

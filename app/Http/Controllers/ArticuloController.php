@@ -14,19 +14,19 @@ class ArticuloController extends Controller
         $query = Articulo::query()->with('categoria');
 
         if ($request->filled('search')) {
-            $search = $request->input('search');
+            $search = strtolower($request->input('search'));
             $criteria = $request->input('criteria');
 
             if ($criteria === 'nombre') {
-                $query->where('art_nombre', 'LIKE', '%' . $search . '%');
+                $query->whereRaw('LOWER(art_nombre) LIKE ?', [$search . '%']);
             } elseif ($criteria === 'categoria') {
                 $query->whereHas('categoria', function ($q) use ($search) {
-                    $q->where('cat_name', 'LIKE', '%' . $search . '%');
+                    $q->whereRaw('LOWER(cat_name) LIKE ?', [$search . '%']);
                 });
             }
         }
 
-        $articulos = $query->paginate(10);
+        $articulos = $query->paginate(10)->appends($request->all());
 
         return view('vistas.articulos.index', compact('articulos'));
     }
@@ -50,7 +50,7 @@ class ArticuloController extends Controller
         ]);
 
         // Verificar si el artículo ya existe
-        $articuloExistente = Articulo::where('art_nombre', $validated['art_nombre'])->first();
+        $articuloExistente = Articulo::whereRaw('LOWER(art_nombre) = ?', [strtolower($validated['art_nombre'])])->first();
 
         if ($articuloExistente) {
             // Redirigir de nuevo con un mensaje de error
@@ -127,6 +127,7 @@ class ArticuloController extends Controller
 
         return response()->json(['success' => true, 'message' => 'Estado del artículo actualizado correctamente.']);
     }
+
     public function toggleStatus(Articulo $articulo)
     {
         $articulo->art_estado = !$articulo->art_estado;

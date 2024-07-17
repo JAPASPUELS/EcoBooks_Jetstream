@@ -15,16 +15,17 @@
             </button>
             <form method="GET" action="{{ route('articulos.index') }}" class="flex items-center space-x-2">
                 <select id="searchCriteria" name="criteria" class="custom-select">
-                    <option value="nombre">Buscar por Nombre</option>
-                    <option value="categoria">Buscar por Categoría</option>
+                    <option value="nombre" {{ request('criteria') == 'nombre' ? 'selected' : '' }}>Buscar por Nombre</option>
+                    <option value="categoria" {{ request('criteria') == 'categoria' ? 'selected' : '' }}>Buscar por Categoría</option>
                 </select>
-                <input type="text" id="searchInput" name="search" class="custom-input" placeholder="Buscar...">
+                <input type="text" id="searchInput" name="search" class="custom-input" placeholder="Buscar..." value="{{ request('search') }}">
+                <button type="submit" class="btn btn-primary">Buscar</button>
             </form>
         </div>
     </div>
 </div>
 
-<h2 class="title-custom">Tabla</h2>
+<h2 class="title-custom">Tabla de Articulos</h2>
 <div class="overflow-x-auto bg-white rounded-lg shadow-md border border-gray-200">
     <table id="dataTable" class="min-w-full divide-y divide-gray-200">
         <thead class="bg-gray-50">
@@ -66,19 +67,19 @@
             @if ($articulos->onFirstPage())
             <li class="page-item disabled"><span class="page-link bg-gray-200 text-gray-500 cursor-not-allowed">Anterior</span></li>
             @else
-            <li class="page-item"><a href="{{ $articulos->previousPageUrl() }}" class="page-link">Anterior</a></li>
+            <li class="page-item"><a href="{{ $articulos->previousPageUrl() }}&search={{ request('search') }}&criteria={{ request('criteria') }}" class="page-link">Anterior</a></li>
             @endif
 
             @foreach ($articulos->getUrlRange(1, $articulos->lastPage()) as $page => $url)
             @if ($page == $articulos->currentPage())
             <li class="page-item active"><span class="page-link bg-blue-500 text-white">{{ $page }}</span></li>
             @else
-            <li class="page-item"><a href="{{ $url }}" class="page-link">{{ $page }}</a></li>
+            <li class="page-item"><a href="{{ $url }}&search={{ request('search') }}&criteria={{ request('criteria') }}" class="page-link">{{ $page }}</a></li>
             @endif
             @endforeach
 
             @if ($articulos->hasMorePages())
-            <li class="page-item"><a href="{{ $articulos->nextPageUrl() }}" class="page-link">Siguiente</a></li>
+            <li class="page-item"><a href="{{ $articulos->nextPageUrl() }}&search={{ request('search') }}&criteria={{ request('criteria') }}" class="page-link">Siguiente</a></li>
             @else
             <li class="page-item disabled"><span class="page-link bg-gray-200 text-gray-500 cursor-not-allowed">Siguiente</span></li>
             @endif
@@ -89,7 +90,6 @@
         </p>
     </div>
 </div>
-
 
 <div class="fixed z-10 inset-0 overflow-y-auto hidden mt-40" id="reportModal" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="flex items-center justify-center min-h-screen pt-20 px-4 pb-20 text-center sm:block sm:p-0">
