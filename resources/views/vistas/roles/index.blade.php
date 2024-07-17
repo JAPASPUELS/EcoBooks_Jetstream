@@ -229,7 +229,9 @@
                 document.querySelectorAll('.btn-delete').forEach(button => {
                     button.addEventListener('click', function() {
                         const id = this.getAttribute('data-id');
-                        const enUso = this.getAttribute('data-active');
+                        const enUso = this.getAttribute('data-uso');
+
+                        console.log(enUso);
 
                         Swal.fire({
                             title: '¿Estás seguro?',

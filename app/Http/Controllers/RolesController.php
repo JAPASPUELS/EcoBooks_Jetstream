@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Roles;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class RolesController extends Controller
 {
@@ -19,7 +21,8 @@ class RolesController extends Controller
         Roles::create([
             'rol_nombre' => $request->rol_nombre,
             'rol_descripcion' => $request->rol_descripcion,
-            'active' => $request->active,
+            'active' => false,
+            'created_by' => Auth::id()
         ]);
 
         return redirect()->route('roles.index')->with('success', 'Rol registrado exitosamente');
@@ -28,18 +31,18 @@ class RolesController extends Controller
     public function index(Request $request)
     {
         $query = Roles::query();
-    
+
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where('rol_nombre', 'LIKE', "%{$search}%")
-                  ->orWhere('rol_descripcion', 'LIKE', "%{$search}%");
+                ->orWhere('rol_descripcion', 'LIKE', "%{$search}%");
         }
-    
+
         $roles = $query->paginate(10);
-    
+
         return view('vistas.roles.index', compact('roles'));
     }
-    
+
 
     public function edit($id)
     {
@@ -78,17 +81,21 @@ class RolesController extends Controller
     {
         try {
             $rol = Roles::findOrFail($id);
-            $enUso = User::where('id', $rol->rol_id)->exists();
+
+            // Verifica si hay usuarios que tienen este rol
+            $enUso = User::where('rol_id', $rol->rol_id)->exists();
+
             if ($enUso) {
-                return response()->json(['success' => false, 'message' => 'El rol esta en uso']);
+                return response()->json(['success' => false, 'message' => 'El rol está en uso']);
             } else {
                 $rol->update([
                     'active' => !$rol->active,
                 ]);
-                return response()->json(['success' => true, 'message' => 'Cambio el estado del Rol  exitosamente']);
+                return response()->json(['success' => true, 'message' => 'Cambio el estado del Rol exitosamente']);
             }
         } catch (\Throwable $th) {
             error_log($th);
+            return response()->json(['success' => false, 'message' => 'Ocurrió un error al intentar actualizar el rol']);
         }
     }
 }
