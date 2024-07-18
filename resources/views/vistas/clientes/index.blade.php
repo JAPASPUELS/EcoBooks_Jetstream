@@ -5,17 +5,19 @@
 <link rel="stylesheet" href="{{ asset('css/clientes.css') }}">
 
 <div>
-    <div>
-        <div>
-            <h3>Modificar Cliente</h3>
+    <div class="mx-5">
+        <div class="flex justify-start items-center">
             <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4" id="reportCliBtn">
                 Reportes
             </button>
         </div>
-        <div>
-            <div class="mb-4">
-                <input type="text" id="searchInput" class="form-control" placeholder="Buscar...">
-            </div>
+
+        <!-- Barra de búsqueda -->
+        <div class="mt-5">
+            <input type="text" id="searchInput" class="form-control" placeholder="Buscar...">
+        </div>
+
+        <div class="mt-5">
             <table class="table table-striped table-hover">
                 <thead>
                     <tr>
@@ -49,6 +51,11 @@
                     @endforeach
                 </tbody>
             </table>
+
+            <!-- Enlaces de paginación -->
+            <div class="mt-4">
+                {{ $clientes->links() }}
+            </div>
         </div>
     </div>
 </div>
@@ -68,10 +75,10 @@ role="dialog" aria-modal="true">
                     <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">Seleccionar Tipo de Reporte
                     </h3>
                     <!-- Botones de selección de reporte -->
-                    <div class="mt-2 ">
-                        <span class=" text-yellow-400">Version Pro ✨ </span>
+                    <div class="mt-2">
+                        <span class="text-yellow-400">Versión Pro ✨</span>
                         <button
-                            class="w-full inline-flex justify-center mr-16 rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-500 text-yellow-400 font-medium  hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm opacity-50 cursor-not-allowed" disabled
+                            class="w-full inline-flex justify-center mr-16 rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-500 text-yellow-400 font-medium hover:bg-gray-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500 sm:mt-0 sm:w-auto sm:text-sm opacity-50 cursor-not-allowed" disabled
                             id="vPro">
                             Filtros de Reportes
                         </button>
@@ -125,12 +132,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     excelBtn.addEventListener('click', function() {
-        // Aquí puedes redirigir a la ruta de generación de reporte Excel
         window.location.href = "{{ route('reportcli.excel') }}";
     });
 
     pdfBtn.addEventListener('click', function() {
-        // Aquí puedes redirigir a la ruta de generación de reporte PDF
         window.location.href = "{{ route('reportcli.pdf') }}";
     });
 

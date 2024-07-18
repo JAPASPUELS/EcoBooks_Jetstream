@@ -1,14 +1,17 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Exports\AuditoriaExport;
 use App\Exports\MovimientoExport;
+use App\Exports\InventarioExcelExport;
 use App\Models\Clientes;
 use App\Models\Movimientos;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Articulo;
 use App\Models\Auditoria;
+use App\Models\Inventario;
 use App\Models\Gasto;
 use App\Models\Proveedor;
 use App\Models\Ventas;
@@ -29,8 +32,8 @@ class ReportController extends Controller
     public function exportPDF()
     {
         $categories = Categoria::all();
-         // Verificar qué categorías están en uso
-            foreach ($categories as $category) {
+        // Verificar qué categorías están en uso
+        foreach ($categories as $category) {
             $enUso = Articulo::where('cat_id', $category->cat_id)->exists();
             $category->enUso = $enUso ? 'Ok' : '';
         }
@@ -100,7 +103,37 @@ class ReportController extends Controller
         return $pdf->download('gastos.pdf');
     }
 
-    public function exportPDFVenta($id)
+    public function exportExcelInventario(Request $request)
+    {
+        $query = Inventario::with('user', 'product');
+
+        if ($request->has('fecha') && $request->fecha != '') {
+            $fecha = date('Y-m-d', strtotime($request->fecha));
+            $query->whereDate('inv_fecha', '>=', $fecha)
+                ->whereDate('inv_fecha', '<=', $fecha);
+        }
+
+        $registros = $query->get();
+
+        return Excel::download(new InventarioExcelExport($registros), 'inventario.xlsx');
+    }
+
+
+    public function exportPDFInventario(Request $request)
+    {
+        $query = Inventario::with('user', 'product');
+
+        if ($request->has('fecha') && $request->fecha != '') {
+            $fecha = date('Y-m-d', strtotime($request->fecha));
+            $query->whereDate('inv_fecha', '>=', $fecha)
+                ->whereDate('inv_fecha', '<=', $fecha);
+        }
+
+        $registros = $query->get();
+        $pdf = PDF::loadView('reports.inventario', compact('registros'));
+        return $pdf->download('inventario.pdf');
+    }   
+     public function exportPDFVenta($id)
     {
         try {
             $venta = Ventas::with(['user', 'detalles.articulo', 'pagos.formaPago'])

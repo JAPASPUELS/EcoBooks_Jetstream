@@ -100,14 +100,23 @@ document.addEventListener('DOMContentLoaded', function() {
     const cliCodigoError = document.getElementById('cli_codigo_error');
 
     clienteForm.addEventListener('submit', function(event) {
+        // Resetear el contenido del error
         cliCodigoError.textContent = '';
+        const allErrorMessages = document.querySelectorAll('.text-danger');
+        allErrorMessages.forEach(error => error.textContent = '');
+
+        let isValid = true;
 
         if (cliIdentificacion.value === 'CI' && !validarCedula(cliCodigo.value)) {
-            event.preventDefault();
+            isValid = false;
             cliCodigoError.textContent = 'Cédula ecuatoriana inválida.';
         } else if (cliIdentificacion.value === 'RUC' && !validarRUC(cliCodigo.value)) {
-            event.preventDefault();
+            isValid = false;
             cliCodigoError.textContent = 'RUC ecuatoriano inválido.';
+        }
+
+        if (!isValid) {
+            event.preventDefault();
         }
     });
 
@@ -141,7 +150,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function validarRUC(ruc) {
     if (ruc.length !== 13) return false;
-    
+
     const numeroProvincia = parseInt(ruc.substring(0, 2));
     if (numeroProvincia < 1 || numeroProvincia > 24) return false;
 
@@ -161,14 +170,14 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         let residuo = suma % 11;
         residuo = residuo === 0 ? 0 : 11 - residuo;
-        return residuo === digitoVerificador;
+        if (residuo !== digitoVerificador) return false;
     } else if (tipo === 9) { // Privado
         for (let i = 0; i < 9; i++) {
             suma += parseInt(ruc.charAt(i)) * coeficientesPri[i];
         }
         let residuo = suma % 11;
         residuo = residuo === 0 ? 0 : 11 - residuo;
-        return residuo === digitoVerificador;
+        if (residuo !== digitoVerificador) return false;
     } else { // Natural
         for (let i = 0; i < 9; i++) {
             let valor = parseInt(ruc.charAt(i)) * coeficientesNat[i];
@@ -176,9 +185,13 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         let residuo = suma % 10;
         residuo = residuo === 0 ? 0 : 10 - residuo;
-        return residuo === digitoVerificador;
+        if (residuo !== digitoVerificador) return false;
     }
+
+    // Validar si los últimos tres dígitos son "001"
+    return ruc.substring(10) === '001';
 }
+
 });
 </script>
 @endsection

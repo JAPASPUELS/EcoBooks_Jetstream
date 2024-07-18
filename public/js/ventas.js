@@ -87,15 +87,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const row = document.createElement('tr');
         row.setAttribute('data-id', product.art_id);
         row.innerHTML = `
-            <td>${product.art_id}</td>
-            <td><input type="number" class="form-control" value="${product.cantidad}" min="1" max="${product.stock}" onchange="updateTotals()"></td>
-            <td>${product.art_nombre}</td>
-            <td>
-                <input type="checkbox" id="envase_si_${product.art_id}" name="envase_si" onchange="updateTotals()"> Sí
-            </td>
-            <td class="product-precio">${product.art_precio.toFixed(2)}</td>
-            <td class="product-total">${(product.art_precio * product.cantidad).toFixed(2)}</td>
-            <td><button type="button" class="btn btn-danger bg-red-500 rounded-sm text-white px-5 py-2.5 me-2 mb-2 btn-sm">Eliminar</button></td>
+             <td class="tracking-wider  text-center">${product.art_id}</td>
+        <td class="tracking-wider  text-center">
+            <input type="number" class="form-control" value="${product.cantidad}" min="1" max="${product.stock}" onchange="updateTotals()">
+        </td>
+        <td class="tracking-wider  text-center">${product.art_nombre}</td>
+        <td class="tracking-wider  text-center">
+            <input type="checkbox" id="envase_si_${product.art_id}" name="envase_si" onchange="updateTotals()"> Sí
+        </td>
+        <td class="tracking-wider text-center  product-precio">${product.art_precio.toFixed(2)}</td>
+        <td class="tracking-wider text-center product-total">${(product.art_precio * product.cantidad).toFixed(2)}</td>
+        <td class="tracking-wider text-center">
+            <button type="button" class="btn btn-danger  rounded-sm text-white px-5 py-2.5 me-2 mb-2 btn-sm" onclick="removeProduct(this)">Eliminar</button>
+        </td>
         `;
 
         row.querySelector('.btn-danger').addEventListener('click', function () {
@@ -107,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateTotals();
     }
 
-    window.updateTotals = function() {
+    window.updateTotals = function () {
         const productsTable = document.getElementById('productsTable');
         let subtotal = 0;
         let descuento = 0;
@@ -141,7 +145,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('total').innerText = total.toFixed(2);
     }
 
-    window.confirmDiscount = function() {
+    window.confirmDiscount = function () {
         const descuentoInput = document.getElementById('discount').value;
         if (descuentoInput) {
             Swal.fire({
@@ -163,7 +167,7 @@ document.addEventListener('DOMContentLoaded', function () {
     window.closeProductModal = closeProductModal;
 
     // Filtro de productos
-    document.getElementById('searchProductInput').addEventListener('input', function(e) {
+    document.getElementById('searchProductInput').addEventListener('input', function (e) {
         const searchTerm = e.target.value.toLowerCase();
         const filteredProducts = products.filter(product => product.art_nombre.toLowerCase().includes(searchTerm));
         renderProducts(filteredProducts, 1);

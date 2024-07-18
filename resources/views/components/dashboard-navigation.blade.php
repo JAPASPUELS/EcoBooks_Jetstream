@@ -96,7 +96,7 @@
                         <a href="{{ route('roles.index') }}">Gestión Roles</a>
                     </li>
                     <li class="flex items-center space-x-2">
-                        <a href="{{ route('users.index') }}">Gestión Usuarios Principales</a>
+                      {{--  <a href="{{ route('users.index') }}">Gestión Usuarios Principales</a>--}}   
                     </li>
                 </ul>
 
@@ -212,6 +212,16 @@
                 </a>
                 <ul class="sub-menu blank">
                     <li><a class="link_name" href="{{ route('formaPago.index') }}">Formas de Pago</a></li>
+                </ul>
+            </li>
+            <li id="inventario">
+                <a href="{{ route('inventario.index') }}">
+                    <i class='fas fa-box icon' style="color: #03A9F4;"></i>
+                    <span class="link_name">Inventario</span>
+                </a>
+                <ul class="sub-menu blank">
+                    <li><a class="link_name" href="{{ route('inventario.index') }}">Inventario</a></li>
+                    {{-- <li><a class="link_name" href="#">Inventario</a></li> --}}
                 </ul>
             </li>
             <li id="movimientos">
