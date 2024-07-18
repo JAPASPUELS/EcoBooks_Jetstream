@@ -269,7 +269,7 @@
     </div>
 
     <!-- Modal -->
-    <div id="detalleModal" class="fixed inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
+    <div id="detalleModal" class="fixed ml-10 inset-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full hidden">
         <div class="relative top-20 mx-auto p-5 border w-3/4 shadow-lg rounded-md bg-white">
             <div class="mt-3 text-left">
                 <div class="flex justify-between items-center mb-4">

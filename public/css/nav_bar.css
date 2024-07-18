@@ -21,6 +21,9 @@ body {
 }
 .sidebar.close {
     width: 78px;
+    position: fixed;
+    z-index: 100;
+    transition: all 0.5s ease;
 }
 
 .sidebar .logo-details {
@@ -54,7 +57,8 @@ body {
     overflow: auto;
 }
 .sidebar.close .nav-links {
-    overflow: visible;
+    overflow: scroll;
+    height: 85%;
 }
 .sidebar .nav-links::-webkit-scrollbar {
     display: none;

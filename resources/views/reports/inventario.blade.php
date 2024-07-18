@@ -32,14 +32,15 @@
 
         .header {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
             margin-bottom: 20px;
         }
 
         .header img {
-            width: 150px;
-            height: 100px;
-            margin-right: 20px;
+            float: right;
+            max-height: 150px;
+            max-width: 212.39px;
+            margin-top: -40px;
         }
 
         .details {
@@ -61,13 +62,13 @@
 
 <body>
     <div class="header">
-        {{-- <img src="{{ public_path('images/logo_EcoBooks.jpg') }}" alt="Logo"> --}}
+        <img src="{{ public_path('images/logo_EcoBooks.jpg') }}" alt="Logo">
         <div class="details">
             <h1 class="text-2xl font-bold">Reporte de Inventario</h1>
             <p>Fecha: {{ \Carbon\Carbon::now()->format('d/m/Y H:i:s') }}</p>
             @if (auth()->user())
-                <p>Generado por: {{ auth()->user()->name }}</p>
-                <p>Email: {{ auth()->user()->email }}</p>
+            <p>Generado por: {{ auth()->user()->name }}</p>
+            <p>Email: {{ auth()->user()->email }}</p>
             @endif
         </div>
     </div>
@@ -83,13 +84,13 @@
         </thead>
         <tbody>
             @foreach ($registros as $reg)
-                <tr class="border-t">
-                    <td>{{ $reg->art_id }}</td>
-                    <td>{{ $reg->product->art_nombre }}</td>
-                    <td>{{ $reg->inv_cantidad_ing}}</td>
-                    <td>{{ $reg->inv_fecha}}</td>
-                    <td>{{ $reg->user->name }}</td>
-                </tr>
+            <tr class="border-t">
+                <td>{{ $reg->art_id }}</td>
+                <td>{{ $reg->product->art_nombre }}</td>
+                <td>{{ $reg->inv_cantidad_ing}}</td>
+                <td>{{ $reg->inv_fecha}}</td>
+                <td>{{ $reg->user->name }}</td>
+            </tr>
             @endforeach
         </tbody>
     </table>

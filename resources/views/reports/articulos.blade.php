@@ -31,15 +31,46 @@
         }
 
         .header {
-            text-align: center;
+            display: flex;
+            align-items: flex-start;
             margin-bottom: 20px;
+        }
+
+        .header img {
+            float: right;
+            max-height: 150px;
+            max-width: 212.39px;
+            margin-top: -40px;
+        }
+
+        .details {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .details h1 {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .details p {
+            margin: 0;
+            color: gray;
         }
     </style>
 </head>
 
 <body>
     <div class="header">
-        <h1>Reporte de Articulos</h1>
+        <img src="{{ public_path('images/logo_EcoBooks.jpg') }}" alt="Logo">
+        <div class="details">
+            <h1 class="text-2xl font-bold">Reporte de Articulos</h1>
+            <p>Fecha: {{ \Carbon\Carbon::now()->format('d/m/Y H:i:s') }}</p>
+            @if (auth()->user())
+            <p>Generado por: {{ auth()->user()->name }}</p>
+            <p>Email: {{ auth()->user()->email }}</p>
+            @endif
+        </div>
     </div>
     <table>
         <thead>
