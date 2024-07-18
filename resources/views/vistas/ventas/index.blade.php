@@ -28,16 +28,9 @@
                         <td data-label="vent_fecha">{{ $vnt-> vent_fecha }}</td>
                         <td data-label="vent_total">{{ $vnt-> vent_total }}</td>
                         <td data-label="Acciones">
-                            <button class="btn btn-edit" data-id="{{ $vnt->vent_numero }}">
-                                <i class='bx bx-edit'></i>
-                            </button>
-                            <button class="btn btn-delete" data-id="{{ $vnt->vent_numero }}">
-                                <i class='bx bx-trash'></i>
-                            </button>
-                            <button class="btn btn-edit" data-id="{{ $vnt->vent_numero }}">
+                            <button class="btn btn-show" id="pdfBtn" data-venta-id="{{ $vnt->vent_numero }}" onclick="test('{{ $vnt->vent_numero }}')">
                                 <i class='bx bx-show'></i>
                             </button>
- 
                         </td>
                     </tr>
                     @endforeach
@@ -51,4 +44,19 @@
 <!-- @include('vistas.proveedores.modal') -->
 
 <!-- <script src="{{ asset('js/proveedores.js') }}"></script> -->
+<script>
+    function test(first) {
+        console.log(first);
+        window.location.href = `/reportvent/pdf/${first}`;
+    }
+    // document.addEventListener('DOMContentLoaded', function() {
+    //     const pdfBtn = document.getElementById('pdfBtn');
+    //     const ventaId = pdfBtn.getAttribute('data-venta-id');
+       
+    //     pdfBtn.addEventListener('click', function() {
+    //         console.log(ventaId);
+    //         // window.location.href = `/reportvent/pdf/${ventaId}`;
+    //     });
+    // });
+</script>
 @endsection

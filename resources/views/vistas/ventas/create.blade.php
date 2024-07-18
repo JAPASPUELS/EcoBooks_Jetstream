@@ -68,7 +68,7 @@
                     <table class="min-w-full divide-y divide-gray-200">
                         <tfoot class="bg-gray-50">
                             <tr>
-                                <td colspan="6" class="px-6 py-3 text-right text-sm font-medium text-gray-500">SUBTOTAL $</td>
+                                <td colspan="6" class="px-6 py-3 text-right text-sm font-medium text-gray-500">SUBTOTAL SIN DESCUENTO $</td>
                                 <td class="px-6 py-3 text-sm font-medium text-gray-900" id="subtotal">0.00</td>
                             </tr>
                             <tr>

@@ -45,12 +45,9 @@ class ClientesController extends Controller
         return redirect()->route('clientes.create')->with('success', 'Cliente registrado exitosamente');
     }
 
-
-
-
     public function index()
     {
-        $clientes = Clientes::orderBy('cli_nombre', 'asc')->get();
+        $clientes = Clientes::orderBy('cli_nombre', 'asc')->paginate(10); // Cambiado a paginate(10)
         return view('vistas.clientes.index', compact('clientes'));
     }
 
