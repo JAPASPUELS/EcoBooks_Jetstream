@@ -23,7 +23,12 @@ class Clientes extends Model
         'cli_identificacion',
         'created_by',
     ];
-    
+
+    public function ventas()
+    {
+        return $this->belongsTo(Ventas::class, 'cli_codigo', 'cli_codigo'); // Cambio aquí
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by');

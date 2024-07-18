@@ -15,6 +15,7 @@ use App\Models\Auditoria;
 use App\Models\Inventario;
 use App\Models\Gasto;
 use App\Models\Proveedor;
+use App\Models\Ventas;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Exports\CategoriesExport;
 use App\Exports\ClientesExport;
@@ -160,5 +161,26 @@ class ReportController extends Controller
     public function exportExcelCompras()
     {
         return Excel::download(new ComprasExport, 'compras.xlsx');
+    }   
+     public function exportPDFVenta($id)
+    {
+        try {
+            $venta = Ventas::with(['user', 'detalles.articulo', 'pagos.formaPago'])
+                ->where('vent_numero', $id)
+                ->first();
+            
+            if (!$venta) {
+                return redirect()->back()->withErrors('Venta no encontrada');
+            }
+            
+            $pdf = PDF::loadView('reports.venta', compact('venta'));
+            return $pdf->download('venta.pdf');
+        } catch (\Throwable $th) {
+            error_log("Error Generated Document -> $th");
+            return redirect()->back()->withErrors('Error al generar el PDF');
+        }
     }
+    
+  
+
 }

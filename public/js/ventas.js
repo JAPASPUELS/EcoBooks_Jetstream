@@ -229,4 +229,10 @@ document.addEventListener('DOMContentLoaded', function () {
         renderProducts(filteredProducts, 1);
         renderPagination(filteredProducts);
     });
+
+    function openRegisterClientModal(cedula) {
+        document.getElementById('register-client-cedula').value = cedula;
+        document.getElementById('registerClientModal').showModal();
+    }
+
 });

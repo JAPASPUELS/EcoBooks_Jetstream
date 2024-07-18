@@ -22,10 +22,16 @@ class Ventas extends Model
 
     public $timestamps = false;
 
+    public function cliente()
+    {
+        return $this->belongsTo(Clientes::class, 'cli_codigo', 'cli_codigo'); // Cambio aquí
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'created_by');
     }
+
     public function detalles()
     {
         return $this->hasMany(DetalleVentas::class, 'vent_numero', 'vent_numero');
@@ -33,6 +39,6 @@ class Ventas extends Model
 
     public function pagos()
     {
-        return $this->hasOne(Pago::class, 'vent_numero', 'vent_numero');
+        return $this->hasMany(Pago::class, 'vent_numero', 'vent_numero'); // Cambio aquí
     }
 }
