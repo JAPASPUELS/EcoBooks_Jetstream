@@ -1,0 +1,370 @@
+/* General Styles */
+
+/* Estilos para contenedor de filtro */
+.custom-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.custom-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.custom-form-group {
+    display: flex;
+    gap: 10px; /* Espacio entre el select y el input */
+}
+
+.custom-select,
+.custom-input {
+    width: 230px; /* Ajusta el ancho automáticamente */
+    max-width: 230px; /* Máximo ancho permitido */
+    padding: 8px 12px; /* Espaciado interno */
+    border: 1px solid #ccc; /* Borde */
+    border-radius: 4px; /* Bordes redondeados */
+}
+
+.custom-select:focus,
+.custom-input:focus {
+    border-color: #3182ce; /* Color del borde al enfocar */
+    box-shadow: 0 0 0 1px #3182ce; /* Sombra al enfocar */
+    outline: none; /* Quitar outline */
+}
+
+/* Estilo para el título */
+h2.title-custom {
+    font-size: 24px; /* Tamaño de fuente */
+    color: #007bff; /* Color del texto */
+    font-weight: bold; /* Texto en negrita */
+    text-align: center; /* Alineación del texto */
+    margin: 20px 0; /* Márgenes */
+}
+
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.card {
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
+    background: #fff;
+}
+
+.card-header {
+    background-color: #ffffff;
+    color: #000000;
+    border-bottom: 1px solid #e0e0e0;
+    padding: 15px 20px;
+    border-radius: 8px;
+}
+
+.card-title {
+    margin: 0;
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+
+.card-body {
+    padding: 20px;
+}
+
+.form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-group label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.form-group label i {
+    margin-right: 8px;
+}
+
+.form-control {
+    border-radius: 4px;
+    padding: 10px;
+    border: 1px solid #ced4da;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-top: 20px;
+    width: 100%;
+}
+.btn-cancel {
+    background-color: #c00404;
+    border-color: #c00404;
+    color: #ffffff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s, border-color 0.3s;
+    margin-top: 20px;
+    width: 100%;
+}
+
+.btn-success i {
+    margin-right: 5px;
+}
+
+.btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+}
+
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.alert-success {
+    margin-top: 20px;
+    border-radius: 4px;
+    padding: 10px 20px;
+}
+
+.icon-celeste {
+    color: #00bcd4;
+    margin-right: 8px;
+}
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.375rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-primary:hover {
+    color: #fff;
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* CSS para Tabla Editar Usuarios */
+
+.table .btn-edit-role {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.table .btn-delete {
+    background-color: #4746468e;
+    color: rgb(255, 255, 255);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#dataTable th,
+#dataTable td {
+    padding: 12px 15px;
+    text-align: left;
+}
+
+#dataTable th {
+    background-color: #f1f5f9;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#dataTable tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+#dataTable tr:hover {
+    background-color: #f1f5f9;
+}
+
+.pagination-links .page-link {
+    padding: 8px 12px;
+    margin: 0 4px;
+    border-radius: 4px;
+    border: 1px solid #e5e7eb;
+    color: #374151;
+    text-decoration: none;
+}
+
+.pagination-links .page-link:hover {
+    background-color: #e5e7eb;
+    border-color: #d1d5db;
+}
+
+/* Set a minimum height for tbody to keep the table height consistent */
+tbody {
+    display: block;
+    min-height: 400px;
+    /* Adjust this value as needed */
+}
+
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+thead,
+tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+body {
+    background-color: #cfe9d9; /* Color de fondo */
+}
+
+.card {
+    border-radius: 1rem;
+    background-color: #ffffff; /* Color de fondo de la tarjeta */
+    box-shadow: 0 4px 8px rgba(1, 60, 255, 0.582); /* Sombra suave */
+}
+
+img.img-fluid.h-100 {
+    border-radius: 1rem 0 0 1rem;
+    object-fit: cover;
+}
+
+.d-flex.align-items-center {
+    height: 100%;
+}
+
+.btn-custom {
+    background-color: #0062cc; /* Color del botón */
+    color: white;
+    border-radius: 0.25rem; /* Borde redondeado */
+}
+
+.form-outline input {
+    border-color: #ff6219; /* Color del borde del campo de entrada */
+    border-radius: 0.25rem; /* Borde redondeado */
+}
+
+.form-label {
+    color: #393f81; /* Color del texto de la etiqueta */
+}
+
+.center-text {
+    text-align: center;
+}
+
+.highlight-link {
+    color: #ff6219; /* Color destacado para el enlace */
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.text-muted {
+    color: #393f81 !important; /* Color del texto mutado */
+}
+
+/* Estilos para el Modal */
+.modal-custom {
+    width: 50%;
+    max-width: 600px;
+    border: none;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: fixed;
+    top: 30%; /* Mover hacia abajo */
+    left: 50%;
+    transform: translate(
+        -50%,
+        -30%
+    ); /* Centrar horizontal y ajustar verticalmente */
+    z-index: 1000;
+    background-color: white;
+    overflow-y: auto;
+}
+
+.modal-title {
+    font-weight: bold; /* Aplicar negrilla */
+    font-size: 1.5rem; /* Ajustar el tamaño de la fuente si es necesario */
+    margin: 0;
+}
+
+.modal-header,
+.modal-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header {
+    border-bottom: 1px solid #e9ecef;
+    padding-bottom: 10px;
+}
+
+.modal-footer {
+    border-top: 1px solid #e9ecef;
+    padding-top: 10px;
+}
+
+.modal-header .close {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.dialog::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+body.modal-open {
+    overflow: hidden;
+}
