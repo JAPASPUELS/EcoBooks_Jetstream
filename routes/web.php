@@ -17,6 +17,7 @@ use App\Http\Controllers\FormaPagoController;
 use App\Http\Controllers\MovimientoController;
 use App\Http\Controllers\GastoController;
 use App\Http\Controllers\CompraController;
+use App\Http\Controllers\UserController;
 
 
 Route::get('/', function () {
@@ -254,6 +255,13 @@ Route::resource('compras', CompraController::class);
 Route::delete('/compras/{id}', [CompraController::class, 'destroy'])->name('compras.destroy');
 Route::get('/reportcompras/excel', [ReportController::class, 'exportExcelCompras'])->name('reportCompras.excel');
 Route::get('/reportcompras/pdf', [ReportController::class, 'exportPDFCompras'])->name('reportCompras.pdf');
+
+//Rutas para gestionar Usuarios
+
+Route::get('/users', [UserController::class, 'index'])->name('users.index');
+Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+Route::post('/users', [UserController::class, 'store'])->name('users.store');
+Route::put('/users/update-role', [UserController::class, 'updateRole'])->name('users.updateRole');
 
 
 
