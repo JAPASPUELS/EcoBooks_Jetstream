@@ -100,10 +100,12 @@
                 <!-- Existing code for charts -->
 
                 <!-- Modal -->
-                <div id="dataModal" class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 hidden ">
+                <div id="dataModal"
+                    class="fixed inset-0 flex items-center justify-center bg-gray-800 bg-opacity-75 hidden ">
                     <div class="bg-white rounded-lg shadow-lg p-6 w-3/5">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-lg font-semibold">Datos</h3>
+
                             <button id="closeModalButton" class="text-red-500">&times;</button>
                         </div>
                         <button id="reportButton"
@@ -124,7 +126,7 @@
                                 <!-- Datos se llenarán con JavaScript -->
                             </tbody>
                         </table>
-                        <div id="paginationLinks" class="mt-4 justify-center ">
+                        <div id="paginationLinks" class="mt-4 flex justify-center">
                             <!-- Links de paginación se llenarán con JavaScript -->
                         </div>
 
@@ -252,17 +254,23 @@
                 const userId = document.getElementById('userDropdown').value;
                 let startDate = document.getElementById('datepicker-range-start').value;
                 let endDate = document.getElementById('datepicker-range-end').value;
+                const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
-                if (userId) {
+
+                const and = {
+                    page: page
+                };
+
+                if (userId > 0) {
                     and.user_id = userId;
                 }
-                if (tableName) {
+                if (tableName != "todo") {
                     and.aud_table = tableName;
                 }
-                if (startDate) {
+                if (startDate!="") {
                     and.start = startDate;
                 }
-                if (endDate) {
+                if (endDate!="") {
                     and.end = endDate;
                 }
 
@@ -283,7 +291,6 @@
                         return response.json();
                     })
                     .then(data => {
-                        console.log(data);
                         updateCounters(data.countByAction);
                         initPieChart(data, and.aud_table);
                         initBarChart(data, and.aud_table);
@@ -340,17 +347,17 @@
 
                 if (current_page > 1) {
                     paginationLinks.innerHTML +=
-                        `<a href="#" class="${baseLinkClasses} pagination-link mt-1 bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900" data-page="${current_page - 1}">&laquo; Previo</a>`;
+                        `<a href="#" class="${baseLinkClasses} pagination-link  bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900" data-page="${current_page - 1}">&laquo; Previo</a>`;
                 }
 
                 for (let i = 1; i <= last_page; i++) {
                     paginationLinks.innerHTML +=
-                        `<a href="#" class="${baseLinkClasses} pagination-link mt-1 ${i === current_page ? 'active bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900'}" data-page="${i}">${i}</a>`;
+                        `<a href="#" class="${baseLinkClasses} pagination-link ${i === current_page ? 'active bg-blue-500 text-white' : 'bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900'}" data-page="${i}">${i}</a>`;
                 }
 
                 if (current_page < last_page) {
                     paginationLinks.innerHTML +=
-                        `<a href="#" class="${baseLinkClasses} pagination-link mt-1 bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900" data-page="${current_page + 1}">Siguiente &raquo;</a>`;
+                        `<a href="#" class="${baseLinkClasses} pagination-link bg-gray-200 hover:bg-gray-300 text-gray-700 hover:text-gray-900" data-page="${current_page + 1}">Siguiente &raquo;</a>`;
                 }
 
 
@@ -601,12 +608,13 @@
                 if (tableName != "todo") {
                     and.aud_table = tableName;
                 }
-                if (startDate) {
+                if (startDate!="") {
                     and.start = startDate;
                 }
-                if (endDate) {
+                if (endDate!="") {
                     and.end = endDate;
                 }
+                console.log(and);
                 fetch('/chart-data', {
                         method: 'POST',
                         headers: {
@@ -653,7 +661,9 @@
                     return response.json();
                 })
                 .then(data => {
-
+                    console.log("ssssssss");
+                    console.log(data);
+                    console.log("ssssssss");
                     updateCounters(data.countByAction);
                     initPieChart(data, and.aud_table);
                     initBarChart(data, and.aud_table);
