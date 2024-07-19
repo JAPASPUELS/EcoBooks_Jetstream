@@ -213,6 +213,10 @@ Route::get('/reportinv/excel', [ReportController::class, 'exportExcelInventario'
 Route::get('/reportinv/pdf', [ReportController::class, 'exportPDFInventario'])->name('reportinv.pdf');
 
 
+Route::get('/reportvent/pdf/{id}', [ReportController::class, 'exportPDFVenta'])->name('reportvent.pdf');
+
+
+
 
 // Rutas para gestionar proveedores
 Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');

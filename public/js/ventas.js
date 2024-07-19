@@ -117,6 +117,17 @@ document.addEventListener('DOMContentLoaded', function () {
             const productPrecio = parseFloat(button.getAttribute('data-precio'));
             const stock = parseInt(button.getAttribute('data-stock'));
 
+            if (stock <= 0) {
+                closeProductModal();
+                Swal.fire({
+                    title: 'Error',
+                    text: 'No se puede agregar un artículo con stock 0',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+                return;
+            }
+
             const product = {
                 art_id: productId,
                 art_nombre: productNombre,
@@ -135,7 +146,20 @@ document.addEventListener('DOMContentLoaded', function () {
         const existingRow = productsTable.querySelector(`tr[data-id="${product.art_id}"]`);
         if (existingRow) {
             const cantidadInput = existingRow.querySelector('input[type="number"]');
-            cantidadInput.value = parseInt(cantidadInput.value) + product.cantidad;
+            const newCantidad = parseInt(cantidadInput.value) + product.cantidad;
+
+            if (newCantidad > product.stock) {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'No se puede agregar más productos de los disponibles en stock',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar'
+                });
+                cantidadInput.value = product.stock;
+            } else {
+                cantidadInput.value = newCantidad;
+            }
+
             updateTotals();
             return;
         }
@@ -143,27 +167,41 @@ document.addEventListener('DOMContentLoaded', function () {
         const row = document.createElement('tr');
         row.setAttribute('data-id', product.art_id);
         row.innerHTML = `
-             <td class="tracking-wider  text-center">${product.art_id}</td>
-        <td class="tracking-wider  text-center">
-            <input type="number" class="form-control" value="${product.cantidad}" min="1" max="${product.stock}" onchange="updateTotals()">
-        </td>
-        <td class="tracking-wider  text-center">${product.art_nombre}</td>
-        <td class="tracking-wider  text-center">
-            <input type="checkbox" id="envase_si_${product.art_id}" name="envase_si" onchange="updateTotals()"> Sí
-        </td>
-        <td class="tracking-wider text-center  product-precio">${product.art_precio.toFixed(2)}</td>
-        <td class="tracking-wider text-center product-total">${(product.art_precio * product.cantidad).toFixed(2)}</td>
-        <td class="tracking-wider text-center">
-            <button type="button" class="btn btn-danger  rounded-sm text-white px-5 py-2.5 me-2 mb-2 btn-sm" onclick="removeProduct(this)">Eliminar</button>
-        </td>
+            <td class="tracking-wider text-center">${product.art_id}</td>
+            <td class="tracking-wider text-center">
+                <input type="number" class="form-control" value="${product.cantidad}" min="1" max="${product.stock}" onchange="validateQuantity(this, ${product.stock})">
+            </td>
+            <td class="tracking-wider text-center">${product.art_nombre}</td>
+            <td class="tracking-wider text-center">
+                <input type="checkbox" id="envase_si_${product.art_id}" name="envase_si" onchange="updateTotals()"> Sí
+            </td>
+            <td class="tracking-wider text-center product-precio">${product.art_precio.toFixed(2)}</td>
+            <td class="tracking-wider text-center product-total">${(product.art_precio * product.cantidad).toFixed(2)}</td>
+            <td class="tracking-wider text-center">
+                <button type="button" class="btn btn-danger rounded-sm text-white px-5 py-2.5 me-2 mb-2 btn-sm" onclick="removeProduct(this)">Eliminar</button>
+            </td>
         `;
 
-        row.querySelector('.btn-danger').addEventListener('click', function () {
-            row.remove();
-            updateTotals();
-        });
-
         productsTable.appendChild(row);
+        updateTotals();
+    }
+
+    window.validateQuantity = function (input, stock) {
+        if (parseInt(input.value) > stock) {
+            Swal.fire({
+                title: 'Error',
+                text: 'No se puede agregar más productos de los disponibles en stock',
+                icon: 'error',
+                confirmButtonText: 'Aceptar'
+            });
+            input.value = stock;
+        }
+        updateTotals();
+    }
+
+    window.removeProduct = function (button) {
+        const row = button.parentNode.parentNode;
+        row.parentNode.removeChild(row);
         updateTotals();
     }
 
@@ -229,4 +267,9 @@ document.addEventListener('DOMContentLoaded', function () {
         renderProducts(filteredProducts, 1);
         renderPagination(filteredProducts);
     });
+
+    function openRegisterClientModal(cedula) {
+        document.getElementById('register-client-cedula').value = cedula;
+        document.getElementById('registerClientModal').showModal();
+    }
 });

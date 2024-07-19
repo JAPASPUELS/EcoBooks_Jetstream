@@ -34,4 +34,9 @@ class DetalleVentas extends Model
     {
         return $this->belongsTo(Ventas::class, 'vent_numero', 'vent_numero');
     }
+    public function articulo()
+    {
+        return $this->belongsTo(Articulo::class, 'art_id');
+    }
+   
 }
