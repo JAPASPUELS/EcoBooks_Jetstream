@@ -24,6 +24,8 @@ use App\Exports\GastosExport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use App\Exports\ArticulosExport;
 use App\Exports\ComprasExport;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ReportController extends Controller
 {
@@ -166,14 +168,17 @@ class ReportController extends Controller
     {
         try {
             $venta = Ventas::with(['user', 'detalles.articulo', 'pagos.formaPago'])
-                ->where('vent_numero', $id)
-                ->first();
-            
+            ->where('vent_numero', $id)
+            ->first();
+            $user = Clientes::where("cli_codigo",$venta->cli_codigo)->first();
+            Log::info( $venta);
+            Log::info( $user);
+
             if (!$venta) {
                 return redirect()->back()->withErrors('Venta no encontrada');
             }
             
-            $pdf = PDF::loadView('reports.venta', compact('venta'));
+            $pdf = PDF::loadView('reports.venta', compact('venta','user'));
             return $pdf->download('venta.pdf');
         } catch (\Throwable $th) {
             error_log("Error Generated Document -> $th");
