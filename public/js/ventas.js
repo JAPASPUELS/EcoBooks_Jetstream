@@ -3,62 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
     let currentPage = 1;
     const products = articulos;
 
-    function guardarVenta() {
-        const productos = [];
-        document.querySelectorAll('#productsTable tr').forEach(row => {
-            productos.push({
-                art_id: row.querySelector('[name="art_id"]').value,
-                det_precio: row.querySelector('[name="det_precio"]').value,
-                det_unidades: row.querySelector('[name="det_unidades"]').value
-            });
-        });
-
-        const ventaData = {
-            cli_codigo: document.getElementById('cedula').value,
-            vent_total: parseFloat(document.getElementById('total').innerText),
-            vent_fecha: document.getElementById('fecha').value,
-            fpa_id: document.getElementById('pago').value,
-            detalle_ventas: productos
-        };
-
-        fetch('/vistas/ventas', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-            },
-            body: JSON.stringify(ventaData)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                Swal.fire({
-                    title: 'Éxito',
-                    text: data.message,
-                    icon: 'success',
-                    confirmButtonText: 'Aceptar'
-                }).then(() => {
-                    window.location.href = '/vistas/ventas';
-                });
-            } else {
-                Swal.fire({
-                    title: 'Error',
-                    text: data.message,
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar'
-                });
-            }
-        })
-        .catch(error => {
-            Swal.fire({
-                title: 'Error',
-                text: 'Hubo un error al guardar la venta',
-                icon: 'error',
-                confirmButtonText: 'Aceptar'
-            });
-        });
-    }
-
     function openProductModal() {
         document.getElementById('productModal').showModal();
         renderProducts(products, currentPage);
@@ -169,7 +113,7 @@ document.addEventListener('DOMContentLoaded', function () {
         row.innerHTML = `
             <td class="tracking-wider text-center">${product.art_id}</td>
             <td class="tracking-wider text-center">
-                <input type="number" class="form-control" value="${product.cantidad}" min="1" max="${product.stock}" onchange="validateQuantity(this, ${product.stock})">
+                <input type="number" class="form-control rounded-lg" value="${product.cantidad}" min="1" max="${product.stock}" onchange="validateQuantity(this, ${product.stock})">
             </td>
             <td class="tracking-wider text-center">${product.art_nombre}</td>
             <td class="tracking-wider text-center">
@@ -178,7 +122,7 @@ document.addEventListener('DOMContentLoaded', function () {
             <td class="tracking-wider text-center product-precio">${product.art_precio.toFixed(2)}</td>
             <td class="tracking-wider text-center product-total">${(product.art_precio * product.cantidad).toFixed(2)}</td>
             <td class="tracking-wider text-center">
-                <button type="button" class="btn btn-danger rounded-sm text-white px-5 py-2.5 me-2 mb-2 btn-sm" onclick="removeProduct(this)">Eliminar</button>
+                <button type="button" class="btn btn-danger my-1 text-white px-5 py-2.5 me-2 mb-2 btn-sm rounded-lg" onclick="removeProduct(this)">Eliminar</button>
             </td>
         `;
 

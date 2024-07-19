@@ -1,5 +1,7 @@
-<dialog id="productModal" class="modal">
-    <div class="modal-header flex items-center justify-between p-4 border-b border-gray-200 rounded-t">
+{{-- <dialog id="productModal" class="modal">
+     --}}
+    <dialog id="productModal" class="mx-auto mt-20">
+    <div class="modal-header flex items-center justify-between p-4 border-b border-gray-200 rounded-t ">
         <h5 class="modal-title text-xl font-medium">Buscar productos</h5>
         <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center" onclick="closeProductModal()">
             <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 9l4-4a1 1 0 10-1.4-1.4L10 6.6 6.4 3a1 1 0 00-1.4 1.4l4 4-4 4a1 1 0 001.4 1.4l-4-4 4 4a1 1 0 001.4-1.4l-4-4z" clip-rule="evenodd"></path></svg>
