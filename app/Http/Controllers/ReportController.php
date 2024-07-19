@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Http\Controllers;
 
 use App\Exports\AuditoriaExport;
@@ -10,6 +11,7 @@ use App\Models\Movimientos;
 use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Articulo;
+use App\Models\Compra;
 use App\Models\Auditoria;
 use App\Models\Inventario;
 use App\Models\Gasto;
@@ -23,6 +25,8 @@ use App\Exports\GastosExport;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use App\Exports\ArticulosExport;
+// use App\Exports\ComprasExport;
 
 class ReportController extends Controller
 {
@@ -36,11 +40,14 @@ class ReportController extends Controller
         $categories = Categoria::all();
         // Verificar qué categorías están en uso
         foreach ($categories as $category) {
-            $enUso = Articulo::where('cat_id', $category->cat_id)->exists();
-            $category->enUso = $enUso ? 'Ok' : '';
+            // Verificar qué categorías están en uso
+            foreach ($categories as $category) {
+                $enUso = Articulo::where('cat_id', $category->cat_id)->exists();
+                $category->enUso = $enUso ? 'Ok' : '';
+            }
+            $pdf = PDF::loadView('reports.categories', compact('categories'));
+            return $pdf->download('categories.pdf');
         }
-        $pdf = PDF::loadView('reports.categories', compact('categories'));
-        return $pdf->download('categories.pdf');
     }
     public function exportExcelClients()
     {
@@ -134,30 +141,55 @@ class ReportController extends Controller
         $registros = $query->get();
         $pdf = PDF::loadView('reports.inventario', compact('registros'));
         return $pdf->download('inventario.pdf');
-    }   
-     public function exportPDFVenta($id)
+    }
+    public function exportPDFVenta($id)
     {
         try {
             $venta = Ventas::with(['user', 'detalles.articulo', 'pagos.formaPago'])
-            ->where('vent_numero', $id)
-            ->first();
-            $user = Clientes::where("cli_codigo",$venta->cli_codigo)->first();
-            Log::info( $venta);
-            Log::info( $user);
+                ->where('vent_numero', $id)
+                ->first();
+            $user = Clientes::where("cli_codigo", $venta->cli_codigo)->first();
+            Log::info($venta);
+            Log::info($user);
 
             if (!$venta) {
                 return redirect()->back()->withErrors('Venta no encontrada');
             }
-            
-            $pdf = PDF::loadView('reports.venta', compact('venta','user'));
+
+            $pdf = PDF::loadView('reports.venta', compact('venta', 'user'));
             return $pdf->download('venta.pdf');
         } catch (\Throwable $th) {
             error_log("Error Generated Document -> $th");
             return redirect()->back()->withErrors('Error al generar el PDF');
         }
     }
-    
 
-    
 
+
+    public function exportPDFArticulos()
+    {
+        $articulos = Articulo::with('categoria')->orderBy('art_id')->get();
+        $pdf = PDF::loadView('reports.articulos', compact('articulos'));
+        return $pdf->download('articulos.pdf');
+    }
+
+
+    public function exportExcelArticulos()
+    {
+        return Excel::download(new ArticulosExport, 'articulos.xlsx');
+    }
+
+    // Exportar compras a PDF
+    // public function exportPDFCompras()
+    // {
+    //     $compras = Compra::with('articulo', 'proveedor')->orderBy('comp_id', 'asc')->get();
+    //     $pdf = PDF::loadView('reports.compras', compact('compras'));
+    //     return $pdf->download('compras.pdf');
+    // }
+
+    // // Exportar compras a Excel
+    // public function exportExcelCompras()
+    // {
+    //     return Excel::download(new ComprasExport, 'compras.xlsx');
+    // }
 }
