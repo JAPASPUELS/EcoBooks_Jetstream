@@ -128,10 +128,87 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
+    // Manejar el clic en el botón de cambiar estado
+    document.querySelectorAll(".btn-status").forEach((button) => {
+        button.addEventListener("click", function () {
+            const id = this.getAttribute("data-id");
+            const estado = this.getAttribute("data-estado");
+            Swal.fire({
+                title: "¿Estás seguro?",
+                text: `¿Deseas cambiar el estado a ${
+                    estado == 1 ? "inactivo" : "activo"
+                }?`,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                cancelButtonText: "Cancelar",
+                confirmButtonText: "Sí, cambiarlo",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`/articulos/${id}/toggle-status`, {
+                        method: "POST",
+                        headers: {
+                            "X-CSRF-TOKEN": document
+                                .querySelector('meta[name="csrf-token"]')
+                                .getAttribute("content"),
+                            "X-HTTP-Method-Override": "PATCH", // Override method to PATCH
+                        },
+                    })
+                        .then((response) => response.json())
+                        .then((data) => {
+                            if (data.success) {
+                                Swal.fire({
+                                    icon: "success",
+                                    title: "¡Estado cambiado!",
+                                    text: data.message,
+                                    confirmButtonText: "Aceptar",
+                                }).then(() => {
+                                    location.reload(); // Recargar la página para reflejar los cambios
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: "error",
+                                    title: "Error",
+                                    text: data.message,
+                                    confirmButtonText: "Aceptar",
+                                });
+                            }
+                        });
+                }
+            });
+        });
+    });
+
     // Cerrar el modal y permitir el scroll del cuerpo cuando se cierre
     document
         .getElementById("editArticuloModal")
         .addEventListener("close", function () {
             document.body.classList.remove("modal-open");
         });
+
+    // Reportes
+    const reportModal = document.getElementById("reportModal");
+    const reportBtn = document.getElementById("reportArticulosBtn");
+    const closeReportModalBtn = document.getElementById("closeReportModal");
+    const excelBtn = document.getElementById("excelBtn");
+    const pdfBtn = document.getElementById("pdfBtn");
+
+    reportBtn.addEventListener("click", function () {
+        reportModal.classList.remove("hidden");
+    });
+
+    closeReportModalBtn.addEventListener("click", function () {
+        reportModal.classList.add("hidden");
+    });
+
+    excelBtn.addEventListener("click", function () {
+        // Aquí puedes redirigir a la ruta de generación de reporte Excel
+        window.location.href = "/reportart/excel";
+    });
+
+    pdfBtn.addEventListener("click", function () {
+        // Aquí puedes redirigir a la ruta de generación de reporte PDF
+        window.location.href = "/reportart/pdf";
+    });
 });

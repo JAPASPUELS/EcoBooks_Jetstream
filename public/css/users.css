@@ -35,39 +35,6 @@
     outline: none; /* Quitar outline */
 }
 
-.btn {
-    display: inline-block;
-    font-weight: 400;
-    color: #212529;
-    text-align: center;
-    vertical-align: middle;
-    user-select: none;
-    background-color: transparent;
-    border: 1px solid transparent;
-    padding: 0.375rem 0.75rem;
-    font-size: 1rem;
-    line-height: 1.5;
-    border-radius: 0.375rem;
-    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-    cursor: pointer;
-}
-
-.btn-primary {
-    color: #fff;
-    background-color: #007bff;
-    border-color: #007bff;
-}
-
-.btn-primary:hover {
-    color: #fff;
-    background-color: #0056b3;
-    border-color: #004085;
-}
-
-.btn-primary:focus, .btn-primary.focus {
-    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
-}
-
 /* Estilo para el título */
 h2.title-custom {
     font-size: 24px; /* Tamaño de fuente */
@@ -169,6 +136,13 @@ h2.title-custom {
     border-color: #1e7e34;
 }
 
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
 .alert-success {
     margin-top: 20px;
     border-radius: 4px;
@@ -179,10 +153,44 @@ h2.title-custom {
     color: #00bcd4;
     margin-right: 8px;
 }
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    color: #212529;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.375rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out,
+        border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    cursor: pointer;
+}
 
-/* CSS para Tabla Editar Articulos */
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
 
-.table .btn-edit {
+.btn-primary:hover {
+    color: #fff;
+    background-color: #0056b3;
+    border-color: #004085;
+}
+
+.btn-primary:focus,
+.btn-primary.focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+/* CSS para Tabla Editar Usuarios */
+
+.table .btn-edit-role {
     background-color: #007bff;
     color: white;
     border: none;
@@ -192,8 +200,8 @@ h2.title-custom {
     transition: background-color 0.3s ease;
 }
 
-.table .btn-status {
-    background-color: #ff0000;
+.table .btn-delete {
+    background-color: #4746468e;
     color: rgb(255, 255, 255);
     border: none;
     padding: 5px 10px;
@@ -255,9 +263,56 @@ tbody tr {
     width: 100%;
     table-layout: fixed;
 }
-/* CSS para el Modal */
+body {
+    background-color: #cfe9d9; /* Color de fondo */
+}
 
-.modal {
+.card {
+    border-radius: 1rem;
+    background-color: #ffffff; /* Color de fondo de la tarjeta */
+    box-shadow: 0 4px 8px rgba(1, 60, 255, 0.582); /* Sombra suave */
+}
+
+img.img-fluid.h-100 {
+    border-radius: 1rem 0 0 1rem;
+    object-fit: cover;
+}
+
+.d-flex.align-items-center {
+    height: 100%;
+}
+
+.btn-custom {
+    background-color: #0062cc; /* Color del botón */
+    color: white;
+    border-radius: 0.25rem; /* Borde redondeado */
+}
+
+.form-outline input {
+    border-color: #ff6219; /* Color del borde del campo de entrada */
+    border-radius: 0.25rem; /* Borde redondeado */
+}
+
+.form-label {
+    color: #393f81; /* Color del texto de la etiqueta */
+}
+
+.center-text {
+    text-align: center;
+}
+
+.highlight-link {
+    color: #ff6219; /* Color destacado para el enlace */
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.text-muted {
+    color: #393f81 !important; /* Color del texto mutado */
+}
+
+/* Estilos para el Modal */
+.modal-custom {
     width: 50%;
     max-width: 600px;
     border: none;
@@ -265,9 +320,12 @@ tbody tr {
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
     position: fixed;
-    top: 50%;
+    top: 30%; /* Mover hacia abajo */
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(
+        -50%,
+        -30%
+    ); /* Centrar horizontal y ajustar verticalmente */
     z-index: 1000;
     background-color: white;
     overflow-y: auto;
@@ -309,14 +367,4 @@ tbody tr {
 
 body.modal-open {
     overflow: hidden;
-}
-
-.alert-danger {
-    color: #721c24;
-    background-color: #f8d7da;
-    border-color: #f5c6cb;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid transparent;
-    border-radius: 4px;
 }

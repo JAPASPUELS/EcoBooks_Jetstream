@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Reporte de Inventario</title>
+    <title>Reporte de Compras</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -40,22 +40,7 @@
             float: right;
             max-height: 150px;
             max-width: 212.39px;
-            margin-top: -40px;
-        }
-
-        .details {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .details h1 {
-            margin: 0;
-            font-size: 24px;
-        }
-
-        .details p {
-            margin: 0;
-            color: gray;
+            margin-top: -10px;
         }
     </style>
 </head>
@@ -64,7 +49,7 @@
     <div class="header">
         <img src="{{ public_path('images/logo_EcoBooks.jpg') }}" alt="Logo">
         <div class="details">
-            <h1 class="text-2xl font-bold">Reporte de Inventario</h1>
+            <h1 class="text-2xl font-bold">Reporte de Compras</h1>
             <p>Fecha: {{ \Carbon\Carbon::now()->format('d/m/Y H:i:s') }}</p>
             @if (auth()->user())
             <p>Generado por: {{ auth()->user()->name }}</p>
@@ -75,21 +60,23 @@
     <table>
         <thead>
             <tr>
-                <th>Id Producto</th>
-                <th>Producto</th>
+                <th>Id</th>
+                <th>Artículo</th>
+                <th>Proveedor</th>
+                <th>Número de Factura</th>
                 <th>Cantidad</th>
-                <th>Fecha</th>
-                <th>Registrado Por</th>
+                <th>Detalles</th>
             </tr>
         </thead>
         <tbody>
-            @foreach ($registros as $reg)
-            <tr class="border-t">
-                <td>{{ $reg->art_id }}</td>
-                <td>{{ $reg->product->art_nombre }}</td>
-                <td>{{ $reg->inv_cantidad_ing}}</td>
-                <td>{{ $reg->inv_fecha}}</td>
-                <td>{{ $reg->user->name }}</td>
+            @foreach($compras as $compra)
+            <tr>
+                <td>{{ $compra->comp_id }}</td>
+                <td>{{ $compra->articulo->art_nombre }}</td>
+                <td>{{ $compra->proveedor->pro_nombre }}</td>
+                <td>{{ $compra->comp_numfac }}</td>
+                <td>{{ $compra->comp_cantidad }}</td>
+                <td>{{ $compra->com_detalles }}</td>
             </tr>
             @endforeach
         </tbody>

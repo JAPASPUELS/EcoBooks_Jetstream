@@ -1,7 +1,7 @@
 @extends('dashboard')
 
 @section('content')
-<!-- Incluir el archivo CSS de Articulos -->
+<!-- Incluir el archivo CSS de Artículos -->
 <link rel="stylesheet" href="{{ asset('css/articulos.css') }}">
 
 <div class="container mt-5">
@@ -10,6 +10,16 @@
             <h3 class="card-title">Registrar Artículo</h3>
         </div>
         <div class="card-body">
+            @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+            @endif
+            @if(session('success'))
+            <div class="alert alert-success">
+                {{ session('success') }}
+            </div>
+            @endif
             <form action="{{ route('articulos.store') }}" method="POST">
                 @csrf
                 <div class="form-group">
@@ -32,7 +42,7 @@
                 </div>
                 <div class="form-group">
                     <label for="art_cantidad">
-                        <i class="fas fa-sort-numeric-up icon-celeste"></i> Cantidad del Artículo
+                        <i class="fas fa-sort-numeric-up icon-celeste"></i> Cantidad
                     </label>
                     <input type="number" class="form-control" id="art_cantidad" name="art_cantidad" value="{{ old('art_cantidad') }}" required>
                     @error('art_cantidad')
@@ -41,9 +51,14 @@
                 </div>
                 <div class="form-group">
                     <label for="art_unidades">
-                        <i class="fas fa-cube icon-celeste"></i> Unidad de Medida
+                        <i class="fas fa-balance-scale icon-celeste"></i> Unidades de Medida
                     </label>
-                    <input type="text" class="form-control" id="art_unidades" name="art_unidades" value="{{ old('art_unidades') }}" required>
+                    <select class="form-control" id="art_unidades" name="art_unidades" required>
+                        <option value="">Selecciona una unidad de medida</option>
+                        <option value="Mililitros">Mililitros</option>
+                        <option value="Unidades">Unidades</option>
+                        <option value="Gramos">Gramos</option>
+                    </select>
                     @error('art_unidades')
                     <div class="text-danger">{{ $message }}</div>
                     @enderror

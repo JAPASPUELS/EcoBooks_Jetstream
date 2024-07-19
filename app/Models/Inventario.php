@@ -9,11 +9,14 @@ class Inventario extends Model
 {
     use HasFactory;
     protected $table = 'inventario';
+    protected $primaryKey = 'inv_id';
+    public $timestamps = false;
+
 
     protected $fillable = [
         'art_id',
         'inv_fecha',
-        'inv_cantidad',
+        'inv_cantidad_ing',
         'created_by',
     ];
 
