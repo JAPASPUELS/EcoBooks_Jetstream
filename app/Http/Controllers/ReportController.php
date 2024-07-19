@@ -12,7 +12,6 @@ use Illuminate\Http\Request;
 use App\Models\Categoria;
 use App\Models\Articulo;
 use App\Models\Compra;
-use App\Models\Compra;
 use App\Models\Auditoria;
 use App\Models\Inventario;
 use App\Models\Gasto;
