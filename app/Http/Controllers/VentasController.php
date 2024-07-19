@@ -16,10 +16,21 @@ use Illuminate\Support\Facades\Log;
 
 class VentasController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         try {
-            $ventas = Ventas::orderBy('vent_numero', 'asc')->get();
+            $query = Ventas::query();
+
+            if ($request->has('fechaInicio') && $request->fechaInicio != '') {
+                $query->whereDate('vent_fecha', '>=', $request->fechaInicio);
+            }
+
+            if ($request->has('fechaFin') && $request->fechaFin != '') {
+                $query->whereDate('vent_fecha', '<=', $request->fechaFin);
+            }
+
+            $ventas = $query->orderBy('vent_fecha', 'desc')->paginate(10);
+
             return view('vistas.ventas.index', compact('ventas'));
         } catch (\Throwable $th) {
             error_log("Error Load Audit Data -> $th");
@@ -32,7 +43,6 @@ class VentasController extends Controller
         $forma_Pagos = FormaPago::all();
         return view('vistas.ventas.create', compact('articulos', 'forma_Pagos'));
     }
-
     public function store(Request $request)
     {
         DB::beginTransaction();

@@ -13,7 +13,10 @@ class Clientes extends Model
     protected $primaryKey = 'cli_codigo';
     public $incrementing = false; // Asumiendo que cli_codigo no es autoincremental
     public $timestamps = true;
-
+    
+    protected $casts = [
+        'cli_codigo' => 'string',
+    ];
     protected $fillable = [
         'cli_codigo',
         'cli_nombre',
