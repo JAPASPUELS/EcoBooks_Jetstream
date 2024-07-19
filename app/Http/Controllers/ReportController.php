@@ -162,18 +162,19 @@ class ReportController extends Controller
     {
         return Excel::download(new ComprasExport, 'compras.xlsx');
     }   
-     public function exportPDFVenta($id)
+    public function exportPDFVenta($id)
     {
         try {
             $venta = Ventas::with(['user', 'detalles.articulo', 'pagos.formaPago'])
-                ->where('vent_numero', $id)
-                ->first();
-            
+            ->where('vent_numero', $id)
+            ->first();
+            $user = Clientes::where("cli_codigo",$venta->cli_codigo)->first();
+
             if (!$venta) {
                 return redirect()->back()->withErrors('Venta no encontrada');
             }
             
-            $pdf = PDF::loadView('reports.venta', compact('venta'));
+            $pdf = PDF::loadView('reports.venta', compact('venta','user'));
             return $pdf->download('venta.pdf');
         } catch (\Throwable $th) {
             error_log("Error Generated Document -> $th");
