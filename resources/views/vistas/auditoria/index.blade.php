@@ -253,16 +253,22 @@
                 let startDate = document.getElementById('datepicker-range-start').value;
                 let endDate = document.getElementById('datepicker-range-end').value;
 
-                if (userId) {
+                const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+
+                const and = {
+                    page: page
+                };
+
+                if (userId > 0) {
                     and.user_id = userId;
                 }
-                if (tableName) {
+                if (tableName != "todo") {
                     and.aud_table = tableName;
                 }
-                if (startDate) {
+                if (startDate!="") {
                     and.start = startDate;
                 }
-                if (endDate) {
+                if (endDate!="") {
                     and.end = endDate;
                 }
 
@@ -601,10 +607,10 @@
                 if (tableName != "todo") {
                     and.aud_table = tableName;
                 }
-                if (startDate) {
+                if (startDate!="") {
                     and.start = startDate;
                 }
-                if (endDate) {
+                if (endDate!="") {
                     and.end = endDate;
                 }
                 fetch('/chart-data', {
