@@ -51,11 +51,15 @@ class ClientesController extends Controller
         return redirect()->route('clientes.create')->with('success', 'Cliente registrado exitosamente');
     }
 
+
+
+
     public function index()
     {
         $clientes = Clientes::orderBy('cli_nombre', 'asc')->paginate(10); // Cambiado a paginate(10)
         return view('vistas.clientes.index', compact('clientes'));
     }
+
 
     public function edit($id)
     {
@@ -94,11 +98,13 @@ class ClientesController extends Controller
     }
 
 
+
     public function destroy($id)
     {
         $cliente = Clientes::findOrFail($id);
         $cliente->delete();
 
+        return response()->json(['success' => true, 'message' => 'Clientes eliminado exitosamente']);
         return response()->json(['success' => true, 'message' => 'Clientes eliminado exitosamente']);
     }
 }
